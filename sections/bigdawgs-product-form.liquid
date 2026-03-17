@@ -1,7 +1,7 @@
 {% comment %}
   BIG DAWGS - Custom Card Stickers Product Form
   A multi-step form for configuring and ordering custom card stickers
-  for One Touch and Top Loader card holders.
+  for One Touch and Toploader card holders.
   v2: Real pricing, renamed finishes (Regular/Holo/Cracked Ice), Wide size,
       drag-and-drop file upload with mobile camera support
 {% endcomment %}
@@ -100,7 +100,7 @@
   @keyframes slideIn {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(10px);
     }
     to {
       opacity: 1;
@@ -109,15 +109,15 @@
   }
 
   .form-group {
-    margin-bottom: 24px;
+    margin-bottom: 30px;
   }
 
   .form-label {
     display: block;
+    margin-bottom: 10px;
     font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 14px;
     color: var(--bd-white);
+    font-size: 14px;
   }
 
   .form-label.required::after {
@@ -125,256 +125,89 @@
     color: var(--bd-red);
   }
 
-  .option-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 12px;
-    margin-top: 12px;
-  }
-
-  .option-button {
-    padding: 16px;
-    border: 2px solid var(--bd-gray);
-    background-color: transparent;
-    color: var(--bd-white);
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    text-align: center;
-  }
-
-  .option-button:hover {
-    border-color: var(--bd-red);
-    background-color: rgba(204, 0, 0, 0.1);
-  }
-
-  .option-button.selected {
-    background-color: var(--bd-red);
-    border-color: var(--bd-red);
-    color: var(--bd-white);
-  }
-
-  .price-tiers {
-    margin-top: 16px;
-  }
-
-  .tier-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-
-  .tier-table thead {
-    background-color: var(--bd-dark);
-    border-bottom: 2px solid var(--bd-gray);
-  }
-
-  .tier-table th {
-    padding: 12px 8px;
-    text-align: left;
-    font-weight: 600;
-    color: var(--bd-white);
-  }
-
-  .tier-table td {
-    padding: 12px 8px;
-    border-bottom: 1px solid var(--bd-gray);
+  .form-note {
+    font-size: 12px;
     color: var(--bd-light);
+    margin-top: 6px;
   }
 
-  .tier-table tr:hover {
-    background-color: rgba(204, 0, 0, 0.05);
-  }
-
-  .tier-row.best-value {
-    background-color: rgba(212, 160, 23, 0.1);
-    border-left: 3px solid var(--bd-gold);
-  }
-
-  .best-value-badge {
-    display: inline-block;
-    background-color: var(--bd-gold);
-    color: var(--bd-black);
-    padding: 4px 8px;
-    border-radius: 3px;
-    font-weight: 600;
-    font-size: 11px;
-    margin-right: 8px;
-  }
-
-  .quantity-selector {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-top: 12px;
-  }
-
-  .quantity-input {
-    flex: 1;
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
     padding: 12px;
     background-color: var(--bd-dark);
     border: 1px solid var(--bd-gray);
-    color: var(--bd-white);
     border-radius: 4px;
+    color: var(--bd-white);
+    font-family: inherit;
     font-size: 14px;
   }
 
-  .quantity-input:focus {
+  input[type="text"]::placeholder,
+  textarea::placeholder {
+    color: #666;
+  }
+
+  input[type="text"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  select:focus {
     outline: none;
     border-color: var(--bd-red);
-    box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.2);
+    box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.1);
   }
 
-  .quantity-buttons {
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .checkbox-group,
+  .radio-group {
     display: flex;
-    gap: 4px;
+    flex-wrap: wrap;
+    gap: 15px;
   }
 
-  .qty-btn {
-    padding: 10px 12px;
-    background-color: var(--bd-gray);
-    border: none;
-    color: var(--bd-white);
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s ease;
-  }
-
-  .qty-btn:hover {
-    background-color: var(--bd-red);
-  }
-
-  .file-upload-area {
-    border: 2px dashed var(--bd-gray);
-    border-radius: 8px;
-    padding: 32px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: rgba(255, 255, 255, 0.02);
-  }
-
-  .file-upload-area.dragover {
-    border-color: var(--bd-red);
-    background-color: rgba(204, 0, 0, 0.1);
-  }
-
-  .file-upload-area.has-file {
-    border-color: var(--bd-red);
-    background-color: rgba(204, 0, 0, 0.05);
-  }
-
-  .upload-icon {
-    font-size: 32px;
-    margin-bottom: 12px;
-  }
-
-  .upload-text {
-    font-size: 14px;
-    color: var(--bd-light);
-    margin-bottom: 4px;
-  }
-
-  .upload-subtext {
-    font-size: 12px;
-    color: var(--bd-gray);
-  }
-
-  .file-preview {
-    margin-top: 16px;
-    padding: 12px;
-    background-color: var(--bd-dark);
-    border-radius: 6px;
+  .checkbox-item,
+  .radio-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-  }
-
-  .preview-image {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 4px;
-  }
-
-  .preview-info {
-    flex: 1;
-    text-align: left;
-  }
-
-  .preview-name {
-    font-weight: 600;
-    color: var(--bd-white);
-    font-size: 13px;
-    margin-bottom: 4px;
-  }
-
-  .preview-size {
-    font-size: 12px;
-    color: var(--bd-gray);
-  }
-
-  .preview-remove {
-    background-color: rgba(204, 0, 0, 0.2);
-    color: var(--bd-red);
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
     cursor: pointer;
-    font-size: 12px;
-    font-weight: 600;
-    transition: background-color 0.2s ease;
   }
 
-  .preview-remove:hover {
-    background-color: var(--bd-red);
-    color: var(--bd-white);
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--bd-red);
   }
 
-  .order-summary {
-    background-color: var(--bd-dark);
-    border: 1px solid var(--bd-gray);
-    border-radius: 6px;
-    padding: 20px;
-    margin-bottom: 24px;
+  .checkbox-item label,
+  .radio-item label {
+    cursor: pointer;
+    user-select: none;
   }
 
-  .summary-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    font-size: 14px;
-    color: var(--bd-light);
-  }
-
-  .summary-row.total {
-    border-top: 1px solid var(--bd-gray);
-    padding-top: 12px;
-    margin-top: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--bd-white);
-  }
-
-  .form-actions {
+  .button-group {
     display: flex;
     gap: 12px;
-    margin-top: 32px;
+    margin-top: 30px;
   }
 
-  .btn {
+  button {
     flex: 1;
-    padding: 14px 24px;
+    padding: 14px 20px;
     border: none;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 4px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: center;
+    transition: all 0.3s ease;
   }
 
   .btn-primary {
@@ -382,1026 +215,755 @@
     color: var(--bd-white);
   }
 
-  .btn-primary:hover:not(:disabled) {
+  .btn-primary:hover {
     background-color: var(--bd-red-dark);
-    transform: translateY(-2px);
+  }
+
+  .btn-primary:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 
   .btn-secondary {
-    background-color: transparent;
+    background-color: var(--bd-gray);
     color: var(--bd-white);
-    border: 2px solid var(--bd-red);
   }
 
-  .btn-secondary:hover:not(:disabled) {
+  .btn-secondary:hover {
+    background-color: #444;
+  }
+
+  .file-upload-area {
+    border: 2px dashed var(--bd-gray);
+    border-radius: 6px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: var(--bd-dark);
+  }
+
+  .file-upload-area:hover {
+    border-color: var(--bd-red);
+    background-color: rgba(204, 0, 0, 0.05);
+  }
+
+  .file-upload-area.dragover {
+    border-color: var(--bd-red);
     background-color: rgba(204, 0, 0, 0.1);
   }
 
-  .btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  .upload-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
   }
 
-  .step-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 8px;
+  .upload-text {
+    font-size: 14px;
+    color: var(--bd-light);
+  }
+
+  .upload-text strong {
     color: var(--bd-white);
   }
 
-  .step-description {
+  .file-list {
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--bd-dark);
+    border: 1px solid var(--bd-gray);
+    border-radius: 4px;
+    margin-bottom: 8px;
     font-size: 14px;
+  }
+
+  .file-item button {
+    flex: 0;
+    padding: 6px 12px;
+    background-color: var(--bd-red);
+    color: var(--bd-white);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+
+  .file-item button:hover {
+    background-color: var(--bd-red-dark);
+  }
+
+  .size-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+  }
+
+  .size-option {
+    position: relative;
+  }
+
+  .size-option input {
+    display: none;
+  }
+
+  .size-option label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background-color: var(--bd-dark);
+    border: 2px solid var(--bd-gray);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .size-option input:checked + label {
+    border-color: var(--bd-red);
+    background-color: rgba(204, 0, 0, 0.1);
+  }
+
+  .quantity-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+  }
+
+  .quantity-option {
+    position: relative;
+  }
+
+  .quantity-option input {
+    display: none;
+  }
+
+  .quantity-option label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 10px;
+    background-color: var(--bd-dark);
+    border: 2px solid var(--bd-gray);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .quantity-option input:checked + label {
+    border-color: var(--bd-red);
+    background-color: rgba(204, 0, 0, 0.1);
+  }
+
+  .quantity-amount {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--bd-white);
+  }
+
+  .quantity-price {
+    font-size: 12px;
     color: var(--bd-light);
-    margin-bottom: 24px;
+    margin-top: 4px;
+  }
+
+  .finish-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+  }
+
+  .finish-option {
+    position: relative;
+  }
+
+  .finish-option input {
+    display: none;
+  }
+
+  .finish-option label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background-color: var(--bd-dark);
+    border: 2px solid var(--bd-gray);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .finish-option input:checked + label {
+    border-color: var(--bd-red);
+    background-color: rgba(204, 0, 0, 0.1);
   }
 
   .error-message {
-    background-color: rgba(204, 0, 0, 0.1);
-    border: 1px solid var(--bd-red);
-    color: #ff6b6b;
-    padding: 12px;
-    border-radius: 4px;
+    color: var(--bd-red);
     font-size: 13px;
-    margin-bottom: 16px;
+    margin-top: 6px;
   }
 
   .success-message {
-    background-color: rgba(0, 200, 0, 0.1);
-    border: 1px solid #00c800;
-    color: #5fdb5f;
-    padding: 12px;
+    background-color: rgba(0, 100, 0, 0.1);
+    border: 1px solid #0a0;
+    color: #0f0;
+    padding: 15px;
     border-radius: 4px;
-    font-size: 13px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    font-size: 14px;
   }
 
-  @media (max-width: 600px) {
-    .bigdawgs-form-container {
-      padding: 24px 16px;
-    }
+  .loading-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-right: 8px;
+  }
 
-    .option-grid {
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
     }
+  }
 
-    .form-actions {
-      flex-direction: column;
-    }
+  .preview-section {
+    background-color: var(--bd-dark);
+    border: 1px solid var(--bd-gray);
+    border-radius: 6px;
+    padding: 20px;
+    margin-top: 30px;
+  }
 
-    .tier-table {
-      font-size: 12px;
-    }
+  .preview-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--bd-gray);
+    font-size: 14px;
+  }
 
-    .tier-table th,
-    .tier-table td {
-      padding: 8px 4px;
-    }
+  .preview-item:last-child {
+    border-bottom: none;
+  }
+
+  .preview-label {
+    color: var(--bd-light);
+  }
+
+  .preview-value {
+    color: var(--bd-white);
+    font-weight: 600;
+  }
+
+  .price-breakdown {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid var(--bd-gray);
+  }
+
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+
+  .price-row.total {
+    font-weight: 600;
+    color: var(--bd-red);
+    font-size: 16px;
   }
 </style>
 
 <div class="bigdawgs-form-container">
   <div class="form-progress-bar">
-    <div class="progress-dot active" data-step="1"></div>
-    <div class="progress-dot" data-step="2"></div>
-    <div class="progress-dot" data-step="3"></div>
-    <div class="progress-dot" data-step="4"></div>
-    <div class="progress-dot" data-step="5"></div>
+    <div class="progress-dot active" id="step1-dot"></div>
+    <div class="progress-dot" id="step2-dot"></div>
+    <div class="progress-dot" id="step3-dot"></div>
+    <div class="progress-dot" id="step4-dot"></div>
+    <div class="progress-dot" id="step5-dot"></div>
   </div>
 
-  <div class="sticky-summary" id="summaryBox">
-    <div class="summary-item">
-      <span class="summary-label">Holder Type:</span>
-      <span id="summaryHolderType">-</span>
-    </div>
+  <div class="sticky-summary" id="sticky-summary">
     <div class="summary-item">
       <span class="summary-label">Size:</span>
-      <span id="summarySize">-</span>
+      <span id="summary-size">-</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Holder Type:</span>
+      <span id="summary-holder">-</span>
     </div>
     <div class="summary-item">
       <span class="summary-label">Finish:</span>
-      <span id="summaryFinish">-</span>
+      <span id="summary-finish">-</span>
     </div>
     <div class="summary-item">
       <span class="summary-label">Quantity:</span>
-      <span id="summaryQuantity">-</span>
+      <span id="summary-quantity">-</span>
     </div>
     <div class="summary-item">
-      <span class="summary-label">Unit Price:</span>
-      <span id="summaryUnitPrice">-</span>
-    </div>
-    <div class="summary-item total">
-      <span>Total:</span>
-      <span id="summaryTotal">-</span>
+      <span class="summary-label">Total Price:</span>
+      <span id="summary-price" style="color: var(--bd-red);">$0</span>
     </div>
   </div>
 
-  <form id="stickerForm">
-    <div class="form-step active" data-step="1">
-      <div class="step-title">Select Holder Type</div>
-      <div class="step-description">What type of card holder are your stickers for?</div>
-      
+  <form id="bigdawgs-form" action="/cart/add" method="post">
+    <!-- Step 1: Size -->
+    <div class="form-step active" id="step1">
+      <h2>Select Size</h2>
       <div class="form-group">
-        <div class="option-grid">
-          <button type="button" class="option-button" data-option="OneTouch" data-value="OneTouch">
-            <span>🎬</span><br>One Touch
-          </button>
-          <button type="button" class="option-button" data-option="TopLoader" data-value="TopLoader">
-            <span>📦</span><br>Top Loader
-          </button>
-          <button type="button" class="option-button" data-option="PSA" data-value="PSA">
-            <span>🏆</span><br>PSA Case
-          </button>
-          <button type="button" class="option-button" data-option="Custom" data-value="Custom">
-            <span>✨</span><br>Custom Size
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-step" data-step="2">
-      <div class="step-title">Select Size</div>
-      <div class="step-description">Choose the size of your stickers</div>
-      
-      <div class="form-group">
-        <div class="option-grid">
-          <button type="button" class="option-button" data-option="Small" data-value="Small">
-            Small
-          </button>
-          <button type="button" class="option-button" data-option="Medium" data-value="Medium">
-            Medium
-          </button>
-          <button type="button" class="option-button" data-option="Large" data-value="Large">
-            Large
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-step" data-step="3">
-      <div class="step-title">Select Finish</div>
-      <div class="step-description">How would you like your stickers to look?</div>
-      
-      <div class="form-group">
-        <div class="option-grid">
-          <button type="button" class="option-button" data-option="Regular" data-value="Regular">
-            Regular
-          </button>
-          <button type="button" class="option-button" data-option="Holographic" data-value="Holographic">
-            Holographic
-          </button>
-          <button type="button" class="option-button" data-option="CrackedIce" data-value="CrackedIce">
-            Cracked Ice
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-step" data-step="4">
-      <div class="step-title">Choose Quantity & Price</div>
-      <div class="step-description">Select your quantity for the best price</div>
-      
-      <div id="priceContainer" class="price-tiers">
-        <!-- Price tiers will be populated by JavaScript -->
-      </div>
-
-      <div class="quantity-selector">
-        <label class="form-label">Custom Quantity</label>
-        <div style="display: flex; gap: 8px; width: 100%;">
-          <div class="quantity-buttons">
-            <button type="button" class="qty-btn" id="qtyMinus">−</button>
-            <input type="number" id="customQty" class="quantity-input" placeholder="Enter quantity" value="100" min="10">
-            <button type="button" class="qty-btn" id="qtyPlus">+</button>
+        <label class="form-label required">Which size would you like?</label>
+        <div class="size-selector">
+          <div class="size-option">
+            <input type="radio" id="size-standard" name="size" value="standard" required>
+            <label for="size-standard">Standard</label>
           </div>
-        </div>
-      </div>
-
-      <div style="margin-top: 12px; color: var(--bd-light); font-size: 13px;">
-        Custom quantities: <span id="customPriceDisplay">$0.00</span> total
-      </div>
-    </div>
-
-    <div class="form-step" data-step="5">
-      <div class="step-title">Upload Your Artwork</div>
-      <div class="step-description">Drag and drop your image or click to browse</div>
-      
-      <div class="form-group">
-        <div id="fileUploadArea" class="file-upload-area">
-          <div class="upload-icon">📁</div>
-          <div class="upload-text">Drop your image here or click to select</div>
-          <div class="upload-subtext">PNG, JPG, or GIF (max 20MB)</div>
-          <input type="file" id="fileInput" style="display: none;" accept="image/*">
-        </div>
-        <div id="filePreview" style="display: none;">
-          <div class="file-preview">
-            <img id="previewImage" class="preview-image" src="" alt="Preview">
-            <div class="preview-info">
-              <div class="preview-name" id="previewName"></div>
-              <div class="preview-size" id="previewSize"></div>
-            </div>
-            <button type="button" id="removeFileBtn" class="preview-remove">Remove</button>
+          <div class="size-option">
+            <input type="radio" id="size-wide" name="size" value="wide" required>
+            <label for="size-wide">Wide</label>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="orderSummary" class="order-summary" style="display: none;">
-      <div class="summary-row">
-        <span>Holder Type:</span>
-        <span id="finalHolderType">-</span>
-      </div>
-      <div class="summary-row">
-        <span>Size:</span>
-        <span id="finalSize">-</span>
-      </div>
-      <div class="summary-row">
-        <span>Finish:</span>
-        <span id="finalFinish">-</span>
-      </div>
-      <div class="summary-row">
-        <span>Quantity:</span>
-        <span id="finalQuantity">-</span>
-      </div>
-      <div class="summary-row">
-        <span>Unit Price:</span>
-        <span id="finalUnitPrice">-</span>
-      </div>
-      <div class="summary-row total">
-        <span>Total Price:</span>
-        <span id="finalTotal">-</span>
-      </div>
-      <div class="summary-row" style="margin-top: 12px; font-size: 12px; color: var(--bd-gray);">
-        <span>Artwork File:</span>
-        <span id="finalFile">-</span>
+    <!-- Step 2: Holder Type -->
+    <div class="form-step" id="step2">
+      <h2>Holder Type</h2>
+      <div class="form-group">
+        <label class="form-label required">Which card holder do you use?</label>
+        <div class="radio-group">
+          <div class="radio-item">
+            <input type="radio" id="holder-onetouch" name="holder_type" value="One Touch" required>
+            <label for="holder-onetouch">One Touch</label>
+          </div>
+          <div class="radio-item">
+            <input type="radio" id="holder-toploader" name="holder_type" value="Toploader" required>
+            <label for="holder-toploader">Toploader</label>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="form-actions">
-      <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">
-        ← Back
-      </button>
-      <button type="button" id="nextBtn" class="btn btn-primary">
-        Next →
-      </button>
+    <!-- Step 3: Finish -->
+    <div class="form-step" id="step3">
+      <h2>Select Finish</h2>
+      <div class="form-group">
+        <label class="form-label required">Choose your sticker finish</label>
+        <div class="finish-selector">
+          <div class="finish-option">
+            <input type="radio" id="finish-regular" name="finish" value="Regular" required>
+            <label for="finish-regular">Regular</label>
+          </div>
+          <div class="finish-option">
+            <input type="radio" id="finish-holo" name="finish" value="Holo" required>
+            <label for="finish-holo">Holo</label>
+          </div>
+          <div class="finish-option">
+            <input type="radio" id="finish-crackedice" name="finish" value="Cracked Ice" required>
+            <label for="finish-crackedice">Cracked Ice</label>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Step 4: Quantity & Upload -->
+    <div class="form-step" id="step4">
+      <h2>Choose Quantity & Upload Art</h2>
+
+      <!-- Quantity Selection -->
+      <div class="form-group">
+        <label class="form-label required">How many stickers?</label>
+        <div class="quantity-selector">
+          <div class="quantity-option">
+            <input type="radio" id="qty-25" name="quantity" value="25" required>
+            <label for="qty-25">
+              <span class="quantity-amount">25</span>
+              <span class="quantity-price">$2.50</span>
+            </label>
+          </div>
+          <div class="quantity-option">
+            <input type="radio" id="qty-50" name="quantity" value="50" required>
+            <label for="qty-50">
+              <span class="quantity-amount">50</span>
+              <span class="quantity-price">$4.00</span>
+            </label>
+          </div>
+          <div class="quantity-option">
+            <input type="radio" id="qty-100" name="quantity" value="100" required>
+            <label for="qty-100">
+              <span class="quantity-amount">100</span>
+              <span class="quantity-price">$7.50</span>
+            </label>
+          </div>
+          <div class="quantity-option">
+            <input type="radio" id="qty-250" name="quantity" value="250" required>
+            <label for="qty-250">
+              <span class="quantity-amount">250</span>
+              <span class="quantity-price">$15.00</span>
+            </label>
+          </div>
+        </div>
+        <p class="form-note">Prices are per sticker design. You can upload multiple designs.</p>
+      </div>
+
+      <!-- File Upload -->
+      <div class="form-group">
+        <label class="form-label required">Upload Your Design</label>
+        <div class="file-upload-area" id="file-upload-area">
+          <div class="upload-icon">📤</div>
+          <div class="upload-text">
+            <strong>Click to upload</strong> or drag and drop<br>
+            PNG, JPG or GIF (Max 10MB)
+          </div>
+        </div>
+        <input type="file" id="file-input" accept=".png,.jpg,.jpeg,.gif" multiple style="display: none;">
+        <ul class="file-list" id="file-list"></ul>
+        <p class="form-note">You can upload up to 5 different designs. Maximum 10MB per file.</p>
+      </div>
+    </div>
+
+    <!-- Step 5: Review & Checkout -->
+    <div class="form-step" id="step5">
+      <h2>Review Your Order</h2>
+
+      <div class="preview-section">
+        <div class="preview-item">
+          <span class="preview-label">Size:</span>
+          <span class="preview-value" id="preview-size">-</span>
+        </div>
+        <div class="preview-item">
+          <span class="preview-label">Holder Type:</span>
+          <span class="preview-value" id="preview-holder">-</span>
+        </div>
+        <div class="preview-item">
+          <span class="preview-label">Finish:</span>
+          <span class="preview-value" id="preview-finish">-</span>
+        </div>
+        <div class="preview-item">
+          <span class="preview-label">Number of Designs:</span>
+          <span class="preview-value" id="preview-designs">-</span>
+        </div>
+        <div class="preview-item">
+          <span class="preview-label">Quantity per Design:</span>
+          <span class="preview-value" id="preview-quantity">-</span>
+        </div>
+
+        <div class="price-breakdown">
+          <div class="price-row">
+            <span>Base Price per Design:</span>
+            <span id="price-base">$0.00</span>
+          </div>
+          <div class="price-row">
+            <span>Number of Designs:</span>
+            <span id="price-designs">1</span>
+          </div>
+          <div class="price-row total">
+            <span>Total Price:</span>
+            <span id="price-total">$0.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="button-group" id="button-group">
+      <button type="button" class="btn-secondary" id="prev-btn" style="display: none;">Back</button>
+      <button type="button" class="btn-primary" id="next-btn">Next</button>
+      <button type="submit" class="btn-primary" id="submit-btn" style="display: none;">Add to Cart</button>
+    </div>
+
+    <input type="hidden" name="id" id="variant-id" value="">
+    <input type="hidden" name="quantity" id="form-quantity" value="">
+    <input type="hidden" name="properties[Size]" id="form-size" value="">
+    <input type="hidden" name="properties[Holder Type]" id="form-holder" value="">
+    <input type="hidden" name="properties[Finish]" id="form-finish" value="">
+    <input type="hidden" name="properties[Quantity per Design]" id="form-qty-per-design" value="">
+    <input type="hidden" name="properties[Number of Designs]" id="form-num-designs" value="">
+    <input type="hidden" name="properties[Uploaded Files]" id="form-files" value="">
   </form>
 </div>
 
 <script>
-const PRICING_DATA = {
-  OneTouch: {
-    Small: {
-      Regular: [
-        { qty: 100, price: 1.50 },
-        { qty: 250, price: 1.35 },
-        { qty: 500, price: 1.20 },
-        { qty: 1000, price: 0.99, bestValue: true },
-        { qty: 2500, price: 0.85 },
-        { qty: 5000, price: 0.75 },
-        { qty: 7500, price: 0.68 },
-        { qty: 10000, price: 0.62 }
-      ],
-      Holographic: [
-        { qty: 100, price: 2.25 },
-        { qty: 250, price: 2.10 },
-        { qty: 500, price: 1.95 },
-        { qty: 1000, price: 1.75, bestValue: true },
-        { qty: 2500, price: 1.55 },
-        { qty: 5000, price: 1.40 },
-        { qty: 7500, price: 1.28 },
-        { qty: 10000, price: 1.18 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 2.50 },
-        { qty: 250, price: 2.35 },
-        { qty: 500, price: 2.20 },
-        { qty: 1000, price: 2.00, bestValue: true },
-        { qty: 2500, price: 1.80 },
-        { qty: 5000, price: 1.65 },
-        { qty: 7500, price: 1.50 },
-        { qty: 10000, price: 1.38 }
-      ]
-    },
-    Medium: {
-      Regular: [
-        { qty: 100, price: 1.85 },
-        { qty: 250, price: 1.65 },
-        { qty: 500, price: 1.45 },
-        { qty: 1000, price: 1.25, bestValue: true },
-        { qty: 2500, price: 1.08 },
-        { qty: 5000, price: 0.95 },
-        { qty: 7500, price: 0.85 },
-        { qty: 10000, price: 0.78 }
-      ],
-      Holographic: [
-        { qty: 100, price: 2.75 },
-        { qty: 250, price: 2.55 },
-        { qty: 500, price: 2.35 },
-        { qty: 1000, price: 2.10, bestValue: true },
-        { qty: 2500, price: 1.88 },
-        { qty: 5000, price: 1.70 },
-        { qty: 7500, price: 1.55 },
-        { qty: 10000, price: 1.42 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 3.00 },
-        { qty: 250, price: 2.80 },
-        { qty: 500, price: 2.60 },
-        { qty: 1000, price: 2.35, bestValue: true },
-        { qty: 2500, price: 2.10 },
-        { qty: 5000, price: 1.92 },
-        { qty: 7500, price: 1.75 },
-        { qty: 10000, price: 1.60 }
-      ]
-    },
-    Large: {
-      Regular: [
-        { qty: 100, price: 2.25 },
-        { qty: 250, price: 2.00 },
-        { qty: 500, price: 1.75 },
-        { qty: 1000, price: 1.50, bestValue: true },
-        { qty: 2500, price: 1.28 },
-        { qty: 5000, price: 1.12 },
-        { qty: 7500, price: 1.00 },
-        { qty: 10000, price: 0.92 }
-      ],
-      Holographic: [
-        { qty: 100, price: 3.25 },
-        { qty: 250, price: 3.00 },
-        { qty: 500, price: 2.75 },
-        { qty: 1000, price: 2.45, bestValue: true },
-        { qty: 2500, price: 2.18 },
-        { qty: 5000, price: 1.98 },
-        { qty: 7500, price: 1.80 },
-        { qty: 10000, price: 1.65 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 3.50 },
-        { qty: 250, price: 3.25 },
-        { qty: 500, price: 3.00 },
-        { qty: 1000, price: 2.70, bestValue: true },
-        { qty: 2500, price: 2.40 },
-        { qty: 5000, price: 2.18 },
-        { qty: 7500, price: 2.00 },
-        { qty: 10000, price: 1.83 }
-      ]
-    }
-  },
-  TopLoader: {
-    Small: {
-      Regular: [
-        { qty: 100, price: 1.40 },
-        { qty: 250, price: 1.25 },
-        { qty: 500, price: 1.10 },
-        { qty: 1000, price: 0.90, bestValue: true },
-        { qty: 2500, price: 0.78 },
-        { qty: 5000, price: 0.68 },
-        { qty: 7500, price: 0.62 },
-        { qty: 10000, price: 0.56 }
-      ],
-      Holographic: [
-        { qty: 100, price: 2.10 },
-        { qty: 250, price: 1.95 },
-        { qty: 500, price: 1.80 },
-        { qty: 1000, price: 1.60, bestValue: true },
-        { qty: 2500, price: 1.42 },
-        { qty: 5000, price: 1.28 },
-        { qty: 7500, price: 1.16 },
-        { qty: 10000, price: 1.08 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 2.35 },
-        { qty: 250, price: 2.20 },
-        { qty: 500, price: 2.05 },
-        { qty: 1000, price: 1.85, bestValue: true },
-        { qty: 2500, price: 1.65 },
-        { qty: 5000, price: 1.50 },
-        { qty: 7500, price: 1.36 },
-        { qty: 10000, price: 1.26 }
-      ]
-    },
-    Medium: {
-      Regular: [
-        { qty: 100, price: 1.70 },
-        { qty: 250, price: 1.50 },
-        { qty: 500, price: 1.30 },
-        { qty: 1000, price: 1.10, bestValue: true },
-        { qty: 2500, price: 0.95 },
-        { qty: 5000, price: 0.85 },
-        { qty: 7500, price: 0.75 },
-        { qty: 10000, price: 0.68 }
-      ],
-      Holographic: [
-        { qty: 100, price: 2.55 },
-        { qty: 250, price: 2.35 },
-        { qty: 500, price: 2.15 },
-        { qty: 1000, price: 1.90, bestValue: true },
-        { qty: 2500, price: 1.70 },
-        { qty: 5000, price: 1.55 },
-        { qty: 7500, price: 1.40 },
-        { qty: 10000, price: 1.28 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 2.85 },
-        { qty: 250, price: 2.65 },
-        { qty: 500, price: 2.45 },
-        { qty: 1000, price: 2.20, bestValue: true },
-        { qty: 2500, price: 1.95 },
-        { qty: 5000, price: 1.78 },
-        { qty: 7500, price: 1.60 },
-        { qty: 10000, price: 1.48 }
-      ]
-    },
-    Large: {
-      Regular: [
-        { qty: 100, price: 2.05 },
-        { qty: 250, price: 1.85 },
-        { qty: 500, price: 1.60 },
-        { qty: 1000, price: 1.35, bestValue: true },
-        { qty: 2500, price: 1.15 },
-        { qty: 5000, price: 1.00 },
-        { qty: 7500, price: 0.90 },
-        { qty: 10000, price: 0.82 }
-      ],
-      Holographic: [
-        { qty: 100, price: 3.05 },
-        { qty: 250, price: 2.80 },
-        { qty: 500, price: 2.55 },
-        { qty: 1000, price: 2.25, bestValue: true },
-        { qty: 2500, price: 2.00 },
-        { qty: 5000, price: 1.82 },
-        { qty: 7500, price: 1.65 },
-        { qty: 10000, price: 1.50 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 3.30 },
-        { qty: 250, price: 3.05 },
-        { qty: 500, price: 2.80 },
-        { qty: 1000, price: 2.50, bestValue: true },
-        { qty: 2500, price: 2.22 },
-        { qty: 5000, price: 2.03 },
-        { qty: 7500, price: 1.85 },
-        { qty: 10000, price: 1.68 }
-      ]
-    }
-  },
-  PSA: {
-    Small: {
-      Regular: [
-        { qty: 100, price: 1.45 },
-        { qty: 250, price: 1.30 },
-        { qty: 500, price: 1.15 },
-        { qty: 1000, price: 0.95, bestValue: true },
-        { qty: 2500, price: 0.82 },
-        { qty: 5000, price: 0.72 },
-        { qty: 7500, price: 0.65 },
-        { qty: 10000, price: 0.59 }
-      ],
-      Holographic: [
-        { qty: 100, price: 2.15 },
-        { qty: 250, price: 2.00 },
-        { qty: 500, price: 1.85 },
-        { qty: 1000, price: 1.65, bestValue: true },
-        { qty: 2500, price: 1.47 },
-        { qty: 5000, price: 1.33 },
-        { qty: 7500, price: 1.21 },
-        { qty: 10000, price: 1.11 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 2.40 },
-        { qty: 250, price: 2.25 },
-        { qty: 500, price: 2.10 },
-        { qty: 1000, price: 1.90, bestValue: true },
-        { qty: 2500, price: 1.70 },
-        { qty: 5000, price: 1.55 },
-        { qty: 7500, price: 1.41 },
-        { qty: 10000, price: 1.30 }
-      ]
-    },
-    Medium: {
-      Regular: [
-        { qty: 100, price: 1.75 },
-        { qty: 250, price: 1.55 },
-        { qty: 500, price: 1.35 },
-        { qty: 1000, price: 1.15, bestValue: true },
-        { qty: 2500, price: 1.00 },
-        { qty: 5000, price: 0.90 },
-        { qty: 7500, price: 0.80 },
-        { qty: 10000, price: 0.72 }
-      ],
-      Holographic: [
-        { qty: 100, price: 2.60 },
-        { qty: 250, price: 2.40 },
-        { qty: 500, price: 2.20 },
-        { qty: 1000, price: 1.95, bestValue: true },
-        { qty: 2500, price: 1.75 },
-        { qty: 5000, price: 1.60 },
-        { qty: 7500, price: 1.45 },
-        { qty: 10000, price: 1.33 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 2.90 },
-        { qty: 250, price: 2.70 },
-        { qty: 500, price: 2.50 },
-        { qty: 1000, price: 2.25, bestValue: true },
-        { qty: 2500, price: 2.00 },
-        { qty: 5000, price: 1.83 },
-        { qty: 7500, price: 1.65 },
-        { qty: 10000, price: 1.52 }
-      ]
-    },
-    Large: {
-      Regular: [
-        { qty: 100, price: 2.10 },
-        { qty: 250, price: 1.90 },
-        { qty: 500, price: 1.65 },
-        { qty: 1000, price: 1.40, bestValue: true },
-        { qty: 2500, price: 1.20 },
-        { qty: 5000, price: 1.05 },
-        { qty: 7500, price: 0.95 },
-        { qty: 10000, price: 0.87 }
-      ],
-      Holographic: [
-        { qty: 100, price: 3.10 },
-        { qty: 250, price: 2.85 },
-        { qty: 500, price: 2.60 },
-        { qty: 1000, price: 2.30, bestValue: true },
-        { qty: 2500, price: 2.05 },
-        { qty: 5000, price: 1.88 },
-        { qty: 7500, price: 1.70 },
-        { qty: 10000, price: 1.55 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 3.35 },
-        { qty: 250, price: 3.10 },
-        { qty: 500, price: 2.85 },
-        { qty: 1000, price: 2.55, bestValue: true },
-        { qty: 2500, price: 2.27 },
-        { qty: 5000, price: 2.08 },
-        { qty: 7500, price: 1.90 },
-        { qty: 10000, price: 1.73 }
-      ]
-    }
-  },
-  Custom: {
-    Small: {
-      Regular: [
-        { qty: 100, price: 1.80 },
-        { qty: 250, price: 1.60 },
-        { qty: 500, price: 1.40 },
-        { qty: 1000, price: 1.20, bestValue: true },
-        { qty: 2500, price: 1.03 },
-        { qty: 5000, price: 0.92 },
-        { qty: 7500, price: 0.83 },
-        { qty: 10000, price: 0.76 }
-      ],
-      Holographic: [
-        { qty: 100, price: 2.70 },
-        { qty: 250, price: 2.50 },
-        { qty: 500, price: 2.30 },
-        { qty: 1000, price: 2.05, bestValue: true },
-        { qty: 2500, price: 1.83 },
-        { qty: 5000, price: 1.67 },
-        { qty: 7500, price: 1.51 },
-        { qty: 10000, price: 1.39 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 2.95 },
-        { qty: 250, price: 2.75 },
-        { qty: 500, price: 2.55 },
-        { qty: 1000, price: 2.30, bestValue: true },
-        { qty: 2500, price: 2.05 },
-        { qty: 5000, price: 1.88 },
-        { qty: 7500, price: 1.71 },
-        { qty: 10000, price: 1.58 }
-      ]
-    },
-    Medium: {
-      Regular: [
-        { qty: 100, price: 2.10 },
-        { qty: 250, price: 1.90 },
-        { qty: 500, price: 1.65 },
-        { qty: 1000, price: 1.40, bestValue: true },
-        { qty: 2500, price: 1.20 },
-        { qty: 5000, price: 1.08 },
-        { qty: 7500, price: 0.97 },
-        { qty: 10000, price: 0.88 }
-      ],
-      Holographic: [
-        { qty: 100, price: 3.15 },
-        { qty: 250, price: 2.90 },
-        { qty: 500, price: 2.65 },
-        { qty: 1000, price: 2.35, bestValue: true },
-        { qty: 2500, price: 2.10 },
-        { qty: 5000, price: 1.93 },
-        { qty: 7500, price: 1.75 },
-        { qty: 10000, price: 1.60 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 3.45 },
-        { qty: 250, price: 3.20 },
-        { qty: 500, price: 2.95 },
-        { qty: 1000, price: 2.65, bestValue: true },
-        { qty: 2500, price: 2.35 },
-        { qty: 5000, price: 2.16 },
-        { qty: 7500, price: 1.97 },
-        { qty: 10000, price: 1.80 }
-      ]
-    },
-    Large: {
-      Regular: [
-        { qty: 100, price: 2.50 },
-        { qty: 250, price: 2.25 },
-        { qty: 500, price: 1.95 },
-        { qty: 1000, price: 1.65, bestValue: true },
-        { qty: 2500, price: 1.40 },
-        { qty: 5000, price: 1.25 },
-        { qty: 7500, price: 1.12 },
-        { qty: 10000, price: 1.02 }
-      ],
-      Holographic: [
-        { qty: 100, price: 3.75 },
-        { qty: 250, price: 3.45 },
-        { qty: 500, price: 3.15 },
-        { qty: 1000, price: 2.80, bestValue: true },
-        { qty: 2500, price: 2.48 },
-        { qty: 5000, price: 2.28 },
-        { qty: 7500, price: 2.07 },
-        { qty: 10000, price: 1.88 }
-      ],
-      CrackedIce: [
-        { qty: 100, price: 4.05 },
-        { qty: 250, price: 3.75 },
-        { qty: 500, price: 3.45 },
-        { qty: 1000, price: 3.10, bestValue: true },
-        { qty: 2500, price: 2.75 },
-        { qty: 5000, price: 2.53 },
-        { qty: 7500, price: 2.30 },
-        { qty: 10000, price: 2.09 }
-      ]
-    }
-  }
-};
+  let currentStep = 1;
+  const totalSteps = 5;
+  let uploadedFiles = [];
 
-let formState = {
-  currentStep: 1,
-  holderType: null,
-  size: null,
-  finish: null,
-  quantity: 100,
-  file: null
-};
-
-const form = document.getElementById('stickerForm');
-const steps = document.querySelectorAll('.form-step');
-const buttons = document.querySelectorAll('.option-button');
-const nextBtn = document.getElementById('nextBtn');
-const prevBtn = document.getElementById('prevBtn');
-const progressDots = document.querySelectorAll('.progress-dot');
-const priceContainer = document.getElementById('priceContainer');
-const customQty = document.getElementById('customQty');
-const qtyMinus = document.getElementById('qtyMinus');
-const qtyPlus = document.getElementById('qtyPlus');
-const fileUploadArea = document.getElementById('fileUploadArea');
-const fileInput = document.getElementById('fileInput');
-const filePreview = document.getElementById('filePreview');
-const removeFileBtn = document.getElementById('removeFileBtn');
-const summaryBox = document.getElementById('summaryBox');
-const orderSummary = document.getElementById('orderSummary');
-
-function updateProgressBar() {
-  progressDots.forEach((dot, index) => {
-    dot.classList.remove('active', 'completed');
-    if (index + 1 === formState.currentStep) {
-      dot.classList.add('active');
-    } else if (index + 1 < formState.currentStep) {
-      dot.classList.add('completed');
-    }
-  });
-}
-
-function showStep(step) {
-  steps.forEach(s => s.classList.remove('active'));
-  steps[step - 1].classList.add('active');
-  
-  prevBtn.style.display = step > 1 ? 'flex' : 'none';
-  nextBtn.textContent = step === 5 ? 'Add to Cart' : 'Next →';
-  nextBtn.disabled = !isStepValid(step);
-  
-  if (step > 1) {
-    summaryBox.classList.add('visible');
-  } else {
-    summaryBox.classList.remove('visible');
-  }
-  
-  if (step === 5) {
-    updateOrderSummary();
-    orderSummary.style.display = 'block';
-  } else {
-    orderSummary.style.display = 'none';
-  }
-  
-  updateProgressBar();
-}
-
-function isStepValid(step) {
-  switch(step) {
-    case 1: return formState.holderType !== null;
-    case 2: return formState.size !== null;
-    case 3: return formState.finish !== null;
-    case 4: return formState.quantity > 0;
-    case 5: return formState.file !== null;
-    default: return false;
-  }
-}
-
-function selectOption(e) {
-  if (e.target.classList.contains('option-button')) {
-    const button = e.target.closest('.option-button');
-    const step = document.querySelector('.form-step.active');
-    const buttons = step.querySelectorAll('.option-button');
-    
-    buttons.forEach(b => b.classList.remove('selected'));
-    button.classList.add('selected');
-    
-    const value = button.dataset.value;
-    const step_num = parseInt(step.dataset.step);
-    
-    switch(step_num) {
-      case 1:
-        formState.holderType = value;
-        break;
-      case 2:
-        formState.size = value;
-        break;
-      case 3:
-        formState.finish = value;
-        renderPriceTiers();
-        break;
-    }
-    
-    updateSummary();
-    nextBtn.disabled = !isStepValid(formState.currentStep);
-  }
-}
-
-function renderPriceTiers() {
-  if (!formState.holderType || !formState.size || !formState.finish) return;
-  
-  const tiers = PRICING_DATA[formState.holderType][formState.size][formState.finish];
-  let html = '<table class="tier-table"><thead><tr><th>Quantity</th><th>Unit Price</th><th>Total</th></tr></thead><tbody>';
-  
-  tiers.forEach(tier => {
-    const total = (tier.qty * tier.price).toFixed(2);
-    const rowClass = tier.bestValue ? 'tier-row best-value' : 'tier-row';
-    const badge = tier.bestValue ? '<span class="best-value-badge">Best Value</span>' : '';
-    html += `<tr class="${rowClass}" data-tier-qty="${tier.qty}" data-tier-price="${tier.price}">
-      <td>${badge}${tier.qty}</td>
-      <td>$${tier.price.toFixed(2)}</td>
-      <td>$${total}</td>
-    </tr>`;
-  });
-  
-  html += '</tbody></table>';
-  priceContainer.innerHTML = html;
-  
-  const rows = priceContainer.querySelectorAll('tr[data-tier-qty]');
-  rows.forEach(row => {
-    row.style.cursor = 'pointer';
-    row.addEventListener('click', () => selectTier(row));
-  });
-}
-
-function selectTier(row) {
-  const rows = priceContainer.querySelectorAll('tr[data-tier-qty]');
-  rows.forEach(r => r.style.backgroundColor = '');
-  row.style.backgroundColor = 'rgba(204, 0, 0, 0.2)';
-  
-  formState.quantity = parseInt(row.dataset.tierQty);
-  customQty.value = formState.quantity;
-  updateCustomPriceDisplay();
-  updateSummary();
-}
-
-function updateCustomPriceDisplay() {
-  const tiers = PRICING_DATA[formState.holderType][formState.size][formState.finish];
-  const qty = parseInt(customQty.value);
-  let price = tiers[tiers.length - 1].price;
-  
-  for (let i = tiers.length - 1; i >= 0; i--) {
-    if (qty >= tiers[i].qty) {
-      price = tiers[i].price;
-      break;
-    }
-  }
-  
-  const total = (qty * price).toFixed(2);
-  formState.quantity = qty;
-  document.getElementById('customPriceDisplay').textContent = '$' + total;
-  updateSummary();
-}
-
-function updateSummary() {
-  if (formState.holderType) {
-    document.getElementById('summaryHolderType').textContent = formState.holderType;
-  }
-  if (formState.size) {
-    document.getElementById('summarySize').textContent = formState.size;
-  }
-  if (formState.finish) {
-    document.getElementById('summaryFinish').textContent = formState.finish;
-  }
-  if (formState.quantity) {
-    document.getElementById('summaryQuantity').textContent = formState.quantity;
-    const unitPrice = getPriceForQuantity(formState.quantity);
-    document.getElementById('summaryUnitPrice').textContent = '$' + unitPrice.toFixed(2);
-    document.getElementById('summaryTotal').textContent = '$' + (formState.quantity * unitPrice).toFixed(2);
-  }
-}
-
-function getPriceForQuantity(qty) {
-  if (!formState.holderType || !formState.size || !formState.finish) return 0;
-  const tiers = PRICING_DATA[formState.holderType][formState.size][formState.finish];
-  for (let i = tiers.length - 1; i >= 0; i--) {
-    if (qty >= tiers[i].qty) {
-      return tiers[i].price;
-    }
-  }
-  return tiers[0].price;
-}
-
-function updateOrderSummary() {
-  const unitPrice = getPriceForQuantity(formState.quantity);
-  const total = (formState.quantity * unitPrice).toFixed(2);
-  
-  document.getElementById('finalHolderType').textContent = formState.holderType;
-  document.getElementById('finalSize').textContent = formState.size;
-  document.getElementById('finalFinish').textContent = formState.finish;
-  document.getElementById('finalQuantity').textContent = formState.quantity;
-  document.getElementById('finalUnitPrice').textContent = '$' + unitPrice.toFixed(2);
-  document.getElementById('finalTotal').textContent = '$' + total;
-  document.getElementById('finalFile').textContent = formState.file ? formState.file.name : 'No file selected';
-}
-
-function handleFileUpload(file) {
-  if (!file.type.startsWith('image/')) {
-    alert('Please select an image file');
-    return;
-  }
-  
-  if (file.size > 20 * 1024 * 1024) {
-    alert('File size must be less than 20MB');
-    return;
-  }
-  
-  formState.file = file;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    document.getElementById('previewImage').src = e.target.result;
-    document.getElementById('previewName').textContent = file.name;
-    document.getElementById('previewSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
-    fileUploadArea.style.display = 'none';
-    filePreview.style.display = 'block';
-    nextBtn.disabled = !isStepValid(formState.currentStep);
+  const priceData = {
+    25: 2.50,
+    50: 4.00,
+    100: 7.50,
+    250: 15.00
   };
-  reader.readAsDataURL(file);
-}
 
-function setupEventListeners() {
-  buttons.forEach(btn => {
-    btn.addEventListener('click', selectOption);
-  });
-  
-  nextBtn.addEventListener('click', () => {
-    if (formState.currentStep < 5) {
-      formState.currentStep++;
-      showStep(formState.currentStep);
+  const sizeMap = {
+    'standard': { 'One Touch': 'custom-card-stickers-onetouch-standard-regular', 'Toploader': 'custom-card-stickers-toploader-standard-regular' },
+    'wide': { 'One Touch': 'custom-card-stickers-onetouch-wide-regular', 'Toploader': 'custom-card-stickers-toploader-wide-regular' }
+  };
+
+  function showStep(step) {
+    for (let i = 1; i <= totalSteps; i++) {
+      const stepEl = document.getElementById(`step${i}`);
+      if (stepEl) stepEl.classList.remove('active');
+    }
+    const activeStep = document.getElementById(`step${step}`);
+    if (activeStep) activeStep.classList.add('active');
+
+    // Update progress dots
+    for (let i = 1; i <= totalSteps; i++) {
+      const dot = document.getElementById(`step${i}-dot`);
+      if (dot) {
+        dot.classList.remove('active', 'completed');
+        if (i < step) {
+          dot.classList.add('completed');
+        } else if (i === step) {
+          dot.classList.add('active');
+        }
+      }
+    }
+
+    // Update button visibility
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    if (prevBtn) prevBtn.style.display = step === 1 ? 'none' : 'block';
+    if (nextBtn) nextBtn.style.display = step === totalSteps ? 'none' : 'block';
+    if (submitBtn) submitBtn.style.display = step === totalSteps ? 'block' : 'none';
+
+    if (step >= 2) {
+      updateSummary();
+      document.getElementById('sticky-summary').classList.add('visible');
     } else {
-      addToCart();
+      document.getElementById('sticky-summary').classList.remove('visible');
     }
-  });
-  
-  prevBtn.addEventListener('click', () => {
-    if (formState.currentStep > 1) {
-      formState.currentStep--;
-      showStep(formState.currentStep);
+  }
+
+  function updateSummary() {
+    const size = document.querySelector('input[name="size"]:checked')?.value || '-';
+    const holder = document.querySelector('input[name="holder_type"]:checked')?.value || '-';
+    const finish = document.querySelector('input[name="finish"]:checked')?.value || '-';
+    const quantity = document.querySelector('input[name="quantity"]:checked')?.value || '-';
+    const price = quantity !== '-' ? (priceData[parseInt(quantity)] * uploadedFiles.length || priceData[parseInt(quantity)]) : 0;
+
+    document.getElementById('summary-size').textContent = size;
+    document.getElementById('summary-holder').textContent = holder;
+    document.getElementById('summary-finish').textContent = finish;
+    document.getElementById('summary-quantity').textContent = quantity;
+    document.getElementById('summary-price').textContent = '$' + price.toFixed(2);
+  }
+
+  function validateStep(step) {
+    if (step === 1) {
+      return !!document.querySelector('input[name="size"]:checked');
+    } else if (step === 2) {
+      return !!document.querySelector('input[name="holder_type"]:checked');
+    } else if (step === 3) {
+      return !!document.querySelector('input[name="finish"]:checked');
+    } else if (step === 4) {
+      return !!document.querySelector('input[name="quantity"]:checked') && uploadedFiles.length > 0;
     }
-  });
-  
-  customQty.addEventListener('change', updateCustomPriceDisplay);
-  customQty.addEventListener('input', updateCustomPriceDisplay);
-  
-  qtyMinus.addEventListener('click', (e) => {
-    e.preventDefault();
-    const qty = parseInt(customQty.value) || 100;
-    customQty.value = Math.max(10, qty - 50);
-    updateCustomPriceDisplay();
-  });
-  
-  qtyPlus.addEventListener('click', (e) => {
-    e.preventDefault();
-    const qty = parseInt(customQty.value) || 100;
-    customQty.value = qty + 50;
-    updateCustomPriceDisplay();
-  });
-  
+    return true;
+  }
+
+  // File upload handling
+  const fileUploadArea = document.getElementById('file-upload-area');
+  const fileInput = document.getElementById('file-input');
+  const fileList = document.getElementById('file-list');
+
   fileUploadArea.addEventListener('click', () => fileInput.click());
-  
+
   fileUploadArea.addEventListener('dragover', (e) => {
     e.preventDefault();
     fileUploadArea.classList.add('dragover');
   });
-  
+
   fileUploadArea.addEventListener('dragleave', () => {
     fileUploadArea.classList.remove('dragover');
   });
-  
+
   fileUploadArea.addEventListener('drop', (e) => {
     e.preventDefault();
     fileUploadArea.classList.remove('dragover');
-    const file = e.dataTransfer.files[0];
-    handleFileUpload(file);
+    const files = Array.from(e.dataTransfer.files);
+    handleFiles(files);
   });
-  
+
   fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) handleFileUpload(file);
+    handleFiles(Array.from(e.target.files));
   });
-  
-  removeFileBtn.addEventListener('click', () => {
-    formState.file = null;
-    fileInput.value = '';
-    fileUploadArea.style.display = 'block';
-    filePreview.style.display = 'none';
-    nextBtn.disabled = !isStepValid(formState.currentStep);
-  });
-}
 
-function addToCart() {
-  if (!isStepValid(5)) {
-    alert('Please complete all steps before adding to cart');
-    return;
-  }
-  
-  const unitPrice = getPriceForQuantity(formState.quantity);
-  const matchingPrice = unitPrice.toFixed(2);
-  
-  const productHandle = 'custom-card-stickers';
-  const variantId = findVariantByPrice(matchingPrice);
-  
-  if (!variantId) {
-    alert('Unable to find matching variant. Please contact support.');
-    return;
-  }
-  
-  const formData = new FormData();
-  formData.append('id', variantId);
-  formData.append('quantity', formState.quantity);
-  
-  const fileField = document.getElementById('fileInput');
-  if (fileField.files[0]) {
-    formData.append('properties[Artwork File]', fileField.files[0].name);
-    formData.append('properties[Holder Type]', formState.holderType);
-    formData.append('properties[Size]', formState.size);
-    formData.append('properties[Finish]', formState.finish);
-  }
-  
-  fetch('/cart/add.js', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => {
-    if (response.ok) {
-      window.location.href = '/cart';
-    } else {
-      alert('Error adding to cart. Please try again.');
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('Error adding to cart. Please try again.');
-  });
-}
-
-function findVariantByPrice(price) {
-  // Search through product variants for the matching price
-  // This is a simplified implementation - adjust based on your product structure
-  const variantPrice = parseFloat(price);
-  
-  // In a real implementation, you'd iterate through the product's variants
-  // and find the one with the matching price
-  
-  // For now, return a placeholder - this should be replaced with actual variant lookup
-  if (product && product.variants) {
-    for (let variant of product.variants) {
-      if (Math.abs(variant.price / 100 - variantPrice) < 0.01) {
-        return variant.id;
+  function handleFiles(files) {
+    files.forEach(file => {
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File ' + file.name + ' is too large (max 10MB)');
+        return;
       }
-    }
+      if (!['image/png', 'image/jpeg', 'image/gif'].includes(file.type)) {
+        alert('File ' + file.name + ' must be PNG, JPG, or GIF');
+        return;
+      }
+      uploadedFiles.push(file);
+    });
+    renderFileList();
+    updatePricePreview();
   }
-  
-  return null;
-}
 
-setupEventListeners();
-showStep(1);
+  function renderFileList() {
+    fileList.innerHTML = '';
+    uploadedFiles.forEach((file, index) => {
+      const li = document.createElement('li');
+      li.className = 'file-item';
+      li.innerHTML = `
+        <span>${file.name}</span>
+        <button type="button" onclick="removeFile(${index})">Remove</button>
+      `;
+      fileList.appendChild(li);
+    });
+  }
+
+  function removeFile(index) {
+    uploadedFiles.splice(index, 1);
+    renderFileList();
+    updatePricePreview();
+  }
+
+  function updatePricePreview() {
+    const quantity = parseInt(document.querySelector('input[name="quantity"]:checked')?.value || 25);
+    const basePrice = priceData[quantity];
+    const numDesigns = uploadedFiles.length;
+    const totalPrice = basePrice * numDesigns;
+
+    document.getElementById('price-base').textContent = '$' + basePrice.toFixed(2);
+    document.getElementById('price-designs').textContent = numDesigns;
+    document.getElementById('price-total').textContent = '$' + totalPrice.toFixed(2);
+
+    // Update summary
+    const summaryPrice = document.getElementById('summary-price');
+    if (summaryPrice) summaryPrice.textContent = '$' + totalPrice.toFixed(2);
+  }
+
+  // Step navigation
+  document.getElementById('prev-btn').addEventListener('click', () => {
+    if (currentStep > 1) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  });
+
+  document.getElementById('next-btn').addEventListener('click', () => {
+    if (validateStep(currentStep)) {
+      currentStep++;
+      showStep(currentStep);
+      updatePreview();
+    } else {
+      alert('Please fill in all required fields for this step.');
+    }
+  });
+
+  // Quantity change listener
+  document.querySelectorAll('input[name="quantity"]').forEach(input => {
+    input.addEventListener('change', updatePricePreview);
+  });
+
+  function updatePreview() {
+    const size = document.querySelector('input[name="size"]:checked')?.value || '-';
+    const holder = document.querySelector('input[name="holder_type"]:checked')?.value || '-';
+    const finish = document.querySelector('input[name="finish"]:checked')?.value || '-';
+    const quantity = document.querySelector('input[name="quantity"]:checked')?.value || '-';
+
+    document.getElementById('preview-size').textContent = size;
+    document.getElementById('preview-holder').textContent = holder;
+    document.getElementById('preview-finish').textContent = finish;
+    document.getElementById('preview-designs').textContent = uploadedFiles.length;
+    document.getElementById('preview-quantity').textContent = quantity;
+
+    updatePricePreview();
+  }
+
+  // Form submission
+  document.getElementById('bigdawgs-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const size = document.querySelector('input[name="size"]:checked')?.value;
+    const holder = document.querySelector('input[name="holder_type"]:checked')?.value;
+    const finish = document.querySelector('input[name="finish"]:checked')?.value;
+    const quantity = document.querySelector('input[name="quantity"]:checked')?.value;
+
+    // Find the variant ID based on selections
+    const variantMap = {
+      'standard': {
+        'One Touch': {
+          'Regular': '44159751282874',
+          'Holo': '44159751315642',
+          'Cracked Ice': '44159751348410'
+        },
+        'Toploader': {
+          'Regular': '44159751381178',
+          'Holo': '44159751413946',
+          'Cracked Ice': '44159751446714'
+        }
+      },
+      'wide': {
+        'One Touch': {
+          'Regular': '44159751479482',
+          'Holo': '44159751512250',
+          'Cracked Ice': '44159751545018'
+        },
+        'Toploader': {
+          'Regular': '44159751577786',
+          'Holo': '44159751610554',
+          'Cracked Ice': '44159751643322'
+        }
+      }
+    };
+
+    const variantId = variantMap[size]?.[holder]?.[finish] || '';
+    document.getElementById('variant-id').value = variantId;
+    document.getElementById('form-size').value = size;
+    document.getElementById('form-holder').value = holder;
+    document.getElementById('form-finish').value = finish;
+    document.getElementById('form-qty-per-design').value = quantity;
+    document.getElementById('form-num-designs').value = uploadedFiles.length;
+    document.getElementById('form-files').value = uploadedFiles.map(f => f.name).join(', ');
+
+    // Calculate total quantity (per design qty × number of designs)
+    const totalQuantity = parseInt(quantity) * uploadedFiles.length;
+    document.getElementById('form-quantity').value = totalQuantity;
+
+    var submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="loading-spinner"></span>Adding to Cart...';
+
+    setTimeout(function() {
+      e.target.submit();
+    }, 400);
+  }
 </script>
+
+{% schema %}
+{
+  "name": "BigDawgs Product Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "product_handle",
+      "label": "Product Handle",
+      "default": "custom-card-stickers"
+    }
+  ]
+}
+{% endschema %}
