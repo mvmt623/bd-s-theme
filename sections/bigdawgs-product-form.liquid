@@ -12,3 +12,1396 @@
     assign product = collection.products.first
   endif
 -%}
+
+<style>
+  :root {
+    --bd-red: #CC0000;
+    --bd-red-dark: #990000;
+    --bd-gold: #D4A017;
+    --bd-black: #111111;
+    --bd-dark: #1A1A1A;
+    --bd-gray: #333333;
+    --bd-light: #F5F5F5;
+    --bd-white: #FFFFFF;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .bigdawgs-form-container {
+    background-color: var(--bd-black);
+    color: var(--bd-white);
+    padding: 40px 20px;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .form-progress-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 40px;
+    justify-content: space-between;
+  }
+
+  .progress-dot {
+    flex: 1;
+    height: 4px;
+    background-color: var(--bd-gray);
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+  }
+
+  .progress-dot.active {
+    background-color: var(--bd-red);
+  }
+
+  .progress-dot.completed {
+    background-color: var(--bd-gold);
+  }
+
+  .sticky-summary {
+    background-color: var(--bd-dark);
+    border: 1px solid var(--bd-gray);
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 30px;
+    display: none;
+  }
+
+  .sticky-summary.visible {
+    display: block;
+  }
+
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--bd-light);
+  }
+
+  .summary-label {
+    font-weight: 600;
+    color: var(--bd-white);
+  }
+
+  .form-step {
+    display: none;
+    animation: slideIn 0.3s ease-out;
+  }
+
+  .form-step.active {
+    display: block;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--bd-white);
+  }
+
+  .form-label.required::after {
+    content: ' *';
+    color: var(--bd-red);
+  }
+
+  .option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .option-button {
+    padding: 16px;
+    border: 2px solid var(--bd-gray);
+    background-color: transparent;
+    color: var(--bd-white);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  .option-button:hover {
+    border-color: var(--bd-red);
+    background-color: rgba(204, 0, 0, 0.1);
+  }
+
+  .option-button.selected {
+    background-color: var(--bd-red);
+    border-color: var(--bd-red);
+    color: var(--bd-white);
+  }
+
+  .price-tiers {
+    margin-top: 16px;
+  }
+
+  .tier-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .tier-table thead {
+    background-color: var(--bd-dark);
+    border-bottom: 2px solid var(--bd-gray);
+  }
+
+  .tier-table th {
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--bd-white);
+  }
+
+  .tier-table td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--bd-gray);
+    color: var(--bd-light);
+  }
+
+  .tier-table tr:hover {
+    background-color: rgba(204, 0, 0, 0.05);
+  }
+
+  .tier-row.best-value {
+    background-color: rgba(212, 160, 23, 0.1);
+    border-left: 3px solid var(--bd-gold);
+  }
+
+  .best-value-badge {
+    display: inline-block;
+    background-color: var(--bd-gold);
+    color: var(--bd-black);
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 11px;
+    margin-right: 8px;
+  }
+
+  .quantity-selector {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 12px;
+  }
+
+  .quantity-input {
+    flex: 1;
+    padding: 12px;
+    background-color: var(--bd-dark);
+    border: 1px solid var(--bd-gray);
+    color: var(--bd-white);
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+  .quantity-input:focus {
+    outline: none;
+    border-color: var(--bd-red);
+    box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.2);
+  }
+
+  .quantity-buttons {
+    display: flex;
+    gap: 4px;
+  }
+
+  .qty-btn {
+    padding: 10px 12px;
+    background-color: var(--bd-gray);
+    border: none;
+    color: var(--bd-white);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+
+  .qty-btn:hover {
+    background-color: var(--bd-red);
+  }
+
+  .file-upload-area {
+    border: 2px dashed var(--bd-gray);
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+
+  .file-upload-area.dragover {
+    border-color: var(--bd-red);
+    background-color: rgba(204, 0, 0, 0.1);
+  }
+
+  .file-upload-area.has-file {
+    border-color: var(--bd-red);
+    background-color: rgba(204, 0, 0, 0.05);
+  }
+
+  .upload-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .upload-text {
+    font-size: 14px;
+    color: var(--bd-light);
+    margin-bottom: 4px;
+  }
+
+  .upload-subtext {
+    font-size: 12px;
+    color: var(--bd-gray);
+  }
+
+  .file-preview {
+    margin-top: 16px;
+    padding: 12px;
+    background-color: var(--bd-dark);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .preview-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .preview-info {
+    flex: 1;
+    text-align: left;
+  }
+
+  .preview-name {
+    font-weight: 600;
+    color: var(--bd-white);
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .preview-size {
+    font-size: 12px;
+    color: var(--bd-gray);
+  }
+
+  .preview-remove {
+    background-color: rgba(204, 0, 0, 0.2);
+    color: var(--bd-red);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+
+  .preview-remove:hover {
+    background-color: var(--bd-red);
+    color: var(--bd-white);
+  }
+
+  .order-summary {
+    background-color: var(--bd-dark);
+    border: 1px solid var(--bd-gray);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--bd-light);
+  }
+
+  .summary-row.total {
+    border-top: 1px solid var(--bd-gray);
+    padding-top: 12px;
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--bd-white);
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  .btn-primary {
+    background-color: var(--bd-red);
+    color: var(--bd-white);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: var(--bd-red-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--bd-white);
+    border: 2px solid var(--bd-red);
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: rgba(204, 0, 0, 0.1);
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .step-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--bd-white);
+  }
+
+  .step-description {
+    font-size: 14px;
+    color: var(--bd-light);
+    margin-bottom: 24px;
+  }
+
+  .error-message {
+    background-color: rgba(204, 0, 0, 0.1);
+    border: 1px solid var(--bd-red);
+    color: #ff6b6b;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .success-message {
+    background-color: rgba(0, 200, 0, 0.1);
+    border: 1px solid #00c800;
+    color: #5fdb5f;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .bigdawgs-form-container {
+      padding: 24px 16px;
+    }
+
+    .option-grid {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+
+    .tier-table {
+      font-size: 12px;
+    }
+
+    .tier-table th,
+    .tier-table td {
+      padding: 8px 4px;
+    }
+  }
+</style>
+
+<div class="bigdawgs-form-container">
+  <div class="form-progress-bar">
+    <div class="progress-dot active" data-step="1"></div>
+    <div class="progress-dot" data-step="2"></div>
+    <div class="progress-dot" data-step="3"></div>
+    <div class="progress-dot" data-step="4"></div>
+    <div class="progress-dot" data-step="5"></div>
+  </div>
+
+  <div class="sticky-summary" id="summaryBox">
+    <div class="summary-item">
+      <span class="summary-label">Holder Type:</span>
+      <span id="summaryHolderType">-</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Size:</span>
+      <span id="summarySize">-</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Finish:</span>
+      <span id="summaryFinish">-</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Quantity:</span>
+      <span id="summaryQuantity">-</span>
+    </div>
+    <div class="summary-item">
+      <span class="summary-label">Unit Price:</span>
+      <span id="summaryUnitPrice">-</span>
+    </div>
+    <div class="summary-item total">
+      <span>Total:</span>
+      <span id="summaryTotal">-</span>
+    </div>
+  </div>
+
+  <form id="stickerForm">
+    <div class="form-step active" data-step="1">
+      <div class="step-title">Select Holder Type</div>
+      <div class="step-description">What type of card holder are your stickers for?</div>
+      
+      <div class="form-group">
+        <div class="option-grid">
+          <button type="button" class="option-button" data-option="OneTouch" data-value="OneTouch">
+            <span>🎬</span><br>One Touch
+          </button>
+          <button type="button" class="option-button" data-option="TopLoader" data-value="TopLoader">
+            <span>📦</span><br>Top Loader
+          </button>
+          <button type="button" class="option-button" data-option="PSA" data-value="PSA">
+            <span>🏆</span><br>PSA Case
+          </button>
+          <button type="button" class="option-button" data-option="Custom" data-value="Custom">
+            <span>✨</span><br>Custom Size
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-step" data-step="2">
+      <div class="step-title">Select Size</div>
+      <div class="step-description">Choose the size of your stickers</div>
+      
+      <div class="form-group">
+        <div class="option-grid">
+          <button type="button" class="option-button" data-option="Small" data-value="Small">
+            Small
+          </button>
+          <button type="button" class="option-button" data-option="Medium" data-value="Medium">
+            Medium
+          </button>
+          <button type="button" class="option-button" data-option="Large" data-value="Large">
+            Large
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-step" data-step="3">
+      <div class="step-title">Select Finish</div>
+      <div class="step-description">How would you like your stickers to look?</div>
+      
+      <div class="form-group">
+        <div class="option-grid">
+          <button type="button" class="option-button" data-option="Regular" data-value="Regular">
+            Regular
+          </button>
+          <button type="button" class="option-button" data-option="Holographic" data-value="Holographic">
+            Holographic
+          </button>
+          <button type="button" class="option-button" data-option="CrackedIce" data-value="CrackedIce">
+            Cracked Ice
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-step" data-step="4">
+      <div class="step-title">Choose Quantity & Price</div>
+      <div class="step-description">Select your quantity for the best price</div>
+      
+      <div id="priceContainer" class="price-tiers">
+        <!-- Price tiers will be populated by JavaScript -->
+      </div>
+
+      <div class="quantity-selector">
+        <label class="form-label">Custom Quantity</label>
+        <div style="display: flex; gap: 8px; width: 100%;">
+          <div class="quantity-buttons">
+            <button type="button" class="qty-btn" id="qtyMinus">−</button>
+            <input type="number" id="customQty" class="quantity-input" placeholder="Enter quantity" value="100" min="10">
+            <button type="button" class="qty-btn" id="qtyPlus">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 12px; color: var(--bd-light); font-size: 13px;">
+        Custom quantities: <span id="customPriceDisplay">$0.00</span> total
+      </div>
+    </div>
+
+    <div class="form-step" data-step="5">
+      <div class="step-title">Upload Your Artwork</div>
+      <div class="step-description">Drag and drop your image or click to browse</div>
+      
+      <div class="form-group">
+        <div id="fileUploadArea" class="file-upload-area">
+          <div class="upload-icon">📁</div>
+          <div class="upload-text">Drop your image here or click to select</div>
+          <div class="upload-subtext">PNG, JPG, or GIF (max 20MB)</div>
+          <input type="file" id="fileInput" style="display: none;" accept="image/*">
+        </div>
+        <div id="filePreview" style="display: none;">
+          <div class="file-preview">
+            <img id="previewImage" class="preview-image" src="" alt="Preview">
+            <div class="preview-info">
+              <div class="preview-name" id="previewName"></div>
+              <div class="preview-size" id="previewSize"></div>
+            </div>
+            <button type="button" id="removeFileBtn" class="preview-remove">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="orderSummary" class="order-summary" style="display: none;">
+      <div class="summary-row">
+        <span>Holder Type:</span>
+        <span id="finalHolderType">-</span>
+      </div>
+      <div class="summary-row">
+        <span>Size:</span>
+        <span id="finalSize">-</span>
+      </div>
+      <div class="summary-row">
+        <span>Finish:</span>
+        <span id="finalFinish">-</span>
+      </div>
+      <div class="summary-row">
+        <span>Quantity:</span>
+        <span id="finalQuantity">-</span>
+      </div>
+      <div class="summary-row">
+        <span>Unit Price:</span>
+        <span id="finalUnitPrice">-</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total Price:</span>
+        <span id="finalTotal">-</span>
+      </div>
+      <div class="summary-row" style="margin-top: 12px; font-size: 12px; color: var(--bd-gray);">
+        <span>Artwork File:</span>
+        <span id="finalFile">-</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">
+        ← Back
+      </button>
+      <button type="button" id="nextBtn" class="btn btn-primary">
+        Next →
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+const PRICING_DATA = {
+  OneTouch: {
+    Small: {
+      Regular: [
+        { qty: 100, price: 1.50 },
+        { qty: 250, price: 1.35 },
+        { qty: 500, price: 1.20 },
+        { qty: 1000, price: 0.99, bestValue: true },
+        { qty: 2500, price: 0.85 },
+        { qty: 5000, price: 0.75 },
+        { qty: 7500, price: 0.68 },
+        { qty: 10000, price: 0.62 }
+      ],
+      Holographic: [
+        { qty: 100, price: 2.25 },
+        { qty: 250, price: 2.10 },
+        { qty: 500, price: 1.95 },
+        { qty: 1000, price: 1.75, bestValue: true },
+        { qty: 2500, price: 1.55 },
+        { qty: 5000, price: 1.40 },
+        { qty: 7500, price: 1.28 },
+        { qty: 10000, price: 1.18 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 2.50 },
+        { qty: 250, price: 2.35 },
+        { qty: 500, price: 2.20 },
+        { qty: 1000, price: 2.00, bestValue: true },
+        { qty: 2500, price: 1.80 },
+        { qty: 5000, price: 1.65 },
+        { qty: 7500, price: 1.50 },
+        { qty: 10000, price: 1.38 }
+      ]
+    },
+    Medium: {
+      Regular: [
+        { qty: 100, price: 1.85 },
+        { qty: 250, price: 1.65 },
+        { qty: 500, price: 1.45 },
+        { qty: 1000, price: 1.25, bestValue: true },
+        { qty: 2500, price: 1.08 },
+        { qty: 5000, price: 0.95 },
+        { qty: 7500, price: 0.85 },
+        { qty: 10000, price: 0.78 }
+      ],
+      Holographic: [
+        { qty: 100, price: 2.75 },
+        { qty: 250, price: 2.55 },
+        { qty: 500, price: 2.35 },
+        { qty: 1000, price: 2.10, bestValue: true },
+        { qty: 2500, price: 1.88 },
+        { qty: 5000, price: 1.70 },
+        { qty: 7500, price: 1.55 },
+        { qty: 10000, price: 1.42 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 3.00 },
+        { qty: 250, price: 2.80 },
+        { qty: 500, price: 2.60 },
+        { qty: 1000, price: 2.35, bestValue: true },
+        { qty: 2500, price: 2.10 },
+        { qty: 5000, price: 1.92 },
+        { qty: 7500, price: 1.75 },
+        { qty: 10000, price: 1.60 }
+      ]
+    },
+    Large: {
+      Regular: [
+        { qty: 100, price: 2.25 },
+        { qty: 250, price: 2.00 },
+        { qty: 500, price: 1.75 },
+        { qty: 1000, price: 1.50, bestValue: true },
+        { qty: 2500, price: 1.28 },
+        { qty: 5000, price: 1.12 },
+        { qty: 7500, price: 1.00 },
+        { qty: 10000, price: 0.92 }
+      ],
+      Holographic: [
+        { qty: 100, price: 3.25 },
+        { qty: 250, price: 3.00 },
+        { qty: 500, price: 2.75 },
+        { qty: 1000, price: 2.45, bestValue: true },
+        { qty: 2500, price: 2.18 },
+        { qty: 5000, price: 1.98 },
+        { qty: 7500, price: 1.80 },
+        { qty: 10000, price: 1.65 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 3.50 },
+        { qty: 250, price: 3.25 },
+        { qty: 500, price: 3.00 },
+        { qty: 1000, price: 2.70, bestValue: true },
+        { qty: 2500, price: 2.40 },
+        { qty: 5000, price: 2.18 },
+        { qty: 7500, price: 2.00 },
+        { qty: 10000, price: 1.83 }
+      ]
+    }
+  },
+  TopLoader: {
+    Small: {
+      Regular: [
+        { qty: 100, price: 1.40 },
+        { qty: 250, price: 1.25 },
+        { qty: 500, price: 1.10 },
+        { qty: 1000, price: 0.90, bestValue: true },
+        { qty: 2500, price: 0.78 },
+        { qty: 5000, price: 0.68 },
+        { qty: 7500, price: 0.62 },
+        { qty: 10000, price: 0.56 }
+      ],
+      Holographic: [
+        { qty: 100, price: 2.10 },
+        { qty: 250, price: 1.95 },
+        { qty: 500, price: 1.80 },
+        { qty: 1000, price: 1.60, bestValue: true },
+        { qty: 2500, price: 1.42 },
+        { qty: 5000, price: 1.28 },
+        { qty: 7500, price: 1.16 },
+        { qty: 10000, price: 1.08 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 2.35 },
+        { qty: 250, price: 2.20 },
+        { qty: 500, price: 2.05 },
+        { qty: 1000, price: 1.85, bestValue: true },
+        { qty: 2500, price: 1.65 },
+        { qty: 5000, price: 1.50 },
+        { qty: 7500, price: 1.36 },
+        { qty: 10000, price: 1.26 }
+      ]
+    },
+    Medium: {
+      Regular: [
+        { qty: 100, price: 1.70 },
+        { qty: 250, price: 1.50 },
+        { qty: 500, price: 1.30 },
+        { qty: 1000, price: 1.10, bestValue: true },
+        { qty: 2500, price: 0.95 },
+        { qty: 5000, price: 0.85 },
+        { qty: 7500, price: 0.75 },
+        { qty: 10000, price: 0.68 }
+      ],
+      Holographic: [
+        { qty: 100, price: 2.55 },
+        { qty: 250, price: 2.35 },
+        { qty: 500, price: 2.15 },
+        { qty: 1000, price: 1.90, bestValue: true },
+        { qty: 2500, price: 1.70 },
+        { qty: 5000, price: 1.55 },
+        { qty: 7500, price: 1.40 },
+        { qty: 10000, price: 1.28 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 2.85 },
+        { qty: 250, price: 2.65 },
+        { qty: 500, price: 2.45 },
+        { qty: 1000, price: 2.20, bestValue: true },
+        { qty: 2500, price: 1.95 },
+        { qty: 5000, price: 1.78 },
+        { qty: 7500, price: 1.60 },
+        { qty: 10000, price: 1.48 }
+      ]
+    },
+    Large: {
+      Regular: [
+        { qty: 100, price: 2.05 },
+        { qty: 250, price: 1.85 },
+        { qty: 500, price: 1.60 },
+        { qty: 1000, price: 1.35, bestValue: true },
+        { qty: 2500, price: 1.15 },
+        { qty: 5000, price: 1.00 },
+        { qty: 7500, price: 0.90 },
+        { qty: 10000, price: 0.82 }
+      ],
+      Holographic: [
+        { qty: 100, price: 3.05 },
+        { qty: 250, price: 2.80 },
+        { qty: 500, price: 2.55 },
+        { qty: 1000, price: 2.25, bestValue: true },
+        { qty: 2500, price: 2.00 },
+        { qty: 5000, price: 1.82 },
+        { qty: 7500, price: 1.65 },
+        { qty: 10000, price: 1.50 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 3.30 },
+        { qty: 250, price: 3.05 },
+        { qty: 500, price: 2.80 },
+        { qty: 1000, price: 2.50, bestValue: true },
+        { qty: 2500, price: 2.22 },
+        { qty: 5000, price: 2.03 },
+        { qty: 7500, price: 1.85 },
+        { qty: 10000, price: 1.68 }
+      ]
+    }
+  },
+  PSA: {
+    Small: {
+      Regular: [
+        { qty: 100, price: 1.45 },
+        { qty: 250, price: 1.30 },
+        { qty: 500, price: 1.15 },
+        { qty: 1000, price: 0.95, bestValue: true },
+        { qty: 2500, price: 0.82 },
+        { qty: 5000, price: 0.72 },
+        { qty: 7500, price: 0.65 },
+        { qty: 10000, price: 0.59 }
+      ],
+      Holographic: [
+        { qty: 100, price: 2.15 },
+        { qty: 250, price: 2.00 },
+        { qty: 500, price: 1.85 },
+        { qty: 1000, price: 1.65, bestValue: true },
+        { qty: 2500, price: 1.47 },
+        { qty: 5000, price: 1.33 },
+        { qty: 7500, price: 1.21 },
+        { qty: 10000, price: 1.11 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 2.40 },
+        { qty: 250, price: 2.25 },
+        { qty: 500, price: 2.10 },
+        { qty: 1000, price: 1.90, bestValue: true },
+        { qty: 2500, price: 1.70 },
+        { qty: 5000, price: 1.55 },
+        { qty: 7500, price: 1.41 },
+        { qty: 10000, price: 1.30 }
+      ]
+    },
+    Medium: {
+      Regular: [
+        { qty: 100, price: 1.75 },
+        { qty: 250, price: 1.55 },
+        { qty: 500, price: 1.35 },
+        { qty: 1000, price: 1.15, bestValue: true },
+        { qty: 2500, price: 1.00 },
+        { qty: 5000, price: 0.90 },
+        { qty: 7500, price: 0.80 },
+        { qty: 10000, price: 0.72 }
+      ],
+      Holographic: [
+        { qty: 100, price: 2.60 },
+        { qty: 250, price: 2.40 },
+        { qty: 500, price: 2.20 },
+        { qty: 1000, price: 1.95, bestValue: true },
+        { qty: 2500, price: 1.75 },
+        { qty: 5000, price: 1.60 },
+        { qty: 7500, price: 1.45 },
+        { qty: 10000, price: 1.33 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 2.90 },
+        { qty: 250, price: 2.70 },
+        { qty: 500, price: 2.50 },
+        { qty: 1000, price: 2.25, bestValue: true },
+        { qty: 2500, price: 2.00 },
+        { qty: 5000, price: 1.83 },
+        { qty: 7500, price: 1.65 },
+        { qty: 10000, price: 1.52 }
+      ]
+    },
+    Large: {
+      Regular: [
+        { qty: 100, price: 2.10 },
+        { qty: 250, price: 1.90 },
+        { qty: 500, price: 1.65 },
+        { qty: 1000, price: 1.40, bestValue: true },
+        { qty: 2500, price: 1.20 },
+        { qty: 5000, price: 1.05 },
+        { qty: 7500, price: 0.95 },
+        { qty: 10000, price: 0.87 }
+      ],
+      Holographic: [
+        { qty: 100, price: 3.10 },
+        { qty: 250, price: 2.85 },
+        { qty: 500, price: 2.60 },
+        { qty: 1000, price: 2.30, bestValue: true },
+        { qty: 2500, price: 2.05 },
+        { qty: 5000, price: 1.88 },
+        { qty: 7500, price: 1.70 },
+        { qty: 10000, price: 1.55 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 3.35 },
+        { qty: 250, price: 3.10 },
+        { qty: 500, price: 2.85 },
+        { qty: 1000, price: 2.55, bestValue: true },
+        { qty: 2500, price: 2.27 },
+        { qty: 5000, price: 2.08 },
+        { qty: 7500, price: 1.90 },
+        { qty: 10000, price: 1.73 }
+      ]
+    }
+  },
+  Custom: {
+    Small: {
+      Regular: [
+        { qty: 100, price: 1.80 },
+        { qty: 250, price: 1.60 },
+        { qty: 500, price: 1.40 },
+        { qty: 1000, price: 1.20, bestValue: true },
+        { qty: 2500, price: 1.03 },
+        { qty: 5000, price: 0.92 },
+        { qty: 7500, price: 0.83 },
+        { qty: 10000, price: 0.76 }
+      ],
+      Holographic: [
+        { qty: 100, price: 2.70 },
+        { qty: 250, price: 2.50 },
+        { qty: 500, price: 2.30 },
+        { qty: 1000, price: 2.05, bestValue: true },
+        { qty: 2500, price: 1.83 },
+        { qty: 5000, price: 1.67 },
+        { qty: 7500, price: 1.51 },
+        { qty: 10000, price: 1.39 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 2.95 },
+        { qty: 250, price: 2.75 },
+        { qty: 500, price: 2.55 },
+        { qty: 1000, price: 2.30, bestValue: true },
+        { qty: 2500, price: 2.05 },
+        { qty: 5000, price: 1.88 },
+        { qty: 7500, price: 1.71 },
+        { qty: 10000, price: 1.58 }
+      ]
+    },
+    Medium: {
+      Regular: [
+        { qty: 100, price: 2.10 },
+        { qty: 250, price: 1.90 },
+        { qty: 500, price: 1.65 },
+        { qty: 1000, price: 1.40, bestValue: true },
+        { qty: 2500, price: 1.20 },
+        { qty: 5000, price: 1.08 },
+        { qty: 7500, price: 0.97 },
+        { qty: 10000, price: 0.88 }
+      ],
+      Holographic: [
+        { qty: 100, price: 3.15 },
+        { qty: 250, price: 2.90 },
+        { qty: 500, price: 2.65 },
+        { qty: 1000, price: 2.35, bestValue: true },
+        { qty: 2500, price: 2.10 },
+        { qty: 5000, price: 1.93 },
+        { qty: 7500, price: 1.75 },
+        { qty: 10000, price: 1.60 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 3.45 },
+        { qty: 250, price: 3.20 },
+        { qty: 500, price: 2.95 },
+        { qty: 1000, price: 2.65, bestValue: true },
+        { qty: 2500, price: 2.35 },
+        { qty: 5000, price: 2.16 },
+        { qty: 7500, price: 1.97 },
+        { qty: 10000, price: 1.80 }
+      ]
+    },
+    Large: {
+      Regular: [
+        { qty: 100, price: 2.50 },
+        { qty: 250, price: 2.25 },
+        { qty: 500, price: 1.95 },
+        { qty: 1000, price: 1.65, bestValue: true },
+        { qty: 2500, price: 1.40 },
+        { qty: 5000, price: 1.25 },
+        { qty: 7500, price: 1.12 },
+        { qty: 10000, price: 1.02 }
+      ],
+      Holographic: [
+        { qty: 100, price: 3.75 },
+        { qty: 250, price: 3.45 },
+        { qty: 500, price: 3.15 },
+        { qty: 1000, price: 2.80, bestValue: true },
+        { qty: 2500, price: 2.48 },
+        { qty: 5000, price: 2.28 },
+        { qty: 7500, price: 2.07 },
+        { qty: 10000, price: 1.88 }
+      ],
+      CrackedIce: [
+        { qty: 100, price: 4.05 },
+        { qty: 250, price: 3.75 },
+        { qty: 500, price: 3.45 },
+        { qty: 1000, price: 3.10, bestValue: true },
+        { qty: 2500, price: 2.75 },
+        { qty: 5000, price: 2.53 },
+        { qty: 7500, price: 2.30 },
+        { qty: 10000, price: 2.09 }
+      ]
+    }
+  }
+};
+
+let formState = {
+  currentStep: 1,
+  holderType: null,
+  size: null,
+  finish: null,
+  quantity: 100,
+  file: null
+};
+
+const form = document.getElementById('stickerForm');
+const steps = document.querySelectorAll('.form-step');
+const buttons = document.querySelectorAll('.option-button');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+const progressDots = document.querySelectorAll('.progress-dot');
+const priceContainer = document.getElementById('priceContainer');
+const customQty = document.getElementById('customQty');
+const qtyMinus = document.getElementById('qtyMinus');
+const qtyPlus = document.getElementById('qtyPlus');
+const fileUploadArea = document.getElementById('fileUploadArea');
+const fileInput = document.getElementById('fileInput');
+const filePreview = document.getElementById('filePreview');
+const removeFileBtn = document.getElementById('removeFileBtn');
+const summaryBox = document.getElementById('summaryBox');
+const orderSummary = document.getElementById('orderSummary');
+
+function updateProgressBar() {
+  progressDots.forEach((dot, index) => {
+    dot.classList.remove('active', 'completed');
+    if (index + 1 === formState.currentStep) {
+      dot.classList.add('active');
+    } else if (index + 1 < formState.currentStep) {
+      dot.classList.add('completed');
+    }
+  });
+}
+
+function showStep(step) {
+  steps.forEach(s => s.classList.remove('active'));
+  steps[step - 1].classList.add('active');
+  
+  prevBtn.style.display = step > 1 ? 'flex' : 'none';
+  nextBtn.textContent = step === 5 ? 'Add to Cart' : 'Next →';
+  nextBtn.disabled = !isStepValid(step);
+  
+  if (step > 1) {
+    summaryBox.classList.add('visible');
+  } else {
+    summaryBox.classList.remove('visible');
+  }
+  
+  if (step === 5) {
+    updateOrderSummary();
+    orderSummary.style.display = 'block';
+  } else {
+    orderSummary.style.display = 'none';
+  }
+  
+  updateProgressBar();
+}
+
+function isStepValid(step) {
+  switch(step) {
+    case 1: return formState.holderType !== null;
+    case 2: return formState.size !== null;
+    case 3: return formState.finish !== null;
+    case 4: return formState.quantity > 0;
+    case 5: return formState.file !== null;
+    default: return false;
+  }
+}
+
+function selectOption(e) {
+  if (e.target.classList.contains('option-button')) {
+    const button = e.target.closest('.option-button');
+    const step = document.querySelector('.form-step.active');
+    const buttons = step.querySelectorAll('.option-button');
+    
+    buttons.forEach(b => b.classList.remove('selected'));
+    button.classList.add('selected');
+    
+    const value = button.dataset.value;
+    const step_num = parseInt(step.dataset.step);
+    
+    switch(step_num) {
+      case 1:
+        formState.holderType = value;
+        break;
+      case 2:
+        formState.size = value;
+        break;
+      case 3:
+        formState.finish = value;
+        renderPriceTiers();
+        break;
+    }
+    
+    updateSummary();
+    nextBtn.disabled = !isStepValid(formState.currentStep);
+  }
+}
+
+function renderPriceTiers() {
+  if (!formState.holderType || !formState.size || !formState.finish) return;
+  
+  const tiers = PRICING_DATA[formState.holderType][formState.size][formState.finish];
+  let html = '<table class="tier-table"><thead><tr><th>Quantity</th><th>Unit Price</th><th>Total</th></tr></thead><tbody>';
+  
+  tiers.forEach(tier => {
+    const total = (tier.qty * tier.price).toFixed(2);
+    const rowClass = tier.bestValue ? 'tier-row best-value' : 'tier-row';
+    const badge = tier.bestValue ? '<span class="best-value-badge">Best Value</span>' : '';
+    html += `<tr class="${rowClass}" data-tier-qty="${tier.qty}" data-tier-price="${tier.price}">
+      <td>${badge}${tier.qty}</td>
+      <td>$${tier.price.toFixed(2)}</td>
+      <td>$${total}</td>
+    </tr>`;
+  });
+  
+  html += '</tbody></table>';
+  priceContainer.innerHTML = html;
+  
+  const rows = priceContainer.querySelectorAll('tr[data-tier-qty]');
+  rows.forEach(row => {
+    row.style.cursor = 'pointer';
+    row.addEventListener('click', () => selectTier(row));
+  });
+}
+
+function selectTier(row) {
+  const rows = priceContainer.querySelectorAll('tr[data-tier-qty]');
+  rows.forEach(r => r.style.backgroundColor = '');
+  row.style.backgroundColor = 'rgba(204, 0, 0, 0.2)';
+  
+  formState.quantity = parseInt(row.dataset.tierQty);
+  customQty.value = formState.quantity;
+  updateCustomPriceDisplay();
+  updateSummary();
+}
+
+function updateCustomPriceDisplay() {
+  const tiers = PRICING_DATA[formState.holderType][formState.size][formState.finish];
+  const qty = parseInt(customQty.value);
+  let price = tiers[tiers.length - 1].price;
+  
+  for (let i = tiers.length - 1; i >= 0; i--) {
+    if (qty >= tiers[i].qty) {
+      price = tiers[i].price;
+      break;
+    }
+  }
+  
+  const total = (qty * price).toFixed(2);
+  formState.quantity = qty;
+  document.getElementById('customPriceDisplay').textContent = '$' + total;
+  updateSummary();
+}
+
+function updateSummary() {
+  if (formState.holderType) {
+    document.getElementById('summaryHolderType').textContent = formState.holderType;
+  }
+  if (formState.size) {
+    document.getElementById('summarySize').textContent = formState.size;
+  }
+  if (formState.finish) {
+    document.getElementById('summaryFinish').textContent = formState.finish;
+  }
+  if (formState.quantity) {
+    document.getElementById('summaryQuantity').textContent = formState.quantity;
+    const unitPrice = getPriceForQuantity(formState.quantity);
+    document.getElementById('summaryUnitPrice').textContent = '$' + unitPrice.toFixed(2);
+    document.getElementById('summaryTotal').textContent = '$' + (formState.quantity * unitPrice).toFixed(2);
+  }
+}
+
+function getPriceForQuantity(qty) {
+  if (!formState.holderType || !formState.size || !formState.finish) return 0;
+  const tiers = PRICING_DATA[formState.holderType][formState.size][formState.finish];
+  for (let i = tiers.length - 1; i >= 0; i--) {
+    if (qty >= tiers[i].qty) {
+      return tiers[i].price;
+    }
+  }
+  return tiers[0].price;
+}
+
+function updateOrderSummary() {
+  const unitPrice = getPriceForQuantity(formState.quantity);
+  const total = (formState.quantity * unitPrice).toFixed(2);
+  
+  document.getElementById('finalHolderType').textContent = formState.holderType;
+  document.getElementById('finalSize').textContent = formState.size;
+  document.getElementById('finalFinish').textContent = formState.finish;
+  document.getElementById('finalQuantity').textContent = formState.quantity;
+  document.getElementById('finalUnitPrice').textContent = '$' + unitPrice.toFixed(2);
+  document.getElementById('finalTotal').textContent = '$' + total;
+  document.getElementById('finalFile').textContent = formState.file ? formState.file.name : 'No file selected';
+}
+
+function handleFileUpload(file) {
+  if (!file.type.startsWith('image/')) {
+    alert('Please select an image file');
+    return;
+  }
+  
+  if (file.size > 20 * 1024 * 1024) {
+    alert('File size must be less than 20MB');
+    return;
+  }
+  
+  formState.file = file;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    document.getElementById('previewImage').src = e.target.result;
+    document.getElementById('previewName').textContent = file.name;
+    document.getElementById('previewSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+    fileUploadArea.style.display = 'none';
+    filePreview.style.display = 'block';
+    nextBtn.disabled = !isStepValid(formState.currentStep);
+  };
+  reader.readAsDataURL(file);
+}
+
+function setupEventListeners() {
+  buttons.forEach(btn => {
+    btn.addEventListener('click', selectOption);
+  });
+  
+  nextBtn.addEventListener('click', () => {
+    if (formState.currentStep < 5) {
+      formState.currentStep++;
+      showStep(formState.currentStep);
+    } else {
+      addToCart();
+    }
+  });
+  
+  prevBtn.addEventListener('click', () => {
+    if (formState.currentStep > 1) {
+      formState.currentStep--;
+      showStep(formState.currentStep);
+    }
+  });
+  
+  customQty.addEventListener('change', updateCustomPriceDisplay);
+  customQty.addEventListener('input', updateCustomPriceDisplay);
+  
+  qtyMinus.addEventListener('click', (e) => {
+    e.preventDefault();
+    const qty = parseInt(customQty.value) || 100;
+    customQty.value = Math.max(10, qty - 50);
+    updateCustomPriceDisplay();
+  });
+  
+  qtyPlus.addEventListener('click', (e) => {
+    e.preventDefault();
+    const qty = parseInt(customQty.value) || 100;
+    customQty.value = qty + 50;
+    updateCustomPriceDisplay();
+  });
+  
+  fileUploadArea.addEventListener('click', () => fileInput.click());
+  
+  fileUploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    fileUploadArea.classList.add('dragover');
+  });
+  
+  fileUploadArea.addEventListener('dragleave', () => {
+    fileUploadArea.classList.remove('dragover');
+  });
+  
+  fileUploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileUploadArea.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    handleFileUpload(file);
+  });
+  
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) handleFileUpload(file);
+  });
+  
+  removeFileBtn.addEventListener('click', () => {
+    formState.file = null;
+    fileInput.value = '';
+    fileUploadArea.style.display = 'block';
+    filePreview.style.display = 'none';
+    nextBtn.disabled = !isStepValid(formState.currentStep);
+  });
+}
+
+function addToCart() {
+  if (!isStepValid(5)) {
+    alert('Please complete all steps before adding to cart');
+    return;
+  }
+  
+  const unitPrice = getPriceForQuantity(formState.quantity);
+  const matchingPrice = unitPrice.toFixed(2);
+  
+  const productHandle = 'custom-card-stickers';
+  const variantId = findVariantByPrice(matchingPrice);
+  
+  if (!variantId) {
+    alert('Unable to find matching variant. Please contact support.');
+    return;
+  }
+  
+  const formData = new FormData();
+  formData.append('id', variantId);
+  formData.append('quantity', formState.quantity);
+  
+  const fileField = document.getElementById('fileInput');
+  if (fileField.files[0]) {
+    formData.append('properties[Artwork File]', fileField.files[0].name);
+    formData.append('properties[Holder Type]', formState.holderType);
+    formData.append('properties[Size]', formState.size);
+    formData.append('properties[Finish]', formState.finish);
+  }
+  
+  fetch('/cart/add.js', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => {
+    if (response.ok) {
+      window.location.href = '/cart';
+    } else {
+      alert('Error adding to cart. Please try again.');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Error adding to cart. Please try again.');
+  });
+}
+
+function findVariantByPrice(price) {
+  // Search through product variants for the matching price
+  // This is a simplified implementation - adjust based on your product structure
+  const variantPrice = parseFloat(price);
+  
+  // In a real implementation, you'd iterate through the product's variants
+  // and find the one with the matching price
+  
+  // For now, return a placeholder - this should be replaced with actual variant lookup
+  if (product && product.variants) {
+    for (let variant of product.variants) {
+      if (Math.abs(variant.price / 100 - variantPrice) < 0.01) {
+        return variant.id;
+      }
+    }
+  }
+  
+  return null;
+}
+
+setupEventListeners();
+showStep(1);
+</script>
