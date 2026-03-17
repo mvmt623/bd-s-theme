@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "bd-card-stand-main": {
+      "type": "bd-card-stand",
+      "settings": {}
+    }
+  },
+  "order": ["bd-card-stand-main"]
+}

@@ -1,0 +1,450 @@
+{% comment %}
+  BIG DAWGS - FAQ Page Section
+  Dark-branded full-page section matching homepage aesthetic
+{% endcomment %}
+
+<style>
+  :root {
+    --bd-red: #CC0000;
+    --bd-red-dark: #990000;
+    --bd-gold: #D4A017;
+    --bd-black: #111111;
+    --bd-dark: #1A1A1A;
+    --bd-gray: #333333;
+    --bd-light: #F5F5F5;
+    --bd-white: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+
+  /* ── FAQ HERO ── */
+  .bd-faq-hero {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 50%, #0a0a0a 100%);
+    color: var(--bd-white);
+    padding: 5rem 1.5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .bd-faq-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(204,0,0,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .bd-faq-hero-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .bd-faq-badge {
+    display: inline-block;
+    background: var(--bd-red);
+    color: var(--bd-white);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: .3rem .85rem;
+    border-radius: 3px;
+    margin-bottom: 1.2rem;
+  }
+  .bd-faq-hero h1 {
+    color: var(--bd-white);
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 1.2rem;
+    text-transform: uppercase;
+  }
+  .bd-faq-hero h1 span { color: var(--bd-red); }
+  .bd-faq-hero p {
+    color: #bbb;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin: 0 auto 2rem;
+  }
+  .bd-faq-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--bd-red);
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  /* ── FAQ CATEGORIES ── */
+  .bd-faq-main {
+    background: var(--bd-dark);
+    padding: 5rem 1.5rem;
+  }
+  .bd-faq-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .bd-faq-category {
+    margin-bottom: 3.5rem;
+  }
+  .bd-faq-category-title {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--bd-gold);
+    margin-bottom: 1.2rem;
+    padding-bottom: .6rem;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  /* ── ACCORDION ── */
+  .bd-faq-item {
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    margin-bottom: .75rem;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .bd-faq-item:hover,
+  .bd-faq-item.open { border-color: var(--bd-red); }
+  .bd-faq-question {
+    width: 100%;
+    background: #222;
+    color: var(--bd-white);
+    border: none;
+    padding: 1.15rem 1.5rem;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    transition: background .2s;
+    font-family: inherit;
+  }
+  .bd-faq-question:hover { background: #2a2a2a; }
+  .bd-faq-item.open .bd-faq-question { background: #1a0505; }
+  .bd-faq-chevron {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border: 2px solid var(--bd-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    color: var(--bd-red);
+    transition: transform .3s;
+    font-style: normal;
+  }
+  .bd-faq-item.open .bd-faq-chevron { transform: rotate(180deg); }
+  .bd-faq-answer {
+    background: #1a1a1a;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease, padding .25s;
+  }
+  .bd-faq-item.open .bd-faq-answer { max-height: 600px; }
+  .bd-faq-answer-inner {
+    padding: 1.2rem 1.5rem 1.5rem;
+    color: #aaa;
+    font-size: .95rem;
+    line-height: 1.75;
+  }
+  .bd-faq-answer-inner strong { color: var(--bd-white); }
+  .bd-faq-answer-inner a { color: var(--bd-red); text-decoration: underline; }
+  .bd-faq-answer-inner ul {
+    margin: .75rem 0;
+    padding-left: 1.5rem;
+  }
+  .bd-faq-answer-inner ul li { margin-bottom: .4rem; }
+  .bd-price-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: .75rem;
+    font-size: .88rem;
+  }
+  .bd-price-table th {
+    background: #2a2a2a;
+    color: var(--bd-white);
+    padding: .6rem .9rem;
+    text-align: left;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: .75rem;
+    letter-spacing: 1px;
+  }
+  .bd-price-table td {
+    padding: .6rem .9rem;
+    border-bottom: 1px solid #2a2a2a;
+    color: #bbb;
+  }
+  .bd-price-table tr:last-child td { border-bottom: none; }
+  .bd-price-table .best-val { color: var(--bd-gold); font-weight: 700; }
+
+  /* ── CONTACT CTA ── */
+  .bd-faq-contact {
+    background: var(--bd-black);
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+  .bd-faq-contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .bd-faq-contact h2 {
+    color: var(--bd-white);
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0 0 .75rem;
+  }
+  .bd-faq-contact h2 span { color: var(--bd-red); }
+  .bd-faq-contact p {
+    color: #888;
+    font-size: 1rem;
+    margin: 0 0 2rem;
+    line-height: 1.6;
+  }
+  .bd-faq-btn-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .bd-faq-btn {
+    display: inline-block;
+    padding: .85rem 2rem;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: .95rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    text-decoration: none;
+    transition: transform .2s, background .2s;
+  }
+  .bd-faq-btn:hover { transform: translateY(-2px); }
+  .bd-faq-btn-primary {
+    background: var(--bd-red);
+    color: var(--bd-white);
+  }
+  .bd-faq-btn-secondary {
+    background: transparent;
+    color: var(--bd-white);
+    border: 2px solid #555;
+  }
+  .bd-faq-btn-secondary:hover { border-color: var(--bd-white); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .bd-faq-hero h1 { font-size: 2rem; }
+    .bd-faq-question { font-size: .9rem; padding: 1rem 1.2rem; }
+  }
+</style>
+
+<!-- HERO --><!-- HERO -->
+<section class="bd-faq-hero">
+  <div class="bd-faq-hero-inner">
+    <span class="bd-faq-badge">Support</span>
+    <h1>Frequently Asked <span>Questions</span></h1>
+    <p>Everything you need to know about Big Dawgs custom card stickers — ordering, sizing, pricing, artwork, and more.</p>
+    <div class="bd-faq-divider"></div>
+  </div>
+</section>
+
+<!-- FAQ MAIN -->
+<section class="bd-faq-main">
+  <div class="bd-faq-inner">
+
+    <!-- CATEGORY: PRODUCTS & SIZING -->
+    <div class="bd-faq-category">
+      <div class="bd-faq-category-title">Products &amp; Sizing</div>
+
+<div class="bd-faq-item">
+  <button class="bd-faq-question" aria-expanded="false">What sizes of stickers do you offer?<em class="bd-faq-chevron">▼</em></button>
+  <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+    Sticker sizes refer to the <strong>width</strong> of the sticker. We offer three widths for both One Touch and Toploader stickers:
+    <ul>
+      <li><strong>Small (0.5")</strong></li>
+      <li><strong>Medium (0.75")</strong></li>
+      <li><strong>Large (1.0")</strong></li>
+    </ul>
+    Standard heights are <strong>1.25"</strong> for One Touch holders and <strong>1.0"</strong> for Toploader holders.<br><br>
+    For <strong>flat stickers</strong>, we offer 1×1", 1.5×1.5", 2×2", 3×3", and 5×5" sizes.
+  </div></div>
+</div>
+
+      <div class="bd-faq-item">
+        <button class="bd-faq-question" aria-expanded="false">What finishes are available?<em class="bd-faq-chevron">▼</em></button>
+        <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+          We offer three premium finishes:
+          <ul>
+            <li><strong>Regular:</strong> Clean matte finish — professional, crisp, and works with any artwork</li>
+            <li><strong>Holographic:</strong> Full-spectrum rainbow holographic shift — extremely popular at shows</li>
+            <li><strong>Cracked Ice:</strong> Our signature fractured-crystal pattern — deep blue to ice-white shift, exclusive to Big Dawgs</li>
+          </ul>
+          Holographic and Cracked Ice are priced slightly higher due to premium material cost.
+        </div></div>
+      </div>
+
+      <!-- ✅ CHANGE 1: appended "to the back of the stand" -->
+      <div class="bd-faq-item">
+        <button class="bd-faq-question" aria-expanded="false">Do you offer 3D printed card stands?<em class="bd-faq-chevron">▼</em></button>
+        <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+          Yes! Our <strong>3D Printed Card Stands</strong> are custom-made to display your best cards. Options:
+          <ul>
+            <li><strong>Logo Only ($15):</strong> Your logo printed on the stand</li>
+            <li><strong>Extra Customizations ($20):</strong> Logo + choose 2 extras from: IG Handle, QR Code, Payment Options, or similar text to the back of the stand</li>
+          </ul>
+          Perfect for show tables, display cases, or permanent collection setups.
+        </div></div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: PRICING -->
+    <div class="bd-faq-category">
+      <div class="bd-faq-category-title">Pricing &amp; Bulk Orders</div>
+
+      <div class="bd-faq-item">
+        <button class="bd-faq-question" aria-expanded="false">What are the prices for One Touch &amp; Toploader stickers?<em class="bd-faq-chevron">▼</em></button>
+        <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+          Prices are tiered by quantity. All three size options (Small, Medium, Wide) share the same price per tier — you just get more stickers in smaller sizes:
+          <table class="bd-price-table">
+            <thead><tr><th>Finish</th><th>Tier 1</th><th>Tier 2</th><th class="best-val">Best Value</th></tr></thead>
+            <tbody>
+              <tr><td>Regular (One Touch)</td><td>15–25 for $6</td><td>35–50 for $10</td><td class="best-val">70–100 for $15</td></tr>
+              <tr><td>Regular (Toploader)</td><td>20–30 for $6</td><td>40–75 for $10</td><td class="best-val">80–150 for $15</td></tr>
+              <tr><td>Holo / Cracked Ice (OT)</td><td>15–25 for $7</td><td>35–50 for $13</td><td class="best-val">70–100 for $20</td></tr>
+              <tr><td>Holo / Cracked Ice (TL)</td><td>20–30 for $7</td><td>40–70 for $13</td><td class="best-val">80–150 for $20</td></tr>
+            </tbody>
+          </table>
+          Exact quantities vary by size — use the order configurator for your specific selection.
+        </div></div>
+      </div>
+
+      <div class="bd-faq-item">
+        <button class="bd-faq-question" aria-expanded="false">How much do flat stickers cost?<em class="bd-faq-chevron">▼</em></button>
+        <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+          Flat sticker pricing by size:
+          <table class="bd-price-table">
+            <thead><tr><th>Size</th><th>Regular</th><th>Holo / Cracked Ice</th></tr></thead>
+            <tbody>
+              <tr><td>5×5"</td><td>2 for $4</td><td>2 for $5</td></tr>
+              <tr><td>3×3"</td><td>6 for $5</td><td>6 for $6</td></tr>
+              <tr><td>2×2"</td><td>10 for $5</td><td>10 for $7</td></tr>
+              <tr><td>1.5×1.5"</td><td>20 for $10</td><td>20 for $13</td></tr>
+              <tr><td>1×1"</td><td>25 for $10 / 50 for $15</td><td>25 for $13 / 50 for $20</td></tr>
+            </tbody>
+          </table>
+        </div></div>
+      </div>
+
+      <div class="bd-faq-item">
+        <button class="bd-faq-question" aria-expanded="false">Do you offer a sample pack?<em class="bd-faq-chevron">▼</em></button>
+        <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+          Yes! Our <strong>Sample Pack</strong> is the best way to try everything before going bulk.
+          <ul>
+            <li><strong>Regular Sample Pack ($20):</strong> 25 Mag stickers, 30 Toploader stickers, 15 Extra Wide Mag, 20 Extra Wide Toploader, 3 3×3", 5 2×2"</li>
+            <li><strong>Holo / Cracked Ice Sample Pack ($25):</strong> Same contents, premium holographic or cracked ice finish</li>
+          </ul>
+          The sample pack is a great way to test sizes against your specific holders before ordering in bulk.
+        </div></div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: ARTWORK & ORDERING -->
+    <div class="bd-faq-category">
+      <div class="bd-faq-category-title">Artwork &amp; Ordering</div>
+
+      <div class="bd-faq-item">
+        <button class="bd-faq-question" aria-expanded="false">How do I submit my artwork?<em class="bd-faq-chevron">▼</em></button>
+        <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+          Our order form supports <strong>direct file upload</strong> — simply drag and drop or browse for your file. You can also paste a <strong>Google Drive, Dropbox, or iCloud link</strong> if you prefer. After ordering, we'll email you to confirm the artwork before printing.
+        </div></div>
+      </div>
+
+      <!-- ✅ CHANGE 2: simplified to GIF/JPG/PNG only -->
+      <div class="bd-faq-item">
+        <button class="bd-faq-question" aria-expanded="false">What file format should my artwork be in?<em class="bd-faq-chevron">▼</em></button>
+        <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+          We accept <strong>GIF, JPG, and PNG files only</strong>. For best results, upload at 300 DPI or higher with a transparent background. If your file is in a different format, <a href="/pages/contact">email us</a> before ordering and we'll work with you to find a solution.
+        </div></div>
+      </div>
+
+      <!-- ✅ CHANGE 3: "Can I add a secondary logo or QR code?" removed entirely -->
+
+    </div>
+
+    <!-- CATEGORY: SHIPPING & PRODUCTION -->
+    <div class="bd-faq-category">
+      <div class="bd-faq-category-title">Shipping &amp; Production</div>
+
+      <!-- ✅ CHANGE 4: 5–7 business days + USPS Ground/Priority -->
+      <div class="bd-faq-item">
+        <button class="bd-faq-question" aria-expanded="false">How fast will I get my order?<em class="bd-faq-chevron">▼</em></button>
+        <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+          <strong>Production time:</strong> 5–7 business days after artwork approval.<br>
+          <strong>Shipping options:</strong> USPS Ground or Priority — choose your speed at checkout.<br><br>
+          Rush orders may be available — contact us before ordering if you have a hard deadline.
+        </div></div>
+      </div>
+
+      <!-- ✅ CHANGE 5: US + Canada only -->
+      <div class="bd-faq-item">
+        <button class="bd-faq-question" aria-expanded="false">Do you ship internationally?<em class="bd-faq-chevron">▼</em></button>
+        <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+          We currently ship to the <strong>US and Canada</strong>. Shipping rates and estimated delivery times will appear at checkout. Note that Canadian orders may be subject to customs duties — these are the buyer's responsibility.
+        </div></div>
+      </div>
+
+      <div class="bd-faq-item">
+        <button class="bd-faq-question" aria-expanded="false">What's your return / reprint policy?<em class="bd-faq-chevron">▼</em></button>
+        <div class="bd-faq-answer"><div class="bd-faq-answer-inner">
+          We stand behind every order. If there's a <strong>print quality issue or a mistake on our end</strong>, we'll reprint your order at no charge. We'll ask for a photo of the issue to get it sorted quickly.<br><br>
+          Because stickers are custom-made to your specifications, we're unable to accept returns for customer-supplied artwork errors (wrong file, low-res image, etc.) — so please double-check your files before submitting. If you're not sure, just ask us first!
+        </div></div>
+      </div>
+    </div>
+
+  </div><!-- /faq-inner -->
+</section>
+
+<!-- CONTACT CTA -->
+<section class="bd-faq-contact">
+  <div class="bd-faq-contact-inner">
+    <h2>Still Have <span>Questions?</span></h2>
+    <p>Can't find what you're looking for? We're real people who respond fast. Reach out and we'll get you sorted out before you order.</p>
+    <div class="bd-faq-btn-row">
+      <a href="/pages/contact" class="bd-faq-btn bd-faq-btn-primary">Contact Us</a>
+      <a href="/products/custom-card-stickers" class="bd-faq-btn bd-faq-btn-secondary">Start Your Order</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Accordion logic
+  document.querySelectorAll('.bd-faq-question').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = btn.closest('.bd-faq-item');
+      var isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.bd-faq-item.open').forEach(function(el) {
+        el.classList.remove('open');
+        el.querySelector('.bd-faq-question').setAttribute('aria-expanded', 'false');
+      });
+      // Open clicked if it was closed
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "BigDawgs FAQ",
+  "settings": []
+}
+{% endschema %}

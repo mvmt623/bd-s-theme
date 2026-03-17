@@ -1,0 +1,493 @@
+{% comment %}
+  BIG DAWGS - Custom Flat Stickers Product Form
+  3-step configurator: Size → Finish → Artwork & Cart
+{% endcomment %}
+
+<style>
+  :root {
+    --bd-red: #CC0000; --bd-red-dark: #990000;
+    --bd-gold: #D4A017; --bd-black: #111111;
+    --bd-dark: #1A1A1A; --bd-gray: #333333;
+    --bd-light: #F5F5F5; --bd-white: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+
+  .bdf-container {
+    background: var(--bd-black);
+    color: var(--bd-white);
+    padding: 40px 20px;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .bdf-progress {
+    display: flex; gap: 8px; margin-bottom: 36px;
+  }
+  .bdf-dot {
+    flex: 1; height: 4px; background: var(--bd-gray);
+    border-radius: 2px; transition: background .3s;
+  }
+  .bdf-dot.active  { background: var(--bd-red); }
+  .bdf-dot.done    { background: var(--bd-gold); }
+
+  .bdf-summary {
+    display: none; background: var(--bd-dark);
+    border: 1px solid var(--bd-gray); border-radius: 6px;
+    padding: 14px; margin-bottom: 28px;
+  }
+  .bdf-summary.show { display: block; }
+  .bdf-sum-row {
+    display: flex; justify-content: space-between;
+    padding: 6px 0; font-size: 14px; color: var(--bd-light);
+  }
+  .bdf-sum-row strong { color: var(--bd-white); }
+  .bdf-sum-price { color: var(--bd-gold); font-weight: 700; }
+
+  .bdf-step { display: none; animation: bdfIn .3s ease; }
+  .bdf-step.active { display: block; }
+  @keyframes bdfIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .bdf-heading {
+    font-size: 26px; font-weight: 700; margin-bottom: 8px;
+  }
+  .bdf-sub {
+    font-size: 14px; color: #aaa; margin-bottom: 28px;
+  }
+
+  /* SIZE GRID */
+  .bdf-size-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px; margin-bottom: 28px;
+  }
+  @media (max-width: 640px) {
+    .bdf-size-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .bdf-size-card {
+    border: 2px solid var(--bd-gray); border-radius: 8px;
+    padding: 16px 8px; text-align: center; cursor: pointer;
+    background: var(--bd-dark); transition: all .25s;
+    position: relative;
+  }
+  .bdf-size-card:hover { border-color: var(--bd-red); transform: translateY(-2px); }
+  .bdf-size-card.selected {
+    border-color: var(--bd-red);
+    background: rgba(204,0,0,.1);
+    box-shadow: 0 0 16px rgba(204,0,0,.25);
+  }
+  .bdf-size-visual {
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 10px;
+    background: rgba(255,255,255,.08);
+    border-radius: 4px;
+  }
+  .bdf-size-label { font-size: 13px; font-weight: 700; color: var(--bd-white); }
+  .bdf-size-dim   { font-size: 11px; color: #888; margin-top: 3px; }
+
+  /* FINISH GRID */
+  .bdf-finish-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-bottom: 28px;
+  }
+  @media (max-width: 560px) { .bdf-finish-grid { grid-template-columns: 1fr; } }
+  .bdf-finish-card {
+    border: 2px solid var(--bd-gray); border-radius: 8px;
+    padding: 24px 16px; text-align: center; cursor: pointer;
+    background: var(--bd-dark); transition: all .25s;
+  }
+  .bdf-finish-card:hover { border-color: var(--bd-red); transform: translateY(-2px); }
+  .bdf-finish-card.selected {
+    border-color: var(--bd-red);
+    background: rgba(204,0,0,.1);
+    box-shadow: 0 0 16px rgba(204,0,0,.25);
+  }
+  .bdf-swatch {
+    width: 52px; height: 52px; border-radius: 50%;
+    margin: 0 auto 12px;
+    border: 3px solid rgba(255,255,255,.15);
+  }
+  .bdf-swatch.regular { background: linear-gradient(135deg,#e8e8e8,#c0c0c0); }
+  .bdf-swatch.holo    { background: linear-gradient(135deg,#ff00cc,#3333ff,#00ffcc,#ffcc00); }
+  .bdf-swatch.cracked { background: linear-gradient(135deg,#00ccff,#004488,#0088cc); }
+  .bdf-finish-name  { font-size: 16px; font-weight: 700; color: var(--bd-white); margin-bottom: 6px; }
+  .bdf-finish-desc  { font-size: 12px; color: #aaa; margin-bottom: 8px; }
+  .bdf-finish-price { font-size: 14px; color: var(--bd-gold); font-weight: 700; }
+
+  /* ARTWORK STEP */
+  .bdf-field { margin-bottom: 22px; }
+  .bdf-field label {
+    display: block; font-weight: 600; font-size: 14px;
+    margin-bottom: 8px; color: var(--bd-white);
+  }
+  .bdf-upload-zone {
+    border: 2px dashed var(--bd-gray); border-radius: 10px;
+    padding: 2rem 1.5rem; text-align: center; cursor: pointer;
+    background: var(--bd-dark); transition: .25s; position: relative;
+    margin-bottom: 12px;
+  }
+  .bdf-upload-zone:hover, .bdf-upload-zone.drag-over {
+    border-color: var(--bd-red); background: rgba(204,0,0,.05);
+  }
+  .bdf-upload-zone.has-file { border-color: var(--bd-gold); background: rgba(212,160,23,.05); }
+  .bdf-file-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 0; }
+  .bdf-upload-icon { font-size: 2.2rem; margin-bottom: .6rem; pointer-events: none; }
+  .bdf-upload-title { font-size: .95rem; font-weight: 700; color: var(--bd-white); margin: 0 0 4px; pointer-events: none; }
+  .bdf-upload-hint  { font-size: .82rem; color: #aaa; margin: 0 0 6px; pointer-events: none; }
+  .bdf-upload-fmt   { font-size: .72rem; color: #666; margin: 0; pointer-events: none; }
+  .bdf-upload-preview {
+    display: none; margin-top: 10px; padding: 10px 14px;
+    background: #222; border-radius: 6px; font-size: 13px;
+    color: var(--bd-gold); font-weight: 600;
+    align-items: center; gap: 10px;
+  }
+  .bdf-upload-preview.show { display: flex; }
+  .bdf-preview-info { flex: 1; text-align: left; }
+  .bdf-preview-name { color: var(--bd-white); font-size: 13px; font-weight: 600; }
+  .bdf-preview-size { color: #888; font-size: 11px; margin-top: 2px; }
+  .bdf-remove-btn { background: none; border: none; color: #cc4444; cursor: pointer; font-size: 18px; }
+  .bdf-or {
+    display: flex; align-items: center; gap: 10px;
+    margin: 14px 0; color: #555; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .bdf-or::before, .bdf-or::after { content: ""; flex: 1; height: 1px; background: #333; }
+  .bdf-input-text {
+    width: 100%; padding: 12px;
+    background: var(--bd-dark); border: 1px solid var(--bd-gray);
+    border-radius: 6px; color: var(--bd-white);
+    font-size: 14px; font-family: inherit;
+    transition: border-color .3s;
+  }
+  .bdf-input-text:focus { outline: none; border-color: var(--bd-red); }
+  .bdf-input-text::placeholder { color: #555; }
+  textarea.bdf-input-text { min-height: 90px; resize: vertical; }
+  .bdf-help { font-size: 12px; color: #777; margin-top: 5px; }
+
+  /* ACTIONS */
+  .bdf-actions {
+    display: flex; gap: 12px; margin-top: 36px;
+  }
+  .bdf-btn {
+    flex: 1; padding: 14px 24px; border: none; border-radius: 6px;
+    font-size: 16px; font-weight: 700; cursor: pointer;
+    text-transform: uppercase; transition: all .25s;
+  }
+  .bdf-btn-primary { background: var(--bd-red); color: var(--bd-white); }
+  .bdf-btn-primary:hover:not(:disabled) {
+    background: var(--bd-red-dark); transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(204,0,0,.4);
+  }
+  .bdf-btn-primary:disabled { background: var(--bd-gray); opacity: .5; cursor: not-allowed; }
+  .bdf-btn-back {
+    flex: 0 0 110px; background: var(--bd-dark); color: var(--bd-white);
+    border: 1px solid var(--bd-gray);
+  }
+  .bdf-btn-back:hover { border-color: var(--bd-red); color: var(--bd-red); }
+  .bdf-spinner {
+    display: inline-block; width: 15px; height: 15px;
+    border: 2px solid var(--bd-gold); border-top-color: transparent;
+    border-radius: 50%; animation: bdfSpin .6s linear infinite; margin-right: 7px;
+  }
+  @keyframes bdfSpin { to { transform: rotate(360deg); } }
+  @media (max-width: 600px) {
+    .bdf-container { padding: 24px 16px; }
+    .bdf-heading { font-size: 22px; }
+    .bdf-actions { flex-direction: column; }
+    .bdf-btn-back { flex: 1; width: 100%; }
+  }
+</style>
+
+<div class="bdf-container">
+  <div class="bdf-progress">
+    <div class="bdf-dot active" data-step="1"></div>
+    <div class="bdf-dot" data-step="2"></div>
+    <div class="bdf-dot" data-step="3"></div>
+  </div>
+
+  <div class="bdf-summary" id="bdf-summary">
+    <div class="bdf-sum-row"><strong>Size:</strong><span id="bdf-sum-size">—</span></div>
+    <div class="bdf-sum-row"><strong>Finish:</strong><span id="bdf-sum-finish">—</span></div>
+    <div class="bdf-sum-row"><strong>Price:</strong><span id="bdf-sum-price" class="bdf-sum-price">—</span></div>
+  </div>
+
+  <form id="bdf-form" action="/cart/add" method="post">
+
+    <!-- STEP 1: SIZE -->
+    <div class="bdf-step active" data-step="1">
+      <h2 class="bdf-heading">Select Size</h2>
+      <p class="bdf-sub">Choose the sticker dimensions — perfect for laptops, water bottles, packaging, and more.</p>
+
+      <div class="bdf-size-grid">
+        <div class="bdf-size-card" data-opt="size" data-value="1&quot; x 1&quot;">
+          <div class="bdf-size-visual" style="width:36px;height:36px;"></div>
+          <div class="bdf-size-label">1&quot; × 1&quot;</div>
+          <div class="bdf-size-dim">Micro</div>
+        </div>
+        <div class="bdf-size-card" data-opt="size" data-value="2&quot; x 2&quot;">
+          <div class="bdf-size-visual" style="width:44px;height:44px;"></div>
+          <div class="bdf-size-label">2&quot; × 2&quot;</div>
+          <div class="bdf-size-dim">Small</div>
+        </div>
+        <div class="bdf-size-card" data-opt="size" data-value="3&quot; x 3&quot;">
+          <div class="bdf-size-visual" style="width:52px;height:52px;"></div>
+          <div class="bdf-size-label">3&quot; × 3&quot;</div>
+          <div class="bdf-size-dim">Medium</div>
+        </div>
+        <div class="bdf-size-card" data-opt="size" data-value="4&quot; x 4&quot;">
+          <div class="bdf-size-visual" style="width:60px;height:60px;"></div>
+          <div class="bdf-size-label">4&quot; × 4&quot;</div>
+          <div class="bdf-size-dim">Large</div>
+        </div>
+        <div class="bdf-size-card" data-opt="size" data-value="5&quot; x 5&quot;">
+          <div class="bdf-size-visual" style="width:68px;height:68px;"></div>
+          <div class="bdf-size-label">5&quot; × 5&quot;</div>
+          <div class="bdf-size-dim">XL</div>
+        </div>
+      </div>
+
+      <div class="bdf-actions">
+        <button type="button" class="bdf-btn bdf-btn-primary" id="bdf-s1-next">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: FINISH -->
+    <div class="bdf-step" data-step="2">
+      <h2 class="bdf-heading">Select Finish</h2>
+      <p class="bdf-sub">Choose the look that fits your brand — price shown reflects your selected size.</p>
+
+      <div class="bdf-finish-grid">
+        <div class="bdf-finish-card" data-opt="finish" data-value="Regular">
+          <div class="bdf-swatch regular"></div>
+          <div class="bdf-finish-name">Regular</div>
+          <div class="bdf-finish-desc">Clean matte vinyl — professional and sharp</div>
+          <div class="bdf-finish-price" id="bdf-price-regular">—</div>
+        </div>
+        <div class="bdf-finish-card" data-opt="finish" data-value="Holographic">
+          <div class="bdf-swatch holo"></div>
+          <div class="bdf-finish-name">Holographic</div>
+          <div class="bdf-finish-desc">Full rainbow color-shift — impossible to ignore</div>
+          <div class="bdf-finish-price" id="bdf-price-holo">—</div>
+        </div>
+        <div class="bdf-finish-card" data-opt="finish" data-value="Cracked Ice">
+          <div class="bdf-swatch cracked"></div>
+          <div class="bdf-finish-name">Cracked Ice</div>
+          <div class="bdf-finish-desc">Unique fractured-crystal pattern — bold and distinct</div>
+          <div class="bdf-finish-price" id="bdf-price-cracked">—</div>
+        </div>
+      </div>
+
+      <div class="bdf-actions">
+        <button type="button" class="bdf-btn bdf-btn-back" id="bdf-s2-back">Back</button>
+        <button type="button" class="bdf-btn bdf-btn-primary" id="bdf-s2-next">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: ARTWORK & CART -->
+    <div class="bdf-step" data-step="3">
+      <h2 class="bdf-heading">Artwork &amp; Details</h2>
+      <p class="bdf-sub">Upload your design or share a link — we'll confirm before printing.</p>
+
+      <div class="bdf-field">
+        <label>Your Artwork</label>
+        <div class="bdf-upload-zone" id="bdf-upload-zone">
+          <input type="file" class="bdf-file-input" id="bdf-file-input"
+            accept="image/*,.pdf,.ai,.psd,.eps" capture="environment">
+          <div class="bdf-upload-icon" id="bdf-upload-icon">📎</div>
+          <p class="bdf-upload-title" id="bdf-upload-title">Upload Your Artwork</p>
+          <p class="bdf-upload-hint" id="bdf-upload-hint">Drag &amp; drop or tap to browse — mobile camera supported</p>
+          <p class="bdf-upload-fmt">PNG, JPG, PDF, AI, PSD · Any size · 300 DPI+ preferred</p>
+        </div>
+        <div class="bdf-upload-preview" id="bdf-upload-preview">
+          <div class="bdf-preview-info">
+            <div class="bdf-preview-name" id="bdf-preview-name">—</div>
+            <div class="bdf-preview-size" id="bdf-preview-size">—</div>
+          </div>
+          <button type="button" class="bdf-remove-btn" id="bdf-remove-btn" title="Remove">✕</button>
+        </div>
+        <div class="bdf-or">or paste a link</div>
+        <input type="text" class="bdf-input-text" id="bdf-artwork-link"
+          placeholder="https://drive.google.com/... or Dropbox link">
+        <p class="bdf-help">We'll review your file and confirm before printing. High-res PNG or vector preferred.</p>
+      </div>
+
+      <div class="bdf-field">
+        <label for="bdf-notes">Order Notes <span style="font-weight:400;color:#666;">(optional)</span></label>
+        <textarea class="bdf-input-text" id="bdf-notes"
+          name="properties[Order Notes]"
+          placeholder="Colors, placement, special instructions..."></textarea>
+      </div>
+
+      <!-- Hidden cart fields -->
+      <input type="hidden" name="id" id="bdf-variant-id" value="">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="properties[Size]" id="bdf-prop-size" value="">
+      <input type="hidden" name="properties[Finish]" id="bdf-prop-finish" value="">
+      <input type="hidden" name="properties[Artwork]" id="bdf-prop-artwork" value="">
+
+      <div class="bdf-actions">
+        <button type="button" class="bdf-btn bdf-btn-back" id="bdf-s3-back">Back</button>
+        <button type="submit" class="bdf-btn bdf-btn-primary" id="bdf-submit">Add to Cart</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<script>
+(function() {
+  // ============================================================
+  // TESTING MODE — flip to false to re-enable artwork validation
+  const TESTING_MODE = true;
+  // ============================================================
+
+  const variants = {{ product.variants | json }};
+
+  const state = { size: null, finish: null, variantId: null, price: null, artworkFile: null };
+
+  function findVariant(size, finish) {
+    return variants.find(v => v.option1 === size && v.option2 === finish) || null;
+  }
+
+  function getPriceForSizeFinish(size, finish) {
+    const v = findVariant(size, finish);
+    return v ? (v.price / 100).toFixed(2) : null;
+  }
+
+  // Populate finish prices once size is selected
+  function updateFinishPrices() {
+    ['Regular', 'Holographic', 'Cracked Ice'].forEach(function(finish) {
+      const price = getPriceForSizeFinish(state.size, finish);
+      const ids = { 'Regular': 'bdf-price-regular', 'Holographic': 'bdf-price-holo', 'Cracked Ice': 'bdf-price-cracked' };
+      const el = document.getElementById(ids[finish]);
+      if (el) el.textContent = price ? '$' + price : '—';
+    });
+  }
+
+  // Step navigation
+  function goStep(n) {
+    document.querySelectorAll('.bdf-step').forEach(function(s) { s.classList.remove('active'); });
+    document.querySelector('.bdf-step[data-step="' + n + '"]').classList.add('active');
+    document.querySelectorAll('.bdf-dot').forEach(function(d, i) {
+      d.classList.remove('active','done');
+      var ds = i + 1;
+      if (ds === n) d.classList.add('active');
+      else if (ds < n) d.classList.add('done');
+    });
+    if (n > 1) document.getElementById('bdf-summary').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateSummary() {
+    document.getElementById('bdf-sum-size').textContent = state.size || '—';
+    document.getElementById('bdf-sum-finish').textContent = state.finish || '—';
+    if (state.price) document.getElementById('bdf-sum-price').textContent = '$' + state.price;
+  }
+
+  // Card selections
+  document.querySelectorAll('[data-opt="size"]').forEach(function(card) {
+    card.addEventListener('click', function() {
+      document.querySelectorAll('[data-opt="size"]').forEach(function(c) { c.classList.remove('selected'); });
+      this.classList.add('selected');
+      state.size = this.dataset.value;
+      updateSummary();
+    });
+  });
+
+  document.querySelectorAll('[data-opt="finish"]').forEach(function(card) {
+    card.addEventListener('click', function() {
+      document.querySelectorAll('[data-opt="finish"]').forEach(function(c) { c.classList.remove('selected'); });
+      this.classList.add('selected');
+      state.finish = this.dataset.value;
+      var v = findVariant(state.size, state.finish);
+      if (v) { state.variantId = v.id; state.price = (v.price / 100).toFixed(2); }
+      updateSummary();
+    });
+  });
+
+  // Step buttons
+  document.getElementById('bdf-s1-next').addEventListener('click', function() {
+    if (!state.size) { alert('Please select a size.'); return; }
+    updateFinishPrices();
+    goStep(2);
+  });
+  document.getElementById('bdf-s2-back').addEventListener('click', function() { goStep(1); });
+  document.getElementById('bdf-s2-next').addEventListener('click', function() {
+    if (!state.finish) { alert('Please select a finish.'); return; }
+    goStep(3);
+  });
+  document.getElementById('bdf-s3-back').addEventListener('click', function() { goStep(2); });
+
+  // File upload
+  var zone = document.getElementById('bdf-upload-zone');
+  var fileInput = document.getElementById('bdf-file-input');
+  var preview = document.getElementById('bdf-upload-preview');
+
+  zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', function() { zone.classList.remove('drag-over'); });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (this.files[0]) handleFile(this.files[0]);
+  });
+  document.getElementById('bdf-remove-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    state.artworkFile = null;
+    zone.classList.remove('has-file');
+    preview.classList.remove('show');
+    fileInput.value = '';
+    document.getElementById('bdf-upload-title').textContent = 'Upload Your Artwork';
+    document.getElementById('bdf-upload-hint').textContent = 'Drag & drop or tap to browse — mobile camera supported';
+  });
+
+  function handleFile(file) {
+    state.artworkFile = file.name;
+    zone.classList.add('has-file');
+    document.getElementById('bdf-preview-name').textContent = file.name;
+    document.getElementById('bdf-preview-size').textContent = formatBytes(file.size);
+    document.getElementById('bdf-upload-title').textContent = '✓ File ready';
+    document.getElementById('bdf-upload-hint').textContent = file.name;
+    preview.classList.add('show');
+  }
+  function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
+
+  // Form submit
+  document.getElementById('bdf-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!state.size || !state.finish || !state.variantId) {
+      alert('Please complete all steps.'); return;
+    }
+    var artworkLink = document.getElementById('bdf-artwork-link').value.trim();
+    if (!TESTING_MODE && !state.artworkFile && !artworkLink) {
+      alert('Please upload your artwork or paste a link to continue.'); return;
+    }
+    document.getElementById('bdf-variant-id').value = state.variantId;
+    document.getElementById('bdf-prop-size').value = state.size;
+    document.getElementById('bdf-prop-finish').value = state.finish;
+    document.getElementById('bdf-prop-artwork').value = state.artworkFile
+      ? 'File: ' + state.artworkFile + ' (will be emailed)'
+      : artworkLink;
+
+    var btn = document.getElementById('bdf-submit');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="bdf-spinner"></span>Adding to Cart...';
+    setTimeout(function() { e.target.submit(); }, 400);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "BD Flat Stickers",
+  "settings": []
+}
+{% endschema %}

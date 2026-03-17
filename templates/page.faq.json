@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "bigdawgs-faq": {
+      "type": "bigdawgs-faq",
+      "settings": {}
+    }
+  },
+  "order": [
+    "bigdawgs-faq"
+  ]
+}

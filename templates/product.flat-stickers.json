@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "bd-flat-stickers-main": {
+      "type": "bd-flat-stickers",
+      "settings": {}
+    }
+  },
+  "order": ["bd-flat-stickers-main"]
+}

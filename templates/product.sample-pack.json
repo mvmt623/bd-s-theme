@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "bd-sample-pack-main": {
+      "type": "bd-sample-pack",
+      "settings": {}
+    }
+  },
+  "order": ["bd-sample-pack-main"]
+}

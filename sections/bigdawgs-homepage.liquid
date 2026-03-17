@@ -1,0 +1,689 @@
+{% comment %}
+  BIG DAWGS - Homepage Section
+  Full homepage: hero, trust bar, products, how-it-works, finishes, pricing, reviews, FAQ
+{% endcomment %}
+
+<style>
+  :root {
+    --bd-red: #CC0000;
+    --bd-red-dark: #990000;
+    --bd-gold: #D4A017;
+    --bd-black: #111111;
+    --bd-dark: #1A1A1A;
+    --bd-gray: #333333;
+    --bd-light: #F5F5F5;
+    --bd-white: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+
+  /* ── HERO ── */
+  .bd-hero {
+    background-color: var(--bd-black);
+    background-image:
+      linear-gradient(rgba(140, 190, 255, 0.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(140, 190, 255, 0.09) 1px, transparent 1px),
+      linear-gradient(rgba(140, 190, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(140, 190, 255, 0.04) 1px, transparent 1px);
+    background-size:
+      100px 100px,
+      100px 100px,
+      20px 20px,
+      20px 20px;
+    color: var(--bd-white);
+    padding: 5rem 1.5rem 4rem;
+  }
+  .bd-hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .bd-hero-badge {
+    display: inline-block;
+    background: var(--bd-red);
+    color: var(--bd-white);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: .3rem .85rem;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+  }
+  .bd-hero h1 {
+    color: var(--bd-white);
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+  }
+  .bd-hero h1 span { color: var(--bd-red); }
+  .bd-hero-sub {
+    color: #bbb;
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+  }
+  .bd-hero-checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.5rem;
+    margin-bottom: 2rem;
+    list-style: none;
+    padding: 0;
+  }
+  .bd-hero-checks li {
+    color: #aaa;
+    font-size: .9rem;
+  }
+  .bd-hero-checks li::before { content: "✓ "; color: var(--bd-gold); }
+  .bd-btn-primary {
+    display: inline-block;
+    background: var(--bd-red);
+    color: var(--bd-white);
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: .85rem 2.25rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background .25s, transform .2s;
+  }
+  .bd-btn-primary:hover {
+    background: var(--bd-red-dark);
+    transform: translateY(-2px);
+    color: var(--bd-white);
+    text-decoration: none;
+  }
+  .bd-hero-visual {
+    background: var(--bd-dark);
+    border-radius: 12px;
+    border: 1px solid #444;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    text-align: center;
+  }
+  .bd-hero-pill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    margin: 0.75rem 0;
+  }
+  .bd-hero-pill-list .bd-finish-pill {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  .bd-hero-mascot-col {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: visible;
+  }
+  .bd-hero-mascot {
+    display: block;
+    height: clamp(360px, 52vh, 560px);
+    width: auto;
+    max-width: 220%;
+    object-fit: contain;
+    object-position: bottom center;
+    pointer-events: none;
+    filter: drop-shadow(0 8px 32px rgba(0,0,0,0.55));
+  }
+  @media (max-width: 768px) {
+    .bd-hero-inner { grid-template-columns: 1fr; }
+    .bd-hero-mascot-col { display: none; }
+    .bd-hero-visual { justify-content: center; padding: 2rem; }
+    .bd-hero-pill-list { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .bd-hero-pill-list .bd-finish-pill { width: auto; }
+  }
+  .bd-hero-visual-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--bd-white);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .bd-finish-pill {
+    display: inline-block;
+    padding: .4rem 1rem;
+    border-radius: 30px;
+    font-size: .8rem;
+    font-weight: 700;
+    margin: .3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity .2s, transform .2s;
+  }
+  .bd-finish-pill:hover { opacity: .85; transform: translateY(-1px); text-decoration: none; }
+
+  /* ── FINISH VISUAL SYSTEM ── */
+  @keyframes holo-sweep {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes ice-snap {
+    0%,  16% { filter: hue-rotate(0deg)   brightness(1.0); }
+    20%, 36% { filter: hue-rotate(45deg)  brightness(1.06); }
+    40%, 56% { filter: hue-rotate(100deg) brightness(0.94); }
+    60%, 76% { filter: hue-rotate(170deg) brightness(1.06); }
+    80%, 96% { filter: hue-rotate(230deg) brightness(0.97); }
+    100%     { filter: hue-rotate(0deg)   brightness(1.0); }
+  }
+  .bd-pill-regular {
+    background: radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.07) 0%, transparent 55%), linear-gradient(145deg, #3d3d3d 0%, #222 100%);
+    color: #ccc;
+    border: 1px solid #4a4a4a;
+  }
+  .bd-pill-holo {
+    background: linear-gradient(90deg, hsl(0,100%,68%) 0%, hsl(30,100%,62%) 12%, hsl(60,100%,58%) 25%, hsl(120,100%,55%) 38%, hsl(180,100%,55%) 50%, hsl(240,100%,65%) 63%, hsl(290,100%,65%) 75%, hsl(330,100%,66%) 88%, hsl(360,100%,68%) 100%);
+    background-size: 300% 100%;
+    animation: holo-sweep 7s linear infinite;
+    color: #111;
+  }
+  .bd-pill-ice {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(148deg, hsl(175,85%,72%) 0%, hsl(175,85%,72%) 47%, transparent 47.5%), linear-gradient(238deg, hsl(285,75%,76%) 0%, hsl(285,75%,76%) 44%, transparent 44.5%), linear-gradient(58deg, hsl(200,85%,74%) 0%, hsl(200,85%,74%) 41%, transparent 41.5%), linear-gradient(328deg, hsl(340,80%,76%) 0%, hsl(340,80%,76%) 47%, transparent 47.5%), linear-gradient(108deg, hsl(60,90%,72%) 0%, hsl(120,80%,68%) 100%);
+    animation: ice-snap 1.5s linear infinite;
+    color: #111;
+    align-self: center;
+    vertical-align: middle;
+  }
+  .bd-pill-ice::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(148deg, transparent 46.5%, rgba(0,0,0,0.4) 47%, rgba(0,0,0,0.4) 47.5%, transparent 48%), linear-gradient(238deg, transparent 43.5%, rgba(0,0,0,0.4) 44%, rgba(0,0,0,0.4) 44.5%, transparent 45%), linear-gradient(58deg, transparent 40.5%, rgba(0,0,0,0.4) 41%, rgba(0,0,0,0.4) 41.5%, transparent 42%), linear-gradient(328deg, transparent 46.5%, rgba(0,0,0,0.4) 47%, rgba(0,0,0,0.4) 47.5%, transparent 48%);
+  }
+
+  .bd-hero-types { color: #666; font-size: .8rem; margin-top: 1.25rem; }
+  .bd-hero-sizes { color: #555; font-size: .75rem; margin-top: .5rem; }
+  @media (max-width: 768px) {
+    .bd-hero-inner { grid-template-columns: 1fr; }
+    .bd-hero h1 { font-size: 1.9rem; }
+    .bd-hero-visual { min-height: 160px; }
+  }
+
+  /* ── TRUST BAR ── */
+  .bd-trust-bar {
+    background: var(--bd-red);
+    color: var(--bd-white);
+    padding: 1rem 1.5rem;
+  }
+  .bd-trust-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: .75rem;
+  }
+  .bd-trust-item { text-align: center; font-size: .88rem; font-weight: 600; }
+  .bd-trust-item strong { display: block; font-size: 1.05rem; font-weight: 800; letter-spacing: .5px; }
+
+  /* ── SECTIONS ── */
+  .bd-section { padding: 5rem 1.5rem; }
+  .bd-section-inner { max-width: 1100px; margin: 0 auto; }
+  .bd-section-dark { background: var(--bd-dark); color: var(--bd-white); }
+  .bd-section-light { background: var(--bd-light); }
+  .bd-section-white { background: var(--bd-white); }
+  .bd-section h2 { font-size: 2rem; font-weight: 900; text-transform: uppercase; margin: 0 0 .6rem; }
+  .bd-section-dark h2 { color: var(--bd-white); }
+  .bd-section-light h2, .bd-section-white h2 { color: var(--bd-black); }
+  .bd-section-sub { font-size: 1rem; margin-bottom: 2.5rem; max-width: 640px; }
+  .bd-section-dark .bd-section-sub { color: #aaa; }
+  .bd-section-light .bd-section-sub, .bd-section-white .bd-section-sub { color: #555; }
+  .bd-text-center { text-align: center; }
+  .bd-mx-auto { margin-left: auto; margin-right: auto; }
+
+  /* ── PRODUCTS GRID ── */
+  .bd-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .bd-product-card {
+    background: var(--bd-dark);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1.75rem 1.5rem;
+    transition: transform .25s, border-color .25s;
+  }
+  .bd-product-card:hover { transform: translateY(-4px); border-color: var(--bd-red); }
+  .bd-product-card h3 { color: var(--bd-white); font-size: 1.05rem; margin: .5rem 0 .4rem; font-weight: 700; }
+  .bd-product-card p { color: #999; font-size: .88rem; margin-bottom: 1.25rem; line-height: 1.6; }
+  .bd-finish-tag {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: .25rem .7rem;
+    border-radius: 3px;
+    margin-bottom: .5rem;
+  }
+  .bd-tag-regular {
+    background: radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.07) 0%, transparent 55%), linear-gradient(145deg, #3d3d3d 0%, #222 100%);
+    color: #ccc;
+    border: 1px solid #4a4a4a;
+  }
+  .bd-tag-holo {
+    background: linear-gradient(90deg, hsl(0,100%,68%) 0%, hsl(30,100%,62%) 12%, hsl(60,100%,58%) 25%, hsl(120,100%,55%) 38%, hsl(180,100%,55%) 50%, hsl(240,100%,65%) 63%, hsl(290,100%,65%) 75%, hsl(330,100%,66%) 88%, hsl(360,100%,68%) 100%);
+    background-size: 300% 100%;
+    animation: holo-sweep 7s linear infinite;
+    color: #111;
+  }
+  .bd-tag-ice {
+    position: relative;
+    overflow: hidden;
+    align-self: center;
+    vertical-align: middle;
+    background: linear-gradient(148deg, hsl(175,85%,72%) 0%, hsl(175,85%,72%) 47%, transparent 47.5%), linear-gradient(238deg, hsl(285,75%,76%) 0%, hsl(285,75%,76%) 44%, transparent 44.5%), linear-gradient(58deg, hsl(200,85%,74%) 0%, hsl(200,85%,74%) 41%, transparent 41.5%), linear-gradient(328deg, hsl(340,80%,76%) 0%, hsl(340,80%,76%) 47%, transparent 47.5%), linear-gradient(108deg, hsl(60,90%,72%) 0%, hsl(120,80%,68%) 100%);
+    animation: ice-snap 1.5s linear infinite;
+    color: #111;
+  }
+  .bd-tag-ice::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(148deg, transparent 46.5%, rgba(0,0,0,0.4) 47%, rgba(0,0,0,0.4) 47.5%, transparent 48%), linear-gradient(238deg, transparent 43.5%, rgba(0,0,0,0.4) 44%, rgba(0,0,0,0.4) 44.5%, transparent 45%), linear-gradient(58deg, transparent 40.5%, rgba(0,0,0,0.4) 41%, rgba(0,0,0,0.4) 41.5%, transparent 42%), linear-gradient(328deg, transparent 46.5%, rgba(0,0,0,0.4) 47%, rgba(0,0,0,0.4) 47.5%, transparent 48%);
+  }
+  .bd-card-link {
+    color: var(--bd-red);
+    font-size: .88rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .bd-card-link:hover { color: var(--bd-gold); text-decoration: none; }
+  @media (max-width: 900px) { .bd-products-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .bd-products-grid { grid-template-columns: 1fr; } }
+
+  /* ── HOW IT WORKS ── */
+  .bd-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; margin-top: 2.5rem; }
+  .bd-step { text-align: center; }
+  .bd-step-num {
+    width: 56px; height: 56px;
+    background: var(--bd-red);
+    color: var(--bd-white);
+    font-size: 1.5rem; font-weight: 900;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  .bd-step h3 { color: var(--bd-white); font-size: 1.05rem; margin-bottom: .5rem; font-weight: 700; }
+  .bd-step p { color: #aaa; font-size: .9rem; line-height: 1.65; }
+  @media (max-width: 640px) { .bd-steps { grid-template-columns: 1fr; } }
+
+  /* ── FINISHES ── */
+  .bd-finishes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 2.5rem; }
+  .bd-finish-card { background: #222; border: 1px solid #333; border-radius: 8px; padding: 2rem 1.5rem; text-align: center; }
+  .bd-finish-card:hover { border-color: var(--bd-red); }
+  .bd-finish-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .bd-finish-icon img { width: 100%; max-width: 220px; height: auto; border-radius: 8px; display: block; margin: 0 auto; }
+  .bd-finish-card h3 { color: var(--bd-white); font-size: 1.15rem; font-weight: 800; text-transform: uppercase; margin-bottom: .75rem; letter-spacing: 1px; }
+  .bd-finish-card p { color: #999; font-size: .88rem; line-height: 1.65; }
+  @media (max-width: 640px) { .bd-finishes-grid { grid-template-columns: 1fr; } }
+
+  /* ── PRICING ── */
+  .bd-pricing-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+  .bd-pricing-box { background: var(--bd-white); border: 1px solid #ddd; border-radius: 8px; padding: 2rem; }
+  .bd-pricing-box h3 { color: var(--bd-black); font-size: 1.05rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase; }
+  .bd-pricing-box table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  .bd-pricing-box th { background: var(--bd-black); color: var(--bd-white); padding: .5rem .75rem; text-align: left; font-size: .75rem; text-transform: uppercase; letter-spacing: .5px; }
+  .bd-pricing-box td { padding: .5rem .75rem; border-bottom: 1px solid #eee; color: #333; }
+  .bd-pricing-box tr:last-child td { border-bottom: none; }
+  .bd-pricing-note { font-size: .78rem; color: #888; margin-top: .75rem; }
+  .bd-pricing-cta { text-align: center; margin-top: 2.5rem; }
+  @media (max-width: 640px) { .bd-pricing-cols { grid-template-columns: 1fr; } }
+
+  /* ── REVIEWS ── */
+  .bd-reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 2.5rem; }
+  .bd-review-card { background: #222; border: 1px solid #333; border-radius: 8px; padding: 1.75rem; }
+  .bd-stars { color: var(--bd-gold); font-size: 1.1rem; margin-bottom: .75rem; }
+  .bd-review-text { color: #ccc; font-size: .92rem; line-height: 1.65; font-style: italic; margin-bottom: 1rem; }
+  .bd-reviewer { color: #888; font-size: .82rem; font-weight: 600; }
+  @media (max-width: 768px) { .bd-reviews-grid { grid-template-columns: 1fr; } }
+
+  /* ── FAQ ── */
+  .bd-faq-inner { max-width: 780px; margin: 0 auto; }
+  .bd-faq-inner h2 { color: var(--bd-black); }
+  .bd-faq-intro { color: #555; margin-bottom: 2rem; font-size: .96rem; }
+  .bd-faq-inner details { border-bottom: 1px solid #e0e0e0; padding: 0; }
+  .bd-faq-inner details summary {
+    padding: 1.1rem 0;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: .96rem;
+    color: var(--bd-black);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .bd-faq-inner details summary::-webkit-details-marker { display: none; }
+  .bd-faq-inner details summary::after { content: "+"; font-size: 1.3rem; color: var(--bd-red); font-weight: 300; }
+  .bd-faq-inner details[open] summary::after { content: "−"; }
+  .bd-faq-answer { padding: .25rem 0 1.25rem; color: #444; font-size: .93rem; line-height: 1.7; }
+
+  /* ── CTA BANNER ── */
+  .bd-cta-banner { background: var(--bd-red); color: var(--bd-white); padding: 4rem 1.5rem; text-align: center; }
+  .bd-cta-banner h2 { color: var(--bd-white); font-size: 2.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: .75rem; }
+  .bd-cta-banner p { color: rgba(255,255,255,.85); font-size: 1.05rem; margin-bottom: 2rem; }
+  .bd-btn-white {
+    display: inline-block;
+    background: var(--bd-white);
+    color: var(--bd-red);
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: .9rem 2.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background .2s, transform .2s;
+  }
+  .bd-btn-white:hover { background: var(--bd-light); transform: translateY(-2px); color: var(--bd-red); text-decoration: none; }
+</style>
+
+<!-- HERO -->
+<section class="bd-hero">
+  <div class="bd-hero-inner">
+    <div class="bd-hero-content">
+      <span class="bd-hero-badge">Custom Card Holder Stickers</span>
+      <h1>STICKERS FOR <span>CARD SHOPS</span> &amp; COLLECTORS</h1>
+      <!-- ✅ CHANGE 1: "One Touch mag holders" → "One Touches" -->
+      <p class="bd-hero-sub">One Touches. Toploaders. Regular, Holographic &amp; Cracked Ice. Made by someone who actually lives the hobby.</p>
+      <ul class="bd-hero-checks">
+        <li>Bulk Pricing</li>
+        <li>Fast Turnaround</li>
+        <li>One Touch &amp; Toploader</li>
+        <li>3 Premium Finishes</li>
+        <li>Collector-Owned</li>
+      </ul>
+      <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-btn-primary">ORDER NOW &rarr;</a>
+    </div>
+    <!-- ✅ CHANGE 2: pills are now <a> links to the product page -->
+    <div class="bd-hero-visual" aria-hidden="true">
+      <div class="bd-hero-visual-title">CHOOSE YOUR FINISH</div>
+      <div class="bd-hero-pill-list">
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-finish-pill bd-pill-ice">Cracked Ice</a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-finish-pill bd-pill-holo">Holographic</a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-finish-pill bd-pill-regular">Regular</a>
+      </div>
+      <div class="bd-hero-types">One Touch &bull; Toploader</div>
+      <!-- ✅ CHANGE 7: Wide → Large -->
+      <div class="bd-hero-sizes">Small (0.5&quot;) &bull; Medium (0.75&quot;) &bull; Large (1.0&quot;)</div>
+    </div>
+    <div class="bd-hero-mascot-col" aria-hidden="true">
+      <img class="bd-hero-mascot" src="https://cdn.shopify.com/s/files/1/0738/3724/8706/files/bd-mascot-1.png?v=1773102522" alt="Big Dawgs mascot">
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="bd-trust-bar">
+  <div class="bd-trust-inner">
+    <div class="bd-trust-item"><strong>500+</strong>Happy Customers</div>
+    <div class="bd-trust-item"><strong>★★★★★</strong>5-Star Reviews</div>
+    <div class="bd-trust-item"><strong>2 Holder Types</strong>One Touch &amp; Toploader</div>
+    <div class="bd-trust-item"><strong>3 Finishes</strong>Regular · Holo · Cracked Ice</div>
+    <div class="bd-trust-item"><strong>Collector-Built</strong>We Live the Hobby</div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="bd-section bd-section-white" id="bd-products">
+  <div class="bd-section-inner">
+    <h2>Choose Your Style</h2>
+    <p class="bd-section-sub">Every sticker is custom-printed with your logo. Pick your holder type, finish, and size — then upload your artwork.</p>
+    <div class="bd-products-grid">
+      <div class="bd-product-card">
+        <span class="bd-finish-tag bd-tag-regular">Regular</span>
+        <!-- ✅ CHANGE 1: "magnetic one-touch card holders" → "One Touch holders" -->
+        <h3>One Touch Regular Stickers</h3>
+        <p>Clean, professional finish for One Touch holders. Sharp print, crisp look.</p>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+      </div>
+      <div class="bd-product-card">
+        <span class="bd-finish-tag bd-tag-holo">Holographic</span>
+        <h3>One Touch Holographic Stickers</h3>
+        <p>Full rainbow color-shift holographic finish. Turn heads at every card show and break.</p>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+      </div>
+      <div class="bd-product-card">
+        <span class="bd-finish-tag bd-tag-ice">Cracked Ice</span>
+        <h3>One Touch Cracked Ice Stickers</h3>
+        <p>Unique fractured pattern — bold, distinctive, and unlike anything else in the hobby space.</p>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+      </div>
+      <div class="bd-product-card">
+        <span class="bd-finish-tag bd-tag-regular">Regular</span>
+        <h3>Toploader Regular Stickers</h3>
+        <p>Crisp regular-finish stickers perfectly sized for standard toploaders. Great for singles and sets.</p>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+      </div>
+      <div class="bd-product-card">
+        <span class="bd-finish-tag bd-tag-holo">Holographic</span>
+        <h3>Toploader Holographic Stickers</h3>
+        <p>Holographic shine on your toploaders. Elevate every card you sell or display.</p>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+      </div>
+      <div class="bd-product-card">
+        <span class="bd-finish-tag bd-tag-ice">Cracked Ice</span>
+        <h3>Toploader Cracked Ice Stickers</h3>
+        <p>The cracked ice pattern on toploaders — a signature look that collectors remember.</p>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="bd-section bd-section-dark" id="bd-how-it-works">
+  <div class="bd-section-inner bd-text-center">
+    <h2>AS EASY AS 1-2-3</h2>
+    <p class="bd-section-sub bd-mx-auto bd-text-center" style="max-width:520px">From order to delivery without the hassle. We handle everything after you place your order.</p>
+    <div class="bd-steps">
+      <div class="bd-step">
+        <div class="bd-step-num">1</div>
+        <h3>Configure Your Order</h3>
+        <p>Pick your holder type, finish, size, and quantity tier using our step-by-step configurator.</p>
+      </div>
+      <div class="bd-step">
+        <div class="bd-step-num">2</div>
+        <h3>Upload Your Artwork</h3>
+        <!-- ✅ CHANGE 3: file format alignment with FAQ -->
+        <p>Upload your GIF, JPG, or PNG directly, or share via Google Drive or Dropbox link. We'll confirm before printing.</p>
+      </div>
+      <div class="bd-step">
+        <div class="bd-step-num">3</div>
+        <h3>Receive Your Stickers</h3>
+        <p>Most orders ship within 5&ndash;7 business days after artwork approval.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE FINISHES VIDEO -->
+<section class="bd-section bd-section-dark" id="bd-finishes" style="padding-top: 1rem;">
+  <div class="bd-section-inner">
+    <h2 class="bd-text-center">THREE PREMIUM FINISHES</h2>
+    <p class="bd-section-sub bd-text-center bd-mx-auto">Every finish is custom-printed with your logo. Pick the look that matches your brand.</p>
+    <div class="bd-finishes-grid">
+      <div class="bd-finish-card">
+        <div class="bd-finish-icon"><img src="https://cdn.shopify.com/s/files/1/0738/3724/8706/files/bd-A.png?v=1773082307"></div>
+        <h3>Regular</h3>
+        <p>Clean, professional, zero glare. Regular finish card holder stickers are the go-to for sellers who want a sharp, understated look. Perfect for brand-focused card shops and bulk orders.</p>
+      </div>
+      <div class="bd-finish-card">
+        <div class="bd-finish-icon"><div style="width:220px;height:220px;border-radius:50%;overflow:hidden;margin:0 auto;">
+          <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
+            <source src="https://cdn.shopify.com/videos/c/o/v/5b66dc1e7bfe4005bb25ee02d6897e59.mp4" type="video/mp4">
+          </video>
+        </div></div>
+        <h3>Holographic</h3>
+        <p>Full rainbow color-shifting effect. Holographic stickers turn heads at card shows, breaks, and on social. The most eye-catching option in the hobby.</p>
+      </div>
+      <div class="bd-finish-card">
+        <div class="bd-finish-icon">
+          <div style="width:220px;height:220px;border-radius:50%;overflow:hidden;margin:0 auto;">
+            <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
+              <source src="https://cdn.shopify.com/videos/c/o/v/ee4d3ff648bc45108d0349ccb2eadcae.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <h3>Cracked Ice</h3>
+        <p>A unique fractured, shattered-ice pattern distinct from standard holo. Instantly recognizable — a signature look that sets your brand apart.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING TIERS -->
+<section class="bd-section bd-section-light" id="bd-pricing">
+  <div class="bd-section-inner">
+    <h2>BULK PRICING THAT SCALES WITH YOU</h2>
+    <p class="bd-section-sub">The more you order, the better the deal. Contact us for exact pricing — we confirm your total before invoicing.</p>
+    <div class="bd-pricing-cols">
+      <!-- ✅ CHANGE 1: "One Touch (Mag)" → "One Touch" -->
+      <div class="bd-pricing-box">
+        <h3>One Touch Stickers</h3>
+        <table>
+          <thead><tr><th>Size</th><th>Tier 1</th><th>Tier 2</th><th>Best Value</th></tr></thead>
+          <tbody>
+            <tr><td>Small (0.5")</td><td>25 / $6</td><td>50 / $10</td><td>100 / $15</td></tr>
+            <tr><td>Medium (0.75")</td><td>20 / $6</td><td>45 / $10</td><td>90 / $15</td></tr>
+            <!-- ✅ CHANGE 7: Wide → Large -->
+            <tr><td>Large (1.0")</td><td>15 / $6</td><td>35 / $10</td><td>70 / $15</td></tr>
+          </tbody>
+        </table>
+        <p class="bd-pricing-note">Regular finish. Holographic &amp; Cracked Ice: add $1–$5 per tier.</p>
+      </div>
+      <div class="bd-pricing-box">
+        <h3>Toploader Stickers</h3>
+        <table>
+          <thead><tr><th>Size</th><th>Tier 1</th><th>Tier 2</th><th>Best Value</th></tr></thead>
+          <tbody>
+            <tr><td>Small (0.5")</td><td>30 / $6</td><td>75 / $10</td><td>150 / $15</td></tr>
+            <tr><td>Medium (0.75")</td><td>25 / $6</td><td>50 / $10</td><td>100 / $15</td></tr>
+            <!-- ✅ CHANGE 7: Wide → Large -->
+            <tr><td>Large (1.0")</td><td>20 / $6</td><td>40 / $10</td><td>80 / $15</td></tr>
+          </tbody>
+        </table>
+        <p class="bd-pricing-note">Regular finish. Holographic &amp; Cracked Ice: add $1–$5 per tier.</p>
+      </div>
+    </div>
+    <div class="bd-pricing-cta">
+      <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-btn-primary">Configure Your Order &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="bd-section bd-section-dark" id="bd-reviews">
+  <div class="bd-section-inner">
+    <h2 class="bd-text-center">WHAT OUR CUSTOMERS SAY</h2>
+    <p class="bd-section-sub bd-text-center bd-mx-auto">Real reviews from real collectors and card shop sellers.</p>
+    <div class="bd-reviews-grid">
+      <div class="bd-review-card">
+        <div class="bd-stars">★★★★★</div>
+        <p class="bd-review-text">"Nothing but quality work. No short cuts, straight to what the customer wants and works with you to develop if you aren't sure. Tons of help, reassurance, top notch. Always have compliments on the stickers. And the prices, unbeatable."</p>
+        <p class="bd-reviewer">Tyler Roth &mdash; Verified Customer</p>
+      </div>
+      <div class="bd-review-card">
+        <div class="bd-stars">★★★★★</div>
+        <p class="bd-review-text">"I have always been a huge fan of Big Dawgs and have watched them grow along the way. Always very clear on sales packages and always prompt/secure. Really takes the 'guess work' out of the process. They are LEGIT 💯"</p>
+        <p class="bd-reviewer">@dogdazed84 &mdash; Verified Customer</p>
+      </div>
+      <div class="bd-review-card">
+        <div class="bd-stars">★★★★★</div>
+        <p class="bd-review-text">"100% Legit! Super nice and friendly person! The mag stickers look amazing thank you so much! Definitely recommend!"</p>
+        <p class="bd-reviewer">Verified Buyer &mdash; Instagram</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="bd-section bd-section-white" id="bd-faq">
+  <div class="bd-faq-inner">
+    <h2>Frequently Asked Questions</h2>
+    <p class="bd-faq-intro">Everything you need to know about ordering custom card holder stickers from BIG DAWGS.</p>
+
+    <!-- ✅ CHANGE 4: file format aligned with FAQ page -->
+    <details>
+      <summary>What file format should I use for my artwork?</summary>
+      <div class="bd-faq-answer">We accept <strong>GIF, JPG, and PNG files only</strong>. For best results, upload at 300 DPI or higher with a transparent background. If your artwork is in a different format, email us before ordering and we'll work with you to find a solution.</div>
+    </details>
+
+    <details>
+      <summary>How long does production and shipping take?</summary>
+      <div class="bd-faq-answer">Most orders ship within 5–7 business days after artwork is approved. We move fast because we know you need these for your shop, show schedule, or breaks. Rush inquiries are welcome — just note it in the order.</div>
+    </details>
+
+    <!-- ✅ CHANGE 5: "$15–$20 for the highest tiers" → "up from there" -->
+    <details>
+      <summary>What's the minimum order quantity?</summary>
+      <div class="bd-faq-answer">Minimums vary by holder type and size. One Touch: Small starts at 25, Medium at 20, Large at 15. Toploader: Small at 30, Medium at 25, Large at 20. Prices start at $6 and go up from there. See full pricing when you configure your order.</div>
+    </details>
+
+    <details>
+      <summary>What's the difference between holographic and cracked ice finishes?</summary>
+      <div class="bd-faq-answer">Holographic stickers have a full rainbow color-shifting effect — the whole sticker changes color as the light angle shifts. Cracked ice has a unique fractured, shattered-ice pattern that gives a more textured, layered look. Both are premium; they're just totally different visual styles.</div>
+    </details>
+
+    <details>
+      <summary>Can I order stickers for both One Touch and Toploader holders?</summary>
+      <div class="bd-faq-answer">Yes — just place a separate order for each holder type. The product configurator walks you through each one independently so you get exactly the right specs for both.</div>
+    </details>
+
+    <!-- ✅ CHANGE 6: residue-free callout -->
+    <details>
+      <summary>Will the sticker damage my card holder?</summary>
+      <div class="bd-faq-answer">No. Our stickers are <strong>100% residue-free</strong> — peel them off cleanly without leaving any adhesive behind on the plastic surface. They're sized to fit cleanly without covering the cardholder window or locking mechanism, so your holder functions exactly as designed.</div>
+    </details>
+
+    <details>
+      <summary>Do you work with first-time buyers?</summary>
+      <div class="bd-faq-answer">Absolutely. Most of our customers are first-timers. We walk you through the artwork process, confirm everything looks right before printing, and make sure you're happy before we ship.</div>
+    </details>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bd-cta-banner">
+  <h2>READY TO BRAND YOUR CARDS?</h2>
+  <p>Join 500+ collectors and card shops. Configure your custom stickers in minutes.</p>
+  <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-btn-white">START YOUR ORDER &rarr;</a>
+</section>
+
+{% schema %}
+{
+  "name": "BigDawgs Homepage",
+  "settings": [],
+  "presets": [
+    {
+      "name": "BigDawgs Homepage"
+    }
+  ]
+}
+{% endschema %}

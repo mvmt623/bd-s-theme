@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "bigdawgs-product-form": {
+      "type": "bigdawgs-product-form",
+      "settings": {}
+    }
+  },
+  "order": ["bigdawgs-product-form"]
+}

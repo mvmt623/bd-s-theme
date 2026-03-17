@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "bigdawgs-about": {
+      "type": "bigdawgs-about",
+      "settings": {}
+    }
+  },
+  "order": [
+    "bigdawgs-about"
+  ]
+}
