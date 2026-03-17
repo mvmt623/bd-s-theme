@@ -1,0 +1,303 @@
+{% comment %}
+  BIG DAWGS - 3D Printed Card Stand Product Form
+  2-step: Choose Package → Details & Cart
+{% endcomment %}
+
+{%- liquid
+  comment
+    Safely look up variants by title so reordering or adding variants
+    in Shopify admin never breaks checkout. Falls back to first variant.
+  endcomment
+  assign logo_variant = product.variants[0]
+  assign extra_variant = product.variants[1]
+  unless extra_variant
+    assign extra_variant = product.variants[0]
+  endunless
+  for v in product.variants
+    if v.title == 'Logo Only'
+      assign logo_variant = v
+    endif
+    if v.title == 'Extra Customizations'
+      assign extra_variant = v
+    endif
+  endfor
+-%}
+
+<style>
+  :root {
+    --bd-red: #CC0000; --bd-red-dark: #990000;
+    --bd-gold: #D4A017; --bd-black: #111111;
+    --bd-dark: #1A1A1A; --bd-gray: #333333;
+    --bd-light: #F5F5F5; --bd-white: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+
+  .bdcs-container {
+    background: var(--bd-black); color: var(--bd-white);
+    padding: 40px 20px; border-radius: 8px;
+    max-width: 720px; margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .bdcs-progress { display: flex; gap: 8px; margin-bottom: 36px; }
+  .bdcs-dot { flex: 1; height: 4px; background: var(--bd-gray); border-radius: 2px; transition: background .3s; }
+  .bdcs-dot.active { background: var(--bd-red); }
+  .bdcs-dot.done   { background: var(--bd-gold); }
+
+  .bdcs-summary {
+    display: none; background: var(--bd-dark);
+    border: 1px solid var(--bd-gray); border-radius: 6px;
+    padding: 14px; margin-bottom: 28px;
+  }
+  .bdcs-summary.show { display: block; }
+  .bdcs-sum-row {
+    display: flex; justify-content: space-between;
+    padding: 6px 0; font-size: 14px; color: var(--bd-light);
+  }
+  .bdcs-sum-row strong { color: var(--bd-white); }
+  .bdcs-sum-price { color: var(--bd-gold); font-weight: 700; }
+
+  .bdcs-step { display: none; animation: bdcsIn .3s ease; }
+  .bdcs-step.active { display: block; }
+  @keyframes bdcsIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .bdcs-heading { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+  .bdcs-sub { font-size: 14px; color: #aaa; margin-bottom: 28px; line-height: 1.6; }
+
+  /* PACKAGE CARDS */
+  .bdcs-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 28px;
+  }
+  @media (max-width: 480px) { .bdcs-grid { grid-template-columns: 1fr; } }
+  .bdcs-card {
+    border: 2px solid var(--bd-gray); border-radius: 8px;
+    padding: 24px 18px; cursor: pointer;
+    background: var(--bd-dark); transition: all .25s; position: relative;
+  }
+  .bdcs-card:hover { border-color: var(--bd-red); transform: translateY(-2px); }
+  .bdcs-card.selected {
+    border-color: var(--bd-red); background: rgba(204,0,0,.1);
+    box-shadow: 0 0 20px rgba(204,0,0,.25);
+  }
+  .bdcs-card-icon  { font-size: 2rem; margin-bottom: 10px; }
+  .bdcs-card-name  { font-size: 17px; font-weight: 700; color: var(--bd-white); margin-bottom: 8px; }
+  .bdcs-card-price { font-size: 22px; font-weight: 800; color: var(--bd-gold); margin-bottom: 12px; }
+  .bdcs-card-features { list-style: none; padding: 0; margin: 0; }
+  .bdcs-card-features li { font-size: 13px; color: #ccc; padding: 3px 0; }
+  .bdcs-card-features li::before { content: "✓ "; color: var(--bd-gold); }
+  .bdcs-badge {
+    position: absolute; top: 10px; right: 10px;
+    background: var(--bd-red); color: var(--bd-white);
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px;
+  }
+
+  /* FORM FIELDS */
+  .bdcs-field { margin-bottom: 20px; }
+  .bdcs-field label {
+    display: block; font-weight: 600; font-size: 14px;
+    margin-bottom: 7px; color: var(--bd-white);
+  }
+  .bdcs-input {
+    width: 100%; padding: 12px;
+    background: var(--bd-dark); border: 1px solid var(--bd-gray);
+    border-radius: 6px; color: var(--bd-white);
+    font-size: 14px; font-family: inherit; transition: border-color .3s;
+  }
+  .bdcs-input:focus { outline: none; border-color: var(--bd-red); }
+  .bdcs-input::placeholder { color: #555; }
+  textarea.bdcs-input { min-height: 90px; resize: vertical; }
+  .bdcs-help { font-size: 12px; color: #777; margin-top: 5px; }
+  .bdcs-optional { font-weight: 400; color: #666; }
+
+  /* ACTIONS */
+  .bdcs-actions { display: flex; gap: 12px; margin-top: 32px; }
+  .bdcs-btn {
+    flex: 1; padding: 14px 24px; border: none; border-radius: 6px;
+    font-size: 16px; font-weight: 700; cursor: pointer;
+    text-transform: uppercase; transition: all .25s;
+  }
+  .bdcs-btn-primary { background: var(--bd-red); color: var(--bd-white); }
+  .bdcs-btn-primary:hover:not(:disabled) {
+    background: var(--bd-red-dark); transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(204,0,0,.4);
+  }
+  .bdcs-btn-primary:disabled { background: var(--bd-gray); opacity: .5; cursor: not-allowed; }
+  .bdcs-btn-back {
+    flex: 0 0 110px; background: var(--bd-dark); color: var(--bd-white);
+    border: 1px solid var(--bd-gray);
+  }
+  .bdcs-btn-back:hover { border-color: var(--bd-red); color: var(--bd-red); }
+  .bdcs-spinner {
+    display: inline-block; width: 15px; height: 15px;
+    border: 2px solid var(--bd-gold); border-top-color: transparent;
+    border-radius: 50%; animation: bscsSpin .6s linear infinite; margin-right: 7px;
+  }
+  @keyframes bscsSpin { to { transform: rotate(360deg); } }
+  @media (max-width: 600px) {
+    .bdcs-container { padding: 24px 16px; }
+    .bdcs-heading { font-size: 22px; }
+    .bdcs-actions { flex-direction: column; }
+    .bdcs-btn-back { flex: 1; width: 100%; }
+  }
+</style>
+
+<div class="bdcs-container">
+  <div class="bdcs-progress">
+    <div class="bdcs-dot active" data-step="1"></div>
+    <div class="bdcs-dot" data-step="2"></div>
+  </div>
+
+  <div class="bdcs-summary" id="bdcs-summary">
+    <div class="bdcs-sum-row"><strong>Package:</strong><span id="bdcs-sum-pkg">—</span></div>
+    <div class="bdcs-sum-row"><strong>Price:</strong><span id="bdcs-sum-price" class="bdcs-sum-price">—</span></div>
+  </div>
+
+  <form id="bdcs-form" action="/cart/add" method="post">
+
+    <!-- STEP 1: PACKAGE -->
+    <div class="bdcs-step active" data-step="1">
+      <h2 class="bdcs-heading">Choose Your Package</h2>
+      <p class="bdcs-sub">Custom 3D printed display stands for TCG cards, sports collectibles, and more. Built to order with your logo.</p>
+
+      <div class="bdcs-grid">
+        <div class="bdcs-card" data-variant="{{ logo_variant.id }}" data-name="Logo Only" data-price="{{ logo_variant.price | money_without_trailing_zeros }}">
+          <div class="bdcs-card-icon">🖨️</div>
+          <div class="bdcs-card-name">Logo Only</div>
+          <div class="bdcs-card-price">{{ logo_variant.price | money_without_trailing_zeros }}</div>
+          <ul class="bdcs-card-features">
+            <li>Your logo printed on stand</li>
+            <li>Standard card display angle</li>
+            <li>Perfect for shops &amp; home displays</li>
+          </ul>
+        </div>
+        <div class="bdcs-card" data-variant="{{ extra_variant.id }}" data-name="Extra Customizations" data-price="{{ extra_variant.price | money_without_trailing_zeros }}">
+          <div class="bdcs-badge">Best Value</div>
+          <div class="bdcs-card-icon">⚙️</div>
+          <div class="bdcs-card-name">Extra Customizations</div>
+          <div class="bdcs-card-price">{{ extra_variant.price | money_without_trailing_zeros }}</div>
+          <ul class="bdcs-card-features">
+            <li>Logo + custom text or details</li>
+            <li>Color &amp; style preferences</li>
+            <li>Ideal for shows &amp; events</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bdcs-actions">
+        <button type="button" class="bdcs-btn bdcs-btn-primary" id="bdcs-s1-next">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: DETAILS -->
+    <div class="bdcs-step" data-step="2">
+      <h2 class="bdcs-heading">Your Details</h2>
+      <p class="bdcs-sub">Tell us about your brand and how you want the stand customized. We'll confirm before printing.</p>
+
+      <div class="bdcs-field">
+        <label for="bdcs-brand">Brand / Shop Name <span class="bdcs-optional">(required)</span></label>
+        <input type="text" class="bdcs-input" id="bdcs-brand"
+          name="properties[Brand Name]"
+          placeholder="e.g. Big Dawgs Store, Tyler's Cards...">
+      </div>
+
+      <div class="bdcs-field">
+        <label for="bdcs-logo-link">Logo / Artwork Link <span class="bdcs-optional">(Google Drive, Dropbox, etc.)</span></label>
+        <input type="text" class="bdcs-input" id="bdcs-logo-link"
+          name="properties[Logo Link]"
+          placeholder="https://drive.google.com/...">
+        <p class="bdcs-help">PNG (transparent background preferred) or vector file. We'll confirm before printing.</p>
+      </div>
+
+      <div class="bdcs-field">
+        <label for="bdcs-notes">Custom Details &amp; Notes <span class="bdcs-optional">(optional)</span></label>
+        <textarea class="bdcs-input" id="bdcs-notes"
+          name="properties[Custom Notes]"
+          placeholder="Colors, text to include, card type (TCG, sports, graded), display angle preferences..."></textarea>
+      </div>
+
+      <!-- Hidden cart fields -->
+      <input type="hidden" name="id" id="bdcs-variant-id" value="">
+      <input type="hidden" name="quantity" value="1">
+
+      <div class="bdcs-actions">
+        <button type="button" class="bdcs-btn bdcs-btn-back" id="bdcs-s2-back">Back</button>
+        <button type="submit" class="bdcs-btn bdcs-btn-primary" id="bdcs-submit">Add to Cart</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+<script>
+(function() {
+  // ============================================================
+  // TESTING MODE — flip to false to re-enable brand name validation
+  var TESTING_MODE = true;
+  // ============================================================
+
+  var selectedVariant = null;
+  var selectedName = null;
+  var selectedPrice = null;
+
+  function goStep(n) {
+    document.querySelectorAll('.bdcs-step').forEach(function(s) { s.classList.remove('active'); });
+    document.querySelector('.bdcs-step[data-step="' + n + '"]').classList.add('active');
+    document.querySelectorAll('.bdcs-dot').forEach(function(d, i) {
+      d.classList.remove('active','done');
+      var ds = i + 1;
+      if (ds === n) d.classList.add('active');
+      else if (ds < n) d.classList.add('done');
+    });
+    if (n > 1) document.getElementById('bdcs-summary').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.bdcs-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      document.querySelectorAll('.bdcs-card').forEach(function(c) { c.classList.remove('selected'); });
+      this.classList.add('selected');
+      selectedVariant = this.dataset.variant;
+      selectedName    = this.dataset.name;
+      selectedPrice   = this.dataset.price;
+    });
+  });
+
+  document.getElementById('bdcs-s1-next').addEventListener('click', function() {
+    if (!selectedVariant || selectedVariant.trim() === '') {
+      alert('Please select a package.');
+      return;
+    }
+    document.getElementById('bdcs-variant-id').value = selectedVariant;
+    document.getElementById('bdcs-sum-pkg').textContent = selectedName;
+    document.getElementById('bdcs-sum-price').textContent = selectedPrice;
+    goStep(2);
+  });
+
+  document.getElementById('bdcs-s2-back').addEventListener('click', function() { goStep(1); });
+
+  document.getElementById('bdcs-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var variantId = document.getElementById('bdcs-variant-id').value;
+    if (!variantId || variantId.trim() === '') {
+      alert('Please go back and select a package before submitting.');
+      return;
+    }
+    var brand = document.getElementById('bdcs-brand').value.trim();
+    if (!TESTING_MODE && !brand) { alert('Please enter your brand or shop name.'); return; }
+    var btn = document.getElementById('bdcs-submit');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="bdcs-spinner"></span>Adding to Cart...';
+    setTimeout(function() { document.getElementById('bdcs-form').submit(); }, 400);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "BD Card Stand",
+  "settings": []
+}
+{% endschema %}

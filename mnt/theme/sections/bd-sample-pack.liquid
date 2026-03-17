@@ -1,0 +1,196 @@
+{% comment %}
+  BIG DAWGS - Sample Pack Product Form
+  Single-step: pick your finish type → instant Add to Cart
+  Secondary product — streamlined, no friction.
+{% endcomment %}
+
+{%- liquid
+  comment
+    Safely look up sample pack variants by title.
+    Falls back to first variant so checkout never gets an empty ID.
+  endcomment
+  assign regular_variant = product.variants[0]
+  assign holo_variant = product.variants[1]
+  unless holo_variant
+    assign holo_variant = product.variants[0]
+  endunless
+  for v in product.variants
+    if v.title == 'Regular'
+      assign regular_variant = v
+    endif
+    if v.title == 'Holo / Cracked Ice' or v.title == 'Holographic' or v.title == 'Holo'
+      assign holo_variant = v
+    endif
+  endfor
+-%}
+
+<style>
+  :root {
+    --bd-red: #CC0000; --bd-red-dark: #990000;
+    --bd-gold: #D4A017; --bd-black: #111111;
+    --bd-dark: #1A1A1A; --bd-gray: #333333;
+    --bd-light: #F5F5F5; --bd-white: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+
+  .bdsp-container {
+    background: var(--bd-black); color: var(--bd-white);
+    padding: 40px 20px; border-radius: 8px;
+    max-width: 720px; margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .bdsp-heading {
+    font-size: 26px; font-weight: 700; margin-bottom: 8px;
+  }
+  .bdsp-sub {
+    font-size: 14px; color: #aaa; margin-bottom: 30px; line-height: 1.6;
+  }
+  .bdsp-what {
+    background: var(--bd-dark); border: 1px solid #333;
+    border-radius: 8px; padding: 16px 20px; margin-bottom: 28px;
+  }
+  .bdsp-what-title { font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--bd-gold); margin-bottom: 8px; }
+  .bdsp-what ul { list-style: none; padding: 0; margin: 0; }
+  .bdsp-what li { font-size: 14px; color: #ccc; padding: 4px 0; }
+  .bdsp-what li::before { content: "✓ "; color: var(--bd-gold); }
+
+  .bdsp-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 28px;
+  }
+  @media (max-width: 480px) { .bdsp-grid { grid-template-columns: 1fr; } }
+
+  .bdsp-card {
+    border: 2px solid var(--bd-gray); border-radius: 8px;
+    padding: 24px 18px; text-align: center; cursor: pointer;
+    background: var(--bd-dark); transition: all .25s; position: relative;
+  }
+  .bdsp-card:hover { border-color: var(--bd-red); transform: translateY(-2px); }
+  .bdsp-card.selected {
+    border-color: var(--bd-red); background: rgba(204,0,0,.1);
+    box-shadow: 0 0 20px rgba(204,0,0,.25);
+  }
+  .bdsp-swatch {
+    width: 52px; height: 52px; border-radius: 50%;
+    margin: 0 auto 14px; border: 3px solid rgba(255,255,255,.15);
+  }
+  .bdsp-swatch.regular { background: linear-gradient(135deg,#e8e8e8,#c0c0c0); }
+  .bdsp-swatch.holo    { background: linear-gradient(135deg,#ff00cc,#3333ff,#00ffcc,#ffcc00); }
+  .bdsp-card-name  { font-size: 17px; font-weight: 700; color: var(--bd-white); margin-bottom: 6px; }
+  .bdsp-card-desc  { font-size: 12px; color: #aaa; margin-bottom: 12px; line-height: 1.5; }
+  .bdsp-card-price { font-size: 22px; font-weight: 800; color: var(--bd-gold); }
+  .bdsp-badge {
+    position: absolute; top: 10px; right: 10px;
+    background: var(--bd-gold); color: var(--bd-black);
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px; letter-spacing: .5px;
+  }
+
+  .bdsp-submit {
+    width: 100%; padding: 16px; border: none; border-radius: 6px;
+    font-size: 17px; font-weight: 700; cursor: pointer;
+    text-transform: uppercase; letter-spacing: .5px;
+    background: var(--bd-gray); color: #777;
+    transition: all .25s;
+  }
+  .bdsp-submit.ready { background: var(--bd-red); color: var(--bd-white); }
+  .bdsp-submit.ready:hover { background: var(--bd-red-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(204,0,0,.4); }
+  .bdsp-submit:disabled { opacity: .5; cursor: not-allowed; }
+
+  .bdsp-upsell {
+    margin-top: 22px; padding: 14px 18px;
+    background: #1a1a1a; border: 1px solid #2a2a2a;
+    border-radius: 6px; text-align: center;
+  }
+  .bdsp-upsell p { font-size: 13px; color: #888; margin: 0 0 6px; }
+  .bdsp-upsell a {
+    font-size: 13px; font-weight: 700; color: var(--bd-red);
+    text-decoration: none; text-transform: uppercase; letter-spacing: .5px;
+  }
+  .bdsp-upsell a:hover { color: var(--bd-gold); }
+  .bdsp-spinner {
+    display: inline-block; width: 15px; height: 15px;
+    border: 2px solid var(--bd-gold); border-top-color: transparent;
+    border-radius: 50%; animation: bdspSpin .6s linear infinite; margin-right: 7px;
+  }
+  @keyframes bdspSpin { to { transform: rotate(360deg); } }
+</style>
+
+<div class="bdsp-container">
+  <h2 class="bdsp-heading">Choose Your Sample Pack</h2>
+  <p class="bdsp-sub">Try before you commit. Feel the quality of our custom sticker finishes before placing a bulk order.</p>
+
+  <div class="bdsp-what">
+    <div class="bdsp-what-title">What's Included</div>
+    <ul>
+      <li>Assorted custom sticker samples in your chosen finish</li>
+      <li>Multiple sizes so you can see the difference in person</li>
+      <li>Perfect for evaluating quality before your full order</li>
+    </ul>
+  </div>
+
+  <form id="bdsp-form" action="/cart/add" method="post">
+    <div class="bdsp-grid">
+      <div class="bdsp-card" data-variant="{{ regular_variant.id }}" data-name="Regular">
+        <div class="bdsp-swatch regular"></div>
+        <div class="bdsp-card-name">Regular</div>
+        <div class="bdsp-card-desc">Clean, matte vinyl. Sharp and professional — the go-to for card shops.</div>
+        <div class="bdsp-card-price">{{ regular_variant.price | money_without_trailing_zeros }}</div>
+      </div>
+      <div class="bdsp-card" data-variant="{{ holo_variant.id }}" data-name="Holo / Cracked Ice">
+        <div class="bdsp-badge">Most Popular</div>
+        <div class="bdsp-swatch holo"></div>
+        <div class="bdsp-card-name">Holo / Cracked Ice</div>
+        <div class="bdsp-card-desc">Both premium finishes in one pack — rainbow holo plus fractured-ice pattern.</div>
+        <div class="bdsp-card-price">{{ holo_variant.price | money_without_trailing_zeros }}</div>
+      </div>
+    </div>
+
+    <input type="hidden" name="id" id="bdsp-variant-id" value="">
+    <input type="hidden" name="quantity" value="1">
+
+    <button type="submit" class="bdsp-submit" id="bdsp-submit" disabled>
+      Select a Pack Above
+    </button>
+  </form>
+
+  <div class="bdsp-upsell">
+    <p>Ready for custom card holder stickers with your logo?</p>
+    <a href="{{ routes.root_url }}products/custom-card-stickers">Shop Custom Card Stickers &rarr;</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  var selectedVariant = null;
+  var submitBtn = document.getElementById('bdsp-submit');
+
+  document.querySelectorAll('.bdsp-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      document.querySelectorAll('.bdsp-card').forEach(function(c) { c.classList.remove('selected'); });
+      this.classList.add('selected');
+      selectedVariant = this.dataset.variant;
+      document.getElementById('bdsp-variant-id').value = selectedVariant;
+      submitBtn.textContent = 'Add to Cart — ' + this.dataset.name;
+      submitBtn.classList.add('ready');
+      submitBtn.disabled = false;
+    });
+  });
+
+  document.getElementById('bdsp-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!selectedVariant) { alert('Please select a pack first.'); return; }
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="bdsp-spinner"></span>Adding to Cart...';
+    setTimeout(function() { document.getElementById('bdsp-form').submit(); }, 400);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "BD Sample Pack",
+  "settings": []
+}
+{% endschema %}
