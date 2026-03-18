@@ -1,0 +1,499 @@
+{% comment %}
+  BIG DAWGS — Cart Overlay Section
+  Injected before main-cart in cart.json.
+  Provides: dark page-wide CSS override, branded header with step indicator,
+  and JS that injects conversion psychology elements into the cart summary.
+{% endcomment %}
+
+<style>
+  /* ─── CSS VARS ─── */
+  :root {
+    --bd-red: #CC0000;
+    --bd-red-hover: #e00000;
+    --bd-black: #0f0f0f;
+    --bd-dark: #1a1a1a;
+    --bd-card: #181818;
+    --bd-border: #2a2a2a;
+    --bd-white: #ffffff;
+    --bd-muted: #999999;
+    --bd-dim: #555555;
+  }
+
+  /* ─── PAGE-WIDE DARK OVERRIDE ─── */
+  body {
+    background-color: var(--bd-black) !important;
+    color: var(--bd-white) !important;
+  }
+
+  /* ─── CART HEADER ─── */
+  .bd-cart-header {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 50%, #0a0a0a 100%);
+    padding: 2.8rem 1.5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .bd-cart-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center top, rgba(204,0,0,0.10) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .bd-cart-header-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Step indicator */
+  .bd-cart-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 1.4rem;
+  }
+  .bd-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+  }
+  .bd-step-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .5px;
+  }
+  .bd-step--done .bd-step-dot {
+    background: #2a2a2a;
+    color: #666;
+    font-size: .8rem;
+  }
+  .bd-step--active .bd-step-dot {
+    background: var(--bd-red);
+    color: #fff;
+    box-shadow: 0 0 14px rgba(204,0,0,.45);
+  }
+  .bd-step--next .bd-step-dot {
+    background: #1e1e1e;
+    border: 1px solid #2e2e2e;
+    color: #3a3a3a;
+  }
+  .bd-step-label {
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  .bd-step--done .bd-step-label  { color: #444; }
+  .bd-step--active .bd-step-label { color: var(--bd-red); }
+  .bd-step--next .bd-step-label  { color: #333; }
+  .bd-step-connector {
+    width: 48px;
+    height: 1px;
+    margin: 0 4px;
+    margin-bottom: 18px;
+    flex-shrink: 0;
+  }
+  .bd-step-connector--done  { background: #2a2a2a; }
+  .bd-step-connector--next  { background: #1e1e1e; }
+
+  /* Cart heading */
+  .bd-cart-title {
+    color: #fff !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    display: block !important;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0 0 .4rem;
+    line-height: 1.1;
+  }
+  .bd-cart-title em {
+    font-style: normal;
+    color: var(--bd-red);
+  }
+  .bd-cart-subtitle {
+    color: #888;
+    font-size: .85rem;
+    letter-spacing: .5px;
+  }
+
+  /* ─── CART SECTION DARK OVERRIDE ─── */
+  [id$="__cart-section"],
+  [id$="__cart-section"] .section-background {
+    background-color: var(--bd-black) !important;
+    color: var(--bd-white) !important;
+  }
+
+  /* Cart form layout */
+  [id$="__cart-section"] .cart-form {
+    background: transparent !important;
+  }
+
+  /* Cart item rows */
+  [id$="__cart-section"] cart-items-component,
+  [id$="__cart-section"] .cart-items,
+  [id$="__cart-section"] .cart-item {
+    background: transparent !important;
+    color: var(--bd-white) !important;
+    border-color: var(--bd-border) !important;
+  }
+  [id$="__cart-section"] .cart-item__title,
+  [id$="__cart-section"] .cart-item__name,
+  [id$="__cart-section"] [class*="cart-item"] a,
+  [id$="__cart-section"] [class*="cart-item"] h2,
+  [id$="__cart-section"] [class*="cart-item"] h3,
+  [id$="__cart-section"] [class*="cart-item"] p {
+    color: #eee !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  [id$="__cart-section"] .cart-item__price,
+  [id$="__cart-section"] [class*="price"] {
+    color: #bbb !important;
+  }
+  /* Quantity controls */
+  [id$="__cart-section"] quantity-input,
+  [id$="__cart-section"] .quantity {
+    background: #1e1e1e !important;
+    border-color: #333 !important;
+    color: #eee !important;
+  }
+  [id$="__cart-section"] .quantity__button,
+  [id$="__cart-section"] [class*="quantity"] button {
+    background: transparent !important;
+    color: #bbb !important;
+    border-color: #333 !important;
+  }
+  [id$="__cart-section"] .quantity__input,
+  [id$="__cart-section"] [class*="quantity"] input {
+    background: transparent !important;
+    color: #eee !important;
+  }
+  /* Remove link */
+  [id$="__cart-section"] [class*="remove"],
+  [id$="__cart-section"] cart-remove-button a,
+  [id$="__cart-section"] cart-remove-button button {
+    color: #555 !important;
+  }
+  [id$="__cart-section"] [class*="remove"]:hover,
+  [id$="__cart-section"] cart-remove-button a:hover,
+  [id$="__cart-section"] cart-remove-button button:hover {
+    color: var(--bd-red) !important;
+  }
+
+  /* ─── CART SUMMARY / SIDEBAR ─── */
+  [id$="__cart-section"] .cart-page__summary,
+  [id$="__cart-section"] .cart-page__summary .section-background {
+    background-color: var(--bd-black) !important;
+  }
+  [id$="__cart-section"] .cart-summary {
+    background: var(--bd-card) !important;
+    border: 1px solid var(--bd-border) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+  [id$="__cart-section"] .cart-totals,
+  [id$="__cart-section"] [class*="totals"] {
+    background: transparent !important;
+    color: var(--bd-white) !important;
+  }
+  [id$="__cart-section"] .cart-totals__subtotal,
+  [id$="__cart-section"] [class*="subtotal"],
+  [id$="__cart-section"] [class*="total-label"],
+  [id$="__cart-section"] [class*="total-value"] {
+    color: #ddd !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  /* Total line */
+  [id$="__cart-section"] .cart-totals__total,
+  [id$="__cart-section"] [class*="cart-total"] strong,
+  [id$="__cart-section"] [class*="cart-total"] {
+    color: #fff !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  /* Dividers inside summary */
+  [id$="__cart-section"] .cart-summary hr,
+  [id$="__cart-section"] .cart-totals hr,
+  [id$="__cart-section"] [class*="divider"] {
+    border-color: var(--bd-border) !important;
+  }
+  /* Discount / coupon input */
+  [id$="__cart-section"] [class*="discount"],
+  [id$="__cart-section"] [class*="coupon"],
+  [id$="__cart-section"] [id*="discount"],
+  [id$="__cart-section"] [name*="discount"] {
+    background: #1e1e1e !important;
+    border-color: #333 !important;
+    color: #eee !important;
+  }
+
+  /* ─── CHECKOUT BUTTON ─── */
+  [id$="__cart-section"] .cart__checkout-button,
+  [id$="__cart-section"] button[name="checkout"] {
+    background: var(--bd-red) !important;
+    border-color: var(--bd-red) !important;
+    color: #fff !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    border-radius: 6px !important;
+    padding: 1rem 1.5rem !important;
+    width: 100% !important;
+    cursor: pointer !important;
+    transition: background .2s, transform .15s, box-shadow .2s !important;
+    box-shadow: 0 4px 20px rgba(204,0,0,.35) !important;
+  }
+  [id$="__cart-section"] .cart__checkout-button:hover,
+  [id$="__cart-section"] button[name="checkout"]:hover {
+    background: var(--bd-red-hover) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 28px rgba(204,0,0,.5) !important;
+  }
+
+  /* ─── BD CONVERSION INJECTED ELEMENTS ─── */
+
+  /* Trust badges strip above checkout */
+  .bd-trust-strip {
+    display: flex;
+    gap: .5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: .9rem 0 .7rem;
+  }
+  .bd-trust-badge {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: #777;
+  }
+  .bd-trust-badge svg {
+    flex-shrink: 0;
+    opacity: .7;
+  }
+
+  /* Guarantee line */
+  .bd-guarantee {
+    text-align: center;
+    font-size: .7rem;
+    color: #555;
+    letter-spacing: .5px;
+    margin: .5rem 0 0;
+    line-height: 1.5;
+  }
+  .bd-guarantee strong {
+    color: #888;
+  }
+
+  /* Urgency nudge */
+  .bd-urgency {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    justify-content: center;
+    background: rgba(204,0,0,.08);
+    border: 1px solid rgba(204,0,0,.2);
+    border-radius: 6px;
+    padding: .55rem .9rem;
+    margin: .8rem 0;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: #cc6666;
+  }
+  .bd-urgency-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--bd-red);
+    flex-shrink: 0;
+    animation: bd-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes bd-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .4; transform: scale(.7); }
+  }
+
+  /* Checkout note */
+  .bd-checkout-note {
+    text-align: center;
+    font-size: .65rem;
+    color: #3a3a3a;
+    letter-spacing: .5px;
+    margin-top: .6rem;
+  }
+
+  /* ─── "YOU MAY ALSO LIKE" SECTION DARK OVERRIDE ─── */
+  [id$="__product_list_NNFgcy"],
+  [id$="__product_list_NNFgcy"] .section-background,
+  [id$="__product_list_NNFgcy"] [class*="color-scheme"] {
+    background-color: #111 !important;
+    color: #eee !important;
+  }
+  [id$="__product_list_NNFgcy"] h2,
+  [id$="__product_list_NNFgcy"] h3,
+  [id$="__product_list_NNFgcy"] [class*="title"] {
+    color: #eee !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  [id$="__product_list_NNFgcy"] product-card {
+    background: #181818 !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
+  [id$="__product_list_NNFgcy"] product-card h2,
+  [id$="__product_list_NNFgcy"] product-card h3,
+  [id$="__product_list_NNFgcy"] product-card [class*="title"] {
+    color: #ddd !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  [id$="__product_list_NNFgcy"] [class*="price"] {
+    color: #999 !important;
+  }
+  [id$="__product_list_NNFgcy"] a[class*="view"] {
+    color: var(--bd-red) !important;
+  }
+
+  /* ─── EMPTY CART STATE ─── */
+  [id$="__cart-section"] [class*="empty"],
+  [id$="__cart-section"] [class*="cart-empty"] {
+    background: transparent !important;
+    color: #888 !important;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 750px) {
+    .bd-cart-header { padding: 2rem 1.2rem 1.6rem; }
+    .bd-cart-title { font-size: 1.6rem !important; }
+    .bd-step-connector { width: 28px; }
+  }
+</style>
+
+<!-- BRANDED CART HEADER -->
+<div class="bd-cart-header">
+  <div class="bd-cart-header-inner">
+
+    <!-- Step indicator -->
+    <div class="bd-cart-steps">
+      <div class="bd-step bd-step--done">
+        <div class="bd-step-dot">✓</div>
+        <div class="bd-step-label">Browse</div>
+      </div>
+      <div class="bd-step-connector bd-step-connector--done"></div>
+      <div class="bd-step bd-step--active">
+        <div class="bd-step-dot">2</div>
+        <div class="bd-step-label">Review</div>
+      </div>
+      <div class="bd-step-connector bd-step-connector--next"></div>
+      <div class="bd-step bd-step--next">
+        <div class="bd-step-dot">3</div>
+        <div class="bd-step-label">Checkout</div>
+      </div>
+    </div>
+
+    <h1 class="bd-cart-title">Your <em>Order</em>.</h1>
+    <p class="bd-cart-subtitle">Review your picks — then lock it in.</p>
+
+  </div>
+</div>
+
+<script>
+/* ─── CONVERSION PSYCHOLOGY INJECTOR ─── */
+(function () {
+  'use strict';
+
+  function onReady(fn) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fn);
+    } else {
+      fn();
+    }
+  }
+
+  function inject() {
+    var checkoutBtn = document.querySelector('[id$="__cart-section"] button[name="checkout"]');
+    if (!checkoutBtn) {
+      setTimeout(inject, 600);
+      return;
+    }
+
+    /* ── 1. Urgency nudge — above checkout button ── */
+    if (!document.querySelector('.bd-urgency')) {
+      var urgency = document.createElement('div');
+      urgency.className = 'bd-urgency';
+      urgency.innerHTML = '<span class="bd-urgency-dot"></span> Limited stock — items not reserved until checkout';
+      checkoutBtn.parentNode.insertBefore(urgency, checkoutBtn);
+    }
+
+    /* ── 2. Trust badge strip — above checkout ── */
+    if (!document.querySelector('.bd-trust-strip')) {
+      var strip = document.createElement('div');
+      strip.className = 'bd-trust-strip';
+      strip.innerHTML =
+        '<span class="bd-trust-badge">' +
+          '<svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M5.5 0L0 2v4c0 3.3 2.3 6.4 5.5 7C8.7 12.4 11 9.3 11 6V2L5.5 0z" fill="#555"/></svg>' +
+          '&nbsp;Secure Checkout' +
+        '</span>' +
+        '<span class="bd-trust-badge">' +
+          '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="0.5" y="0.5" width="11" height="11" rx="5.5" stroke="#555"/><path d="M3.5 6l2 2 3-3" stroke="#555" stroke-width="1.2" stroke-linecap="round"/></svg>' +
+          '&nbsp;Collector Approved' +
+        '</span>' +
+        '<span class="bd-trust-badge">' +
+          '<svg width="13" height="10" viewBox="0 0 13 10" fill="none"><rect x="0.5" y="0.5" width="12" height="9" rx="1.5" stroke="#555"/><path d="M0 3h13" stroke="#555"/></svg>' +
+          '&nbsp;All Major Cards' +
+        '</span>';
+      checkoutBtn.parentNode.insertBefore(strip, checkoutBtn);
+    }
+
+    /* ── 3. Guarantee line — below checkout button ── */
+    if (!document.querySelector('.bd-guarantee')) {
+      var guarantee = document.createElement('p');
+      guarantee.className = 'bd-guarantee';
+      guarantee.innerHTML = '<strong>100% satisfaction guarantee</strong> — if something\'s off, we make it right.';
+      var next = checkoutBtn.nextSibling;
+      checkoutBtn.parentNode.insertBefore(guarantee, next || null);
+    }
+
+    /* ── 4. Shipping note below guarantee ── */
+    if (!document.querySelector('.bd-checkout-note')) {
+      var note = document.createElement('p');
+      note.className = 'bd-checkout-note';
+      note.textContent = 'Shipping & taxes calculated at next step';
+      var g = document.querySelector('.bd-guarantee');
+      if (g) g.parentNode.insertBefore(note, g.nextSibling || null);
+    }
+  }
+
+  onReady(inject);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "BigDawgs Cart Overlay",
+  "settings": []
+}
+{% endschema %}
