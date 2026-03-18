@@ -1,0 +1,509 @@
+{% comment %}
+  BIG DAWGS — Contact Page Section
+  Fully branded dark section matching About / FAQ aesthetic
+  Warm, inviting design that encourages real conversation
+{% endcomment %}
+
+<style>
+  :root {
+    --bd-red: #CC0000;
+    --bd-red-dark: #990000;
+    --bd-gold: #D4A017;
+    --bd-black: #111111;
+    --bd-dark: #1A1A1A;
+    --bd-gray: #333333;
+    --bd-light: #F5F5F5;
+    --bd-white: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+
+  /* ── CONTACT HERO ── */
+  .bd-contact-hero {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 50%, #0a0a0a 100%);
+    color: var(--bd-white);
+    padding: 5rem 1.5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .bd-contact-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(204,0,0,0.14) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .bd-contact-hero-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .bd-contact-badge {
+    display: inline-block;
+    background: var(--bd-red);
+    color: var(--bd-white);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: .3rem .85rem;
+    border-radius: 3px;
+    margin-bottom: 1.2rem;
+  }
+  .bd-contact-hero h1 {
+    color: var(--bd-white);
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .bd-contact-hero h1 span { color: var(--bd-red); }
+  .bd-contact-hero p {
+    color: #bbb;
+    font-size: 1.1rem;
+    max-width: 560px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+  }
+  .bd-contact-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--bd-red);
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  /* ── BODY — TWO COLUMN ── */
+  .bd-contact-body {
+    background: var(--bd-dark);
+    padding: 5rem 1.5rem;
+  }
+  .bd-contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  /* ── LEFT: INFO PANEL ── */
+  .bd-contact-info .bd-eyebrow {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--bd-gold);
+    margin-bottom: .6rem;
+    display: block;
+  }
+  .bd-contact-info h2 {
+    color: var(--bd-white);
+    font-size: 1.9rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+    line-height: 1.2;
+  }
+  .bd-contact-info h2 span { color: var(--bd-red); }
+  .bd-contact-info > p {
+    color: #aaa;
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+  .bd-contact-info > p strong { color: var(--bd-white); }
+
+  /* Info tiles */
+  .bd-contact-tiles {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .bd-contact-tile {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: var(--bd-black);
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    transition: border-color .25s;
+  }
+  .bd-contact-tile:hover { border-color: var(--bd-red); }
+  .bd-contact-tile-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .bd-contact-tile-text h4 {
+    color: var(--bd-white);
+    font-size: .85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 .25rem;
+  }
+  .bd-contact-tile-text p {
+    color: #888;
+    font-size: .88rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .bd-contact-tile-text a {
+    color: var(--bd-gold);
+    text-decoration: none;
+  }
+  .bd-contact-tile-text a:hover { color: var(--bd-white); }
+
+  /* FAQ nudge */
+  .bd-contact-faq-nudge {
+    background: linear-gradient(135deg, #1a1a1a, #222);
+    border: 1px solid #333;
+    border-left: 3px solid var(--bd-gold);
+    border-radius: 8px;
+    padding: 1rem 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    text-decoration: none;
+    transition: border-color .25s, background .25s;
+  }
+  .bd-contact-faq-nudge:hover {
+    border-left-color: var(--bd-red);
+    background: #202020;
+  }
+  .bd-contact-faq-nudge-text {
+    font-size: .88rem;
+    color: #aaa;
+    line-height: 1.4;
+  }
+  .bd-contact-faq-nudge-text strong {
+    display: block;
+    color: var(--bd-white);
+    font-size: .9rem;
+    margin-bottom: .15rem;
+  }
+  .bd-contact-faq-arrow {
+    color: var(--bd-gold);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    transition: transform .2s;
+  }
+  .bd-contact-faq-nudge:hover .bd-contact-faq-arrow { transform: translateX(4px); }
+
+  /* ── RIGHT: FORM ── */
+  .bd-contact-form-wrap {
+    background: var(--bd-black);
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+    padding: 2.5rem;
+  }
+  .bd-contact-form-wrap h3 {
+    color: var(--bd-white);
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 .4rem;
+  }
+  .bd-contact-form-wrap p.bd-form-sub {
+    color: #888;
+    font-size: .88rem;
+    margin: 0 0 1.8rem;
+    line-height: 1.5;
+  }
+
+  .bd-form-row {
+    margin-bottom: 1.2rem;
+  }
+  .bd-form-row label {
+    display: block;
+    color: #aaa;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: .45rem;
+  }
+  .bd-form-row input,
+  .bd-form-row select,
+  .bd-form-row textarea {
+    width: 100%;
+    background: #181818;
+    border: 1px solid #333;
+    border-radius: 7px;
+    color: var(--bd-white);
+    font-size: .95rem;
+    padding: .75rem 1rem;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    font-family: inherit;
+    resize: vertical;
+  }
+  .bd-form-row input::placeholder,
+  .bd-form-row textarea::placeholder { color: #555; }
+  .bd-form-row input:focus,
+  .bd-form-row select:focus,
+  .bd-form-row textarea:focus {
+    border-color: var(--bd-red);
+    box-shadow: 0 0 0 3px rgba(204,0,0,0.12);
+  }
+  .bd-form-row select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 12px;
+    cursor: pointer;
+  }
+  .bd-form-row select option { background: #1a1a1a; }
+  .bd-form-row textarea { min-height: 130px; }
+  .bd-form-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .bd-form-submit {
+    display: block;
+    width: 100%;
+    background: var(--bd-red);
+    color: var(--bd-white);
+    font-size: .92rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 7px;
+    padding: .95rem 2rem;
+    cursor: pointer;
+    transition: background .2s, transform .2s, box-shadow .2s;
+    box-shadow: 0 6px 20px rgba(204,0,0,0.35);
+    margin-top: .5rem;
+    font-family: inherit;
+  }
+  .bd-form-submit:hover {
+    background: var(--bd-red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(204,0,0,0.5);
+  }
+  .bd-form-disclaimer {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: .78rem;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  /* Success message */
+  .bd-form-success {
+    text-align: center;
+    padding: 2rem 1rem;
+    display: none;
+  }
+  .bd-form-success-icon {
+    font-size: 2.5rem;
+    margin-bottom: .75rem;
+  }
+  .bd-form-success h4 {
+    color: var(--bd-white);
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin: 0 0 .5rem;
+  }
+  .bd-form-success p {
+    color: #888;
+    font-size: .9rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── CTA STRIP ── */
+  .bd-contact-cta {
+    background: var(--bd-red);
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+  }
+  .bd-contact-cta h2 {
+    color: var(--bd-white);
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0 0 .6rem;
+  }
+  .bd-contact-cta p {
+    color: rgba(255,255,255,.8);
+    font-size: 1rem;
+    margin: 0 0 1.8rem;
+  }
+  .bd-contact-cta-btn {
+    display: inline-block;
+    background: var(--bd-white);
+    color: var(--bd-red);
+    font-weight: 700;
+    font-size: .95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: .85rem 2.4rem;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background .2s, transform .2s;
+  }
+  .bd-contact-cta-btn:hover {
+    background: var(--bd-light);
+    transform: translateY(-2px);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .bd-contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .bd-contact-hero h1 { font-size: 2.1rem; }
+  }
+  @media (max-width: 560px) {
+    .bd-contact-form-wrap { padding: 1.6rem; }
+    .bd-contact-hero h1 { font-size: 1.8rem; }
+    .bd-form-two-col { grid-template-columns: 1fr; }
+  }
+</style>
+
+<!-- HERO -->
+<section class="bd-contact-hero">
+  <div class="bd-contact-hero-inner">
+    <span class="bd-contact-badge">Hit Us Up</span>
+    <h1>We Actually Read<br>Every <span>Message</span>.</h1>
+    <p>Questions, custom requests, bulk orders, or just want to talk cards — we're here. Real people, real responses. No bots, no runaround.</p>
+    <div class="bd-contact-divider"></div>
+  </div>
+</section>
+
+<!-- BODY -->
+<section class="bd-contact-body">
+  <div class="bd-contact-inner">
+
+    <!-- LEFT: INFO -->
+    <div class="bd-contact-info">
+      <span class="bd-eyebrow">Get In Touch</span>
+      <h2>We're <span>Collectors</span> Too.</h2>
+      <p>Big Dawgs was built from the hobby up — so when you reach out, you're talking to someone who gets it. Whether it's a <strong>bulk order for your card shop</strong>, a question about finishes, or you just need help getting your design right, we respond fast and we actually care about the outcome.</p>
+
+      <div class="bd-contact-tiles">
+        <div class="bd-contact-tile">
+          <div class="bd-contact-tile-icon">⚡</div>
+          <div class="bd-contact-tile-text">
+            <h4>Fast Responses</h4>
+            <p>Most messages get a reply within a few hours — usually same business day. We don't let questions sit.</p>
+          </div>
+        </div>
+        <div class="bd-contact-tile">
+          <div class="bd-contact-tile-icon">📦</div>
+          <div class="bd-contact-tile-text">
+            <h4>Bulk &amp; Custom Orders</h4>
+            <p>Card shops, dealers, and collectors ordering 50+ stickers — reach out and we'll work out pricing and logistics together.</p>
+          </div>
+        </div>
+        <div class="bd-contact-tile">
+          <div class="bd-contact-tile-icon">🎨</div>
+          <div class="bd-contact-tile-text">
+            <h4>Design Help</h4>
+            <p>Not sure how your artwork will look on a sticker? Send it over. We'll tell you exactly what works and what to tweak.</p>
+          </div>
+        </div>
+        <div class="bd-contact-tile">
+          <div class="bd-contact-tile-icon">📱</div>
+          <div class="bd-contact-tile-text">
+            <h4>Find Us on Instagram</h4>
+            <p>DMs are open — <a href="https://www.instagram.com/bigdawgsstickers" target="_blank" rel="noopener">@bigdawgsstickers</a>. It's the fastest way to share photos or get a quick answer.</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="/pages/faq" class="bd-contact-faq-nudge">
+        <div class="bd-contact-faq-nudge-text">
+          <strong>Have a common question?</strong>
+          Our FAQ covers sizing, turnaround, artwork specs, and more.
+        </div>
+        <span class="bd-contact-faq-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- RIGHT: FORM -->
+    <div class="bd-contact-form-wrap">
+      <h3>Send Us a Message</h3>
+      <p class="bd-form-sub">Fill out the form and we'll get back to you fast — no automated replies, just a real response from our team.</p>
+
+      {%- if form.posted_successfully? -%}
+        <div class="bd-form-success" style="display:block;">
+          <div class="bd-form-success-icon">✅</div>
+          <h4>Message Received!</h4>
+          <p>Thanks for reaching out. We'll be in touch shortly — usually within a few hours on business days.</p>
+        </div>
+      {%- else -%}
+        {%- form 'contact' -%}
+          {%- if form.errors -%}
+            <div style="background:#2a0a0a;border:1px solid #CC0000;border-radius:7px;padding:.85rem 1rem;margin-bottom:1.2rem;color:#ff9999;font-size:.88rem;">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="bd-form-two-col">
+            <div class="bd-form-row">
+              <label for="contact-name">Your Name</label>
+              <input type="text" id="contact-name" name="contact[name]"
+                     value="{{ form.name }}" placeholder="First Last" autocomplete="name" required>
+            </div>
+            <div class="bd-form-row">
+              <label for="contact-email">Email Address</label>
+              <input type="email" id="contact-email" name="contact[email]"
+                     value="{{ form.email }}" placeholder="you@email.com" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="bd-form-row">
+            <label for="contact-subject">What Can We Help With?</label>
+            <select id="contact-subject" name="contact[subject]">
+              <option value="">Select a topic...</option>
+              <option value="Order Question">Order Question</option>
+              <option value="Custom / Bulk Order">Custom or Bulk Order</option>
+              <option value="Design Help">Design Help</option>
+              <option value="Artwork Submission">Artwork Submission</option>
+              <option value="Shipping & Tracking">Shipping &amp; Tracking</option>
+              <option value="Returns & Issues">Returns &amp; Issues</option>
+              <option value="General Question">General Question</option>
+            </select>
+          </div>
+
+          <div class="bd-form-row">
+            <label for="contact-message">Your Message</label>
+            <textarea id="contact-message" name="contact[body]"
+                      placeholder="Tell us what you're working on, what you need, or any questions you have..." required>{{ form.body }}</textarea>
+          </div>
+
+          <button type="submit" class="bd-form-submit">Send Message →</button>
+          <p class="bd-form-disclaimer">We'll reply to your email — usually within a few hours on business days.</p>
+        {%- endform -%}
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="bd-contact-cta">
+  <h2>Ready to Build Your Order?</h2>
+  <p>Skip the form — go straight to the goods. Browse our lineup and get your stickers dialed in.</p>
+  <a href="/collections/all" class="bd-contact-cta-btn">Shop All Products →</a>
+</section>
+
+{% schema %}
+{
+  "name": "BigDawgs Contact",
+  "settings": []
+}
+{% endschema %}
