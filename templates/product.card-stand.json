@@ -3,7 +3,11 @@
     "bd-card-stand-main": {
       "type": "bd-card-stand",
       "settings": {}
+    },
+    "bd-showcase-cta": {
+      "type": "bd-showcase-cta",
+      "settings": {}
     }
   },
-  "order": ["bd-card-stand-main"]
+  "order": ["bd-card-stand-main", "bd-showcase-cta"]
 }

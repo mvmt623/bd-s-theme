@@ -1,0 +1,74 @@
+{% comment %}
+  BD Showcase CTA
+  Slim trust-builder strip rendered below every product form.
+  Links shoppers to /pages/sticker-showcase to see finish photos before ordering.
+{% endcomment %}
+
+<style>
+  .bd-showcase-cta {
+    background: #111111;
+    border-top: 3px solid #CC0000;
+    padding: 32px 20px;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .bd-showcase-cta__eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #CC0000;
+    margin: 0 0 10px;
+  }
+
+  .bd-showcase-cta__heading {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px;
+    line-height: 1.25;
+  }
+
+  .bd-showcase-cta__sub {
+    font-size: 14px;
+    color: #aaaaaa;
+    margin: 0 0 22px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bd-showcase-cta__link {
+    display: inline-block;
+    background-color: #CC0000;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .bd-showcase-cta__link:hover {
+    background-color: #990000;
+    transform: translateY(-2px);
+  }
+</style>
+
+<div class="bd-showcase-cta">
+  <p class="bd-showcase-cta__eyebrow">See it before you order</p>
+  <h3 class="bd-showcase-cta__heading">Not sure which finish to pick?</h3>
+  <p class="bd-showcase-cta__sub">Browse real photos of every finish — Matte, Holographic &amp; Cracked Ice — before you commit.</p>
+  <a class="bd-showcase-cta__link" href="/pages/sticker-showcase">View the Sticker Showcase &rarr;</a>
+</div>
+
+{% schema %}
+{
+  "name": "Showcase CTA",
+  "settings": []
+}
+{% endschema %}

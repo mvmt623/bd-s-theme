@@ -3,7 +3,11 @@
     "bigdawgs-product-form": {
       "type": "bigdawgs-product-form",
       "settings": {}
+    },
+    "bd-showcase-cta": {
+      "type": "bd-showcase-cta",
+      "settings": {}
     }
   },
-  "order": ["bigdawgs-product-form"]
+  "order": ["bigdawgs-product-form", "bd-showcase-cta"]
 }

@@ -3,7 +3,11 @@
     "bd-flat-stickers-main": {
       "type": "bd-flat-stickers",
       "settings": {}
+    },
+    "bd-showcase-cta": {
+      "type": "bd-showcase-cta",
+      "settings": {}
     }
   },
-  "order": ["bd-flat-stickers-main"]
+  "order": ["bd-flat-stickers-main", "bd-showcase-cta"]
 }

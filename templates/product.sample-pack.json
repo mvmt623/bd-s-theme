@@ -3,7 +3,11 @@
     "bd-sample-pack-main": {
       "type": "bd-sample-pack",
       "settings": {}
+    },
+    "bd-showcase-cta": {
+      "type": "bd-showcase-cta",
+      "settings": {}
     }
   },
-  "order": ["bd-sample-pack-main"]
+  "order": ["bd-sample-pack-main", "bd-showcase-cta"]
 }
