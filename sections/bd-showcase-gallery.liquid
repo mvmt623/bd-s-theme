@@ -299,16 +299,14 @@
   }
 
   /* ── Toploader Matte — per-photo position correction ────────────────
-     This photo has more empty space around the sticker at rest than the
-     other cards, making it appear smaller. A modest default scale(1.15)
-     closes the visual gap.
-     object-position / transform-origin shift the crop and zoom anchor
-     down to where the sticker actually sits in this photo.
+     Sticker sits near the top of this photo. object-position: top shows
+     that region; a modest scale(1.15) closes the extra empty space at rest.
+     transform-origin anchors the hover-zoom on the sticker.
      Adjust % values if the sticker position differs in the final photo.
   ────────────────────────────────────────────────────────────────────── */
   .bdsg-card-photo[data-card="tl-matte"] img {
-    object-position: center 42%;
-    transform-origin: 50% 42%;
+    object-position: center top;
+    transform-origin: 50% 38%;
     transform: scale(1.15);
   }
   /* Re-state hover scale so it overrides the base scale(1.15) cleanly */
@@ -317,14 +315,13 @@
   }
 
   /* ── Toploader Holographic — per-photo position correction ──────────
-     Sticker sits lower in this photo's frame than the global 15% anchor
-     assumes. Shift object-position and transform-origin down so the zoom
-     centres on the sticker rather than empty space above it.
+     Sticker sits near the top of this photo. object-position: top shows
+     that region; transform-origin anchors the hover-zoom on the sticker.
      Adjust % values if the sticker position differs in the final photo.
   ────────────────────────────────────────────────────────────────────── */
   .bdsg-card-photo[data-card="tl-holo"] img {
-    object-position: center 42%;
-    transform-origin: 50% 42%;
+    object-position: center top;
+    transform-origin: 50% 38%;
   }
 
   /* Placeholder (no photo uploaded yet) */
