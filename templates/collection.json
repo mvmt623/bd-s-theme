@@ -1,13 +1,9 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */{
+{
   "sections": {
+    "bd-collection-hero": {
+      "type": "bd-collection-hero",
+      "settings": {}
+    },
     "section": {
       "type": "section",
       "blocks": {
@@ -227,6 +223,7 @@
     }
   },
   "order": [
+    "bd-collection-hero",
     "section",
     "main"
   ]
