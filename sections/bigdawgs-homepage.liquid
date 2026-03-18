@@ -345,15 +345,19 @@
 
   /* ── PRICING ── */
   .bd-pricing-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
-  .bd-pricing-box { background: var(--bd-white); border: 1px solid #ddd; border-radius: 8px; padding: 2rem; }
+  .bd-pricing-box { background: var(--bd-white); border: 1px solid #ddd; border-radius: 8px; padding: 2rem; overflow-x: auto; }
   .bd-pricing-box h3 { color: var(--bd-black); font-size: 1.05rem; font-weight: 800; margin-bottom: 1rem; text-transform: uppercase; }
-  .bd-pricing-box table { width: 100%; border-collapse: collapse; font-size: .88rem; }
-  .bd-pricing-box th { background: var(--bd-black); color: var(--bd-white); padding: .5rem .75rem; text-align: left; font-size: .75rem; text-transform: uppercase; letter-spacing: .5px; }
-  .bd-pricing-box td { padding: .5rem .75rem; border-bottom: 1px solid #eee; color: #333; }
+  .bd-pricing-box table { width: 100%; border-collapse: collapse; font-size: .82rem; min-width: 340px; }
+  .bd-pricing-box th { background: var(--bd-black); color: var(--bd-white); padding: .45rem .6rem; text-align: center; font-size: .72rem; text-transform: uppercase; letter-spacing: .5px; }
+  .bd-pricing-box th:first-child { text-align: left; }
+  .bd-pricing-box td { padding: .45rem .6rem; border-bottom: 1px solid #eee; color: #333; text-align: center; white-space: nowrap; }
+  .bd-pricing-box td:first-child { text-align: left; font-weight: 600; color: #555; }
   .bd-pricing-box tr:last-child td { border-bottom: none; }
+  .bd-pricing-box tr.bd-best-value td { background: #fffbea; font-weight: 700; }
+  .bd-best-badge { display: inline-block; background: var(--bd-gold); color: var(--bd-black); font-size: .65rem; font-weight: 800; padding: 1px 5px; border-radius: 3px; margin-left: 4px; vertical-align: middle; letter-spacing: .3px; }
   .bd-pricing-note { font-size: .78rem; color: #888; margin-top: .75rem; }
   .bd-pricing-cta { text-align: center; margin-top: 2.5rem; }
-  @media (max-width: 640px) { .bd-pricing-cols { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .bd-pricing-cols { grid-template-columns: 1fr; } }
 
   /* ── REVIEWS ── */
   .bd-reviews-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 2.5rem; }
@@ -517,7 +521,7 @@
       <div class="bd-step">
         <div class="bd-step-num">3</div>
         <h3>Receive Your Stickers</h3>
-        <p>Most orders ship within 5&ndash;7 business days after artwork approval.</p>
+        <p>Most orders ship within 5–7 business days after artwork approval.</p>
       </div>
     </div>
   </div>
@@ -564,32 +568,56 @@
     <h2>BULK PRICING THAT SCALES WITH YOU</h2>
     <p class="bd-section-sub">The more you order, the better the deal. Contact us for exact pricing — we confirm your total before invoicing.</p>
     <div class="bd-pricing-cols">
-      <!-- ✅ CHANGE 1: "One Touch (Mag)" → "One Touch" -->
       <div class="bd-pricing-box">
         <h3>One Touch Stickers</h3>
         <table>
-          <thead><tr><th>Size</th><th>Tier 1</th><th>Tier 2</th><th>Best Value</th></tr></thead>
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Small (0.5")</th>
+              <th>Medium (0.75")</th>
+              <th>Large (1.0")</th>
+            </tr>
+          </thead>
           <tbody>
-            <tr><td>Small (0.5")</td><td>25 / $6</td><td>50 / $10</td><td>100 / $15</td></tr>
-            <tr><td>Medium (0.75")</td><td>20 / $6</td><td>45 / $10</td><td>90 / $15</td></tr>
-            <!-- ✅ CHANGE 7: Wide → Large -->
-            <tr><td>Large (1.0")</td><td>15 / $6</td><td>35 / $10</td><td>70 / $15</td></tr>
+            <tr><td>1</td><td>30 / $6</td><td>25 / $6</td><td>15 / $6</td></tr>
+            <tr><td>2</td><td>60 / $10</td><td>50 / $10</td><td>35 / $10</td></tr>
+            <tr><td>3</td><td>120 / $15</td><td>100 / $15</td><td>70 / $15</td></tr>
+            <tr><td>4</td><td>250 / $27</td><td>250 / $30</td><td>100 / $20</td></tr>
+            <tr><td>5</td><td>500 / $50</td><td>500 / $55</td><td>250 / $40</td></tr>
+            <tr class="bd-best-value"><td>6 <span class="bd-best-badge">BEST</span></td><td>1,000 / $90</td><td>1,000 / $100</td><td>500 / $75</td></tr>
+            <tr><td>7</td><td>2,500 / $150</td><td>2,500 / $175</td><td>1,000 / $125 <span class="bd-best-badge">BEST</span></td></tr>
+            <tr><td>8</td><td>5,000 / $250</td><td>5,000 / $300</td><td>2,500 / $225</td></tr>
+            <tr><td>9</td><td>10,000 / $400</td><td>10,000 / $500</td><td>5,000 / $400</td></tr>
+            <tr><td>10</td><td>—</td><td>—</td><td>10,000 / $700</td></tr>
           </tbody>
         </table>
-        <p class="bd-pricing-note">Regular finish. Holographic &amp; Cracked Ice: add $1–$5 per tier.</p>
+        <p class="bd-pricing-note">Matte finish. Holographic &amp; Cracked Ice: add $1–$5 per tier.</p>
       </div>
       <div class="bd-pricing-box">
         <h3>Toploader Stickers</h3>
         <table>
-          <thead><tr><th>Size</th><th>Tier 1</th><th>Tier 2</th><th>Best Value</th></tr></thead>
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Small (0.5")</th>
+              <th>Medium (0.75")</th>
+              <th>Large (1.0")</th>
+            </tr>
+          </thead>
           <tbody>
-            <tr><td>Small (0.5")</td><td>30 / $6</td><td>75 / $10</td><td>150 / $15</td></tr>
-            <tr><td>Medium (0.75")</td><td>25 / $6</td><td>50 / $10</td><td>100 / $15</td></tr>
-            <!-- ✅ CHANGE 7: Wide → Large -->
-            <tr><td>Large (1.0")</td><td>20 / $6</td><td>40 / $10</td><td>80 / $15</td></tr>
+            <tr><td>1</td><td>40 / $6</td><td>25 / $6</td><td>20 / $6</td></tr>
+            <tr><td>2</td><td>80 / $10</td><td>55 / $10</td><td>45 / $10</td></tr>
+            <tr><td>3</td><td>160 / $15</td><td>110 / $15</td><td>90 / $15</td></tr>
+            <tr><td>4</td><td>250 / $22</td><td>250 / $25</td><td>250 / $35</td></tr>
+            <tr><td>5</td><td>500 / $40</td><td>500 / $45</td><td>500 / $65</td></tr>
+            <tr class="bd-best-value"><td>6 <span class="bd-best-badge">BEST</span></td><td>1,000 / $75</td><td>1,000 / $80</td><td>1,000 / $120</td></tr>
+            <tr><td>7</td><td>2,500 / $135</td><td>2,500 / $145</td><td>2,500 / $200</td></tr>
+            <tr><td>8</td><td>5,000 / $220</td><td>5,000 / $235</td><td>5,000 / $375</td></tr>
+            <tr><td>9</td><td>10,000 / $350</td><td>10,000 / $400</td><td>10,000 / $650</td></tr>
           </tbody>
         </table>
-        <p class="bd-pricing-note">Regular finish. Holographic &amp; Cracked Ice: add $1–$5 per tier.</p>
+        <p class="bd-pricing-note">Matte finish. Holographic &amp; Cracked Ice: add $1–$5 per tier.</p>
       </div>
     </div>
     <div class="bd-pricing-cta">
