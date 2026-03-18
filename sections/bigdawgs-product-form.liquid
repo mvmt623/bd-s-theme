@@ -2,7 +2,7 @@
   BIG DAWGS - Custom Card Stickers Product Form
   A multi-step form for configuring and ordering custom card stickers
   for One Touch and Toploader card holders.
-  v2: Real pricing, renamed finishes (Regular/Holo/Cracked Ice), Wide size,
+  v2: Real pricing, renamed finishes (Regular/Holo/Cracked Ice), sizes Small/Medium/Large,
       drag-and-drop file upload with mobile camera support
 {% endcomment %}
 
@@ -90,7 +90,7 @@
 
   .form-step {
     display: none;
-    animation: slideIn 0.3s ease-out;
+    animation: slideIn 0.4s ease;
   }
 
   .form-step.active {
@@ -108,106 +108,257 @@
     }
   }
 
+  .form-heading {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--bd-white);
+  }
+
+  .form-subheading {
+    font-size: 15px;
+    color: #999;
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .option-card {
+    border: 2px solid var(--bd-gray);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: var(--bd-dark);
+    transition: all 0.25s ease;
+    position: relative;
+  }
+
+  .option-card:hover {
+    border-color: var(--bd-red);
+    transform: translateY(-4px);
+  }
+
+  .option-card.selected {
+    border-color: var(--bd-red);
+    background-color: rgba(204, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(204, 0, 0, 0.3);
+  }
+
+  .option-card.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .option-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--bd-white);
+    margin-bottom: 6px;
+  }
+
+  .option-desc {
+    font-size: 12px;
+    color: #888;
+    line-height: 1.4;
+  }
+
+  .option-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--bd-gold);
+    margin-top: 10px;
+  }
+
   .form-group {
     margin-bottom: 30px;
   }
 
   .form-label {
     display: block;
-    margin-bottom: 10px;
     font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 10px;
     color: var(--bd-white);
-    font-size: 14px;
   }
 
-  .form-label.required::after {
-    content: ' *';
-    color: var(--bd-red);
-  }
-
-  .form-note {
-    font-size: 12px;
-    color: var(--bd-light);
-    margin-top: 6px;
-  }
-
-  input[type="text"],
-  input[type="number"],
-  textarea,
-  select {
-    width: 100%;
-    padding: 12px;
+  .upload-zone {
+    border: 2px dashed var(--bd-gray);
+    border-radius: 10px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
     background-color: var(--bd-dark);
-    border: 1px solid var(--bd-gray);
-    border-radius: 4px;
-    color: var(--bd-white);
-    font-family: inherit;
-    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+    margin-bottom: 15px;
   }
 
-  input[type="text"]::placeholder,
-  textarea::placeholder {
-    color: #666;
-  }
-
-  input[type="text"]:focus,
-  input[type="number"]:focus,
-  textarea:focus,
-  select:focus {
-    outline: none;
+  .upload-zone:hover,
+  .upload-zone.drag-over {
     border-color: var(--bd-red);
-    box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.1);
+    background-color: rgba(204, 0, 0, 0.05);
   }
 
-  textarea {
-    resize: vertical;
-    min-height: 100px;
+  .upload-zone.has-file {
+    border-color: var(--bd-gold);
+    background-color: rgba(212, 160, 23, 0.08);
   }
 
-  .checkbox-group,
-  .radio-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
+  .file-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
   }
 
-  .checkbox-item,
-  .radio-item {
+  .upload-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .upload-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--bd-white);
+    margin-bottom: 6px;
+  }
+
+  .upload-hint {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 8px;
+  }
+
+  .upload-formats {
+    font-size: 11px;
+    color: #555;
+  }
+
+  .upload-preview {
+    display: none;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 14px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--bd-gold);
+  }
+
+  .upload-preview.show {
     display: flex;
     align-items: center;
-    cursor: pointer;
+    justify-content: space-between;
+    gap: 12px;
   }
 
-  input[type="checkbox"],
-  input[type="radio"] {
-    margin-right: 8px;
-    cursor: pointer;
-    width: 18px;
-    height: 18px;
-    accent-color: var(--bd-red);
+  .preview-file-info {
+    flex: 1;
+    text-align: left;
   }
 
-  .checkbox-item label,
-  .radio-item label {
+  .preview-file-name {
+    color: var(--bd-white);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .preview-file-size {
+    color: #666;
+    font-size: 11px;
+  }
+
+  .remove-file-btn {
+    background: none;
+    border: none;
+    color: #cc6666;
     cursor: pointer;
-    user-select: none;
+    font-size: 20px;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .remove-file-btn:hover {
+    color: #ff6666;
+  }
+
+  .or-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+    color: #555;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .or-divider::before,
+  .or-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: #333;
+  }
+
+  .text-input {
+    width: 100%;
+    padding: 12px 14px;
+    background-color: var(--bd-dark);
+    border: 1px solid var(--bd-gray);
+    border-radius: 6px;
+    color: var(--bd-white);
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+  }
+
+  .text-input:focus {
+    outline: none;
+    border-color: var(--bd-red);
+  }
+
+  .text-input::placeholder {
+    color: #555;
+  }
+
+  textarea.text-input {
+    min-height: 100px;
+    resize: vertical;
+  }
+
+  .form-help {
+    font-size: 12px;
+    color: #666;
+    margin-top: 6px;
   }
 
   .button-group {
     display: flex;
     gap: 12px;
-    margin-top: 30px;
+    margin-top: 40px;
   }
 
-  button {
-    flex: 1;
-    padding: 14px 20px;
+  .btn {
+    padding: 15px 24px;
     border: none;
-    border-radius: 4px;
-    font-size: 15px;
-    font-weight: 600;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
+    text-transform: uppercase;
+    transition: all 0.25s ease;
+    flex: 1;
   }
 
   .btn-primary {
@@ -215,221 +366,36 @@
     color: var(--bd-white);
   }
 
-  .btn-primary:hover {
+  .btn-primary:hover:not(:disabled) {
     background-color: var(--bd-red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(204, 0, 0, 0.4);
   }
 
   .btn-primary:disabled {
-    background-color: #666;
+    background-color: var(--bd-gray);
+    opacity: 0.5;
     cursor: not-allowed;
-    opacity: 0.6;
   }
 
   .btn-secondary {
-    background-color: var(--bd-gray);
+    flex: 0 0 120px;
+    background-color: var(--bd-dark);
     color: var(--bd-white);
+    border: 1px solid var(--bd-gray);
   }
 
   .btn-secondary:hover {
-    background-color: #444;
-  }
-
-  .file-upload-area {
-    border: 2px dashed var(--bd-gray);
-    border-radius: 6px;
-    padding: 40px 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: var(--bd-dark);
-  }
-
-  .file-upload-area:hover {
     border-color: var(--bd-red);
-    background-color: rgba(204, 0, 0, 0.05);
-  }
-
-  .file-upload-area.dragover {
-    border-color: var(--bd-red);
-    background-color: rgba(204, 0, 0, 0.1);
-  }
-
-  .upload-icon {
-    font-size: 48px;
-    margin-bottom: 15px;
-  }
-
-  .upload-text {
-    font-size: 14px;
-    color: var(--bd-light);
-  }
-
-  .upload-text strong {
-    color: var(--bd-white);
-  }
-
-  .file-list {
-    margin-top: 20px;
-    list-style: none;
-    padding: 0;
-  }
-
-  .file-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: var(--bd-dark);
-    border: 1px solid var(--bd-gray);
-    border-radius: 4px;
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-
-  .file-item button {
-    flex: 0;
-    padding: 6px 12px;
-    background-color: var(--bd-red);
-    color: var(--bd-white);
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 12px;
-  }
-
-  .file-item button:hover {
-    background-color: var(--bd-red-dark);
-  }
-
-  .size-selector {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 12px;
-  }
-
-  .size-option {
-    position: relative;
-  }
-
-  .size-option input {
-    display: none;
-  }
-
-  .size-option label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    background-color: var(--bd-dark);
-    border: 2px solid var(--bd-gray);
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .size-option input:checked + label {
-    border-color: var(--bd-red);
-    background-color: rgba(204, 0, 0, 0.1);
-  }
-
-  .quantity-selector {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 10px;
-  }
-
-  .quantity-option {
-    position: relative;
-  }
-
-  .quantity-option input {
-    display: none;
-  }
-
-  .quantity-option label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 15px 10px;
-    background-color: var(--bd-dark);
-    border: 2px solid var(--bd-gray);
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-  }
-
-  .quantity-option input:checked + label {
-    border-color: var(--bd-red);
-    background-color: rgba(204, 0, 0, 0.1);
-  }
-
-  .quantity-amount {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--bd-white);
-  }
-
-  .quantity-price {
-    font-size: 12px;
-    color: var(--bd-light);
-    margin-top: 4px;
-  }
-
-  .finish-selector {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 12px;
-  }
-
-  .finish-option {
-    position: relative;
-  }
-
-  .finish-option input {
-    display: none;
-  }
-
-  .finish-option label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    background-color: var(--bd-dark);
-    border: 2px solid var(--bd-gray);
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .finish-option input:checked + label {
-    border-color: var(--bd-red);
-    background-color: rgba(204, 0, 0, 0.1);
-  }
-
-  .error-message {
     color: var(--bd-red);
-    font-size: 13px;
-    margin-top: 6px;
   }
 
-  .success-message {
-    background-color: rgba(0, 100, 0, 0.1);
-    border: 1px solid #0a0;
-    color: #0f0;
-    padding: 15px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    font-size: 14px;
-  }
-
-  .loading-spinner {
+  .spinner {
     display: inline-block;
     width: 14px;
     height: 14px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top: 2px solid white;
+    border: 2px solid var(--bd-gold);
+    border-top-color: transparent;
     border-radius: 50%;
     animation: spin 0.6s linear infinite;
     margin-right: 8px;
@@ -441,517 +407,400 @@
     }
   }
 
-  .preview-section {
-    background-color: var(--bd-dark);
-    border: 1px solid var(--bd-gray);
-    border-radius: 6px;
-    padding: 20px;
-    margin-top: 30px;
-  }
+  @media (max-width: 768px) {
+    .form-heading {
+      font-size: 22px;
+    }
 
-  .preview-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--bd-gray);
-    font-size: 14px;
-  }
+    .option-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
 
-  .preview-item:last-child {
-    border-bottom: none;
-  }
+    .button-group {
+      flex-direction: column;
+    }
 
-  .preview-label {
-    color: var(--bd-light);
-  }
-
-  .preview-value {
-    color: var(--bd-white);
-    font-weight: 600;
-  }
-
-  .price-breakdown {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 2px solid var(--bd-gray);
-  }
-
-  .price-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    font-size: 14px;
-  }
-
-  .price-row.total {
-    font-weight: 600;
-    color: var(--bd-red);
-    font-size: 16px;
+    .btn-secondary {
+      flex: 1;
+    }
   }
 </style>
 
 <div class="bigdawgs-form-container">
   <div class="form-progress-bar">
-    <div class="progress-dot active" id="step1-dot"></div>
-    <div class="progress-dot" id="step2-dot"></div>
-    <div class="progress-dot" id="step3-dot"></div>
-    <div class="progress-dot" id="step4-dot"></div>
-    <div class="progress-dot" id="step5-dot"></div>
+    <div class="progress-dot active" data-step="1"></div>
+    <div class="progress-dot" data-step="2"></div>
+    <div class="progress-dot" data-step="3"></div>
   </div>
 
-  <div class="sticky-summary" id="sticky-summary">
+  <div class="sticky-summary" id="form-summary">
     <div class="summary-item">
       <span class="summary-label">Size:</span>
-      <span id="summary-size">-</span>
-    </div>
-    <div class="summary-item">
-      <span class="summary-label">Holder Type:</span>
-      <span id="summary-holder">-</span>
+      <span id="summary-size">—</span>
     </div>
     <div class="summary-item">
       <span class="summary-label">Finish:</span>
-      <span id="summary-finish">-</span>
+      <span id="summary-finish">—</span>
     </div>
     <div class="summary-item">
-      <span class="summary-label">Quantity:</span>
-      <span id="summary-quantity">-</span>
-    </div>
-    <div class="summary-item">
-      <span class="summary-label">Total Price:</span>
-      <span id="summary-price" style="color: var(--bd-red);">$0</span>
+      <span class="summary-label">Price:</span>
+      <span id="summary-price" style="color: var(--bd-gold); font-weight: 700;">—</span>
     </div>
   </div>
 
-  <form id="bigdawgs-form" action="/cart/add" method="post">
-    <!-- Step 1: Size -->
-    <div class="form-step active" id="step1">
-      <h2>Select Size</h2>
+  <form id="product-form" action="/cart/add" method="post">
+
+    <!-- STEP 1: SIZE -->
+    <div class="form-step active" data-step="1">
+      <h2 class="form-heading">Select Size</h2>
+      <p class="form-subheading">Choose your preferred dimensions. Sizes shown are print area — perfect for laptops, water bottles, packaging, and more.</p>
+
+      <div class="option-grid" id="size-options">
+        <div class="option-card" data-option="size" data-value="1&quot; x 1&quot;">
+          <div class="option-label">1&quot; × 1&quot;</div>
+          <div class="option-desc">Micro</div>
+        </div>
+        <div class="option-card" data-option="size" data-value="2&quot; x 2&quot;">
+          <div class="option-label">2&quot; × 2&quot;</div>
+          <div class="option-desc">Small</div>
+        </div>
+        <div class="option-card" data-option="size" data-value="3&quot; x 3&quot;">
+          <div class="option-label">3&quot; × 3&quot;</div>
+          <div class="option-desc">Medium</div>
+        </div>
+        <div class="option-card" data-option="size" data-value="4&quot; x 4&quot;">
+          <div class="option-label">4&quot; × 4&quot;</div>
+          <div class="option-desc">Large</div>
+        </div>
+        <div class="option-card" data-option="size" data-value="5&quot; x 5&quot;">
+          <div class="option-label">5&quot; × 5&quot;</div>
+          <div class="option-desc">XL</div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="btn btn-primary" id="step1-next">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: FINISH -->
+    <div class="form-step" data-step="2">
+      <h2 class="form-heading">Select Finish</h2>
+      <p class="form-subheading">Choose the look and feel of your stickers — price shown reflects your selected size.</p>
+
+      <div class="option-grid" id="finish-options">
+        <div class="option-card" data-option="finish" data-value="Regular">
+          <div class="option-label">Regular</div>
+          <div class="option-desc">Clean matte vinyl — professional and sharp</div>
+          <div class="option-price" id="price-regular">—</div>
+        </div>
+        <div class="option-card" data-option="finish" data-value="Holographic">
+          <div class="option-label">Holographic</div>
+          <div class="option-desc">Full rainbow color-shift — impossible to ignore</div>
+          <div class="option-price" id="price-holo">—</div>
+        </div>
+        <div class="option-card" data-option="finish" data-value="Cracked Ice">
+          <div class="option-label">Cracked Ice</div>
+          <div class="option-desc">Unique fractured-crystal pattern — bold and distinct</div>
+          <div class="option-price" id="price-cracked">—</div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="btn btn-secondary" id="step2-back">Back</button>
+        <button type="button" class="btn btn-primary" id="step2-next">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: ARTWORK & DETAILS -->
+    <div class="form-step" data-step="3">
+      <h2 class="form-heading">Upload Artwork</h2>
+      <p class="form-subheading">Share your design file or artwork link — we'll review and confirm before printing.</p>
+
       <div class="form-group">
-        <label class="form-label required">Which size would you like?</label>
-        <div class="size-selector">
-          <div class="size-option">
-            <input type="radio" id="size-standard" name="size" value="standard" required>
-            <label for="size-standard">Standard</label>
-          </div>
-          <div class="size-option">
-            <input type="radio" id="size-wide" name="size" value="wide" required>
-            <label for="size-wide">Wide</label>
-          </div>
+        <label class="form-label">Your Artwork</label>
+        <div class="upload-zone" id="upload-zone" data-option="artwork">
+          <input type="file" class="file-input" id="file-input" accept="image/*,.pdf,.ai,.psd,.eps">
+          <span class="upload-icon" id="upload-icon">📎</span>
+          <p class="upload-title" id="upload-title">Upload Your Artwork</p>
+          <p class="upload-hint" id="upload-hint">Drag &amp; drop or tap to browse — mobile camera supported</p>
+          <p class="upload-formats">PNG, JPG, PDF, AI, PSD · Any size · 300 DPI+ preferred</p>
         </div>
+        <div class="upload-preview" id="upload-preview">
+          <div class="preview-file-info">
+            <span class="preview-file-name" id="preview-file-name">—</span>
+            <span class="preview-file-size" id="preview-file-size">—</span>
+          </div>
+          <button type="button" class="remove-file-btn" id="remove-file-btn" title="Remove file">✕</button>
+        </div>
+        <div class="or-divider">or</div>
+        <input type="text" class="text-input" id="artwork-url" placeholder="Paste a Google Drive, Dropbox, or file share link here">
+        <p class="form-help">We'll review your file and confirm placement, colors, and timing before we print.</p>
       </div>
-    </div>
 
-    <!-- Step 2: Holder Type -->
-    <div class="form-step" id="step2">
-      <h2>Holder Type</h2>
       <div class="form-group">
-        <label class="form-label required">Which card holder do you use?</label>
-        <div class="radio-group">
-          <div class="radio-item">
-            <input type="radio" id="holder-onetouch" name="holder_type" value="One Touch" required>
-            <label for="holder-onetouch">One Touch</label>
-          </div>
-          <div class="radio-item">
-            <input type="radio" id="holder-toploader" name="holder_type" value="Toploader" required>
-            <label for="holder-toploader">Toploader</label>
-          </div>
-        </div>
+        <label class="form-label" for="notes">Order Notes <span style="font-weight: 400; color: #666;">(optional)</span></label>
+        <textarea class="text-input" id="notes" name="properties[Order Notes]" placeholder="Colors, placement, special instructions..."></textarea>
+      </div>
+
+      <!-- Hidden form fields for cart submission -->
+      <input type="hidden" name="id" id="variant-id" value="">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="properties[Size]" id="prop-size" value="">
+      <input type="hidden" name="properties[Finish]" id="prop-finish" value="">
+      <input type="hidden" name="properties[Artwork]" id="prop-artwork" value="">
+
+      <div class="button-group">
+        <button type="button" class="btn btn-secondary" id="step3-back">Back</button>
+        <button type="submit" class="btn btn-primary" id="submit-btn">Add to Cart</button>
       </div>
     </div>
 
-    <!-- Step 3: Finish -->
-    <div class="form-step" id="step3">
-      <h2>Select Finish</h2>
-      <div class="form-group">
-        <label class="form-label required">Choose your sticker finish</label>
-        <div class="finish-selector">
-          <div class="finish-option">
-            <input type="radio" id="finish-regular" name="finish" value="Regular" required>
-            <label for="finish-regular">Regular</label>
-          </div>
-          <div class="finish-option">
-            <input type="radio" id="finish-holo" name="finish" value="Holo" required>
-            <label for="finish-holo">Holo</label>
-          </div>
-          <div class="finish-option">
-            <input type="radio" id="finish-crackedice" name="finish" value="Cracked Ice" required>
-            <label for="finish-crackedice">Cracked Ice</label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 4: Quantity & Upload -->
-    <div class="form-step" id="step4">
-      <h2>Choose Quantity & Upload Art</h2>
-
-      <!-- Quantity Selection -->
-      <div class="form-group">
-        <label class="form-label required">How many stickers?</label>
-        <div class="quantity-selector">
-          <div class="quantity-option">
-            <input type="radio" id="qty-25" name="quantity" value="25" required>
-            <label for="qty-25">
-              <span class="quantity-amount">25</span>
-              <span class="quantity-price">$2.50</span>
-            </label>
-          </div>
-          <div class="quantity-option">
-            <input type="radio" id="qty-50" name="quantity" value="50" required>
-            <label for="qty-50">
-              <span class="quantity-amount">50</span>
-              <span class="quantity-price">$4.00</span>
-            </label>
-          </div>
-          <div class="quantity-option">
-            <input type="radio" id="qty-100" name="quantity" value="100" required>
-            <label for="qty-100">
-              <span class="quantity-amount">100</span>
-              <span class="quantity-price">$7.50</span>
-            </label>
-          </div>
-          <div class="quantity-option">
-            <input type="radio" id="qty-250" name="quantity" value="250" required>
-            <label for="qty-250">
-              <span class="quantity-amount">250</span>
-              <span class="quantity-price">$15.00</span>
-            </label>
-          </div>
-        </div>
-        <p class="form-note">Prices are per sticker design. You can upload multiple designs.</p>
-      </div>
-
-      <!-- File Upload -->
-      <div class="form-group">
-        <label class="form-label required">Upload Your Design</label>
-        <div class="file-upload-area" id="file-upload-area">
-          <div class="upload-icon">📤</div>
-          <div class="upload-text">
-            <strong>Click to upload</strong> or drag and drop<br>
-            PNG, JPG or GIF (Max 10MB)
-          </div>
-        </div>
-        <input type="file" id="file-input" accept=".png,.jpg,.jpeg,.gif" multiple style="display: none;">
-        <ul class="file-list" id="file-list"></ul>
-        <p class="form-note">You can upload up to 5 different designs. Maximum 10MB per file.</p>
-      </div>
-    </div>
-
-    <!-- Step 5: Review & Checkout -->
-    <div class="form-step" id="step5">
-      <h2>Review Your Order</h2>
-
-      <div class="preview-section">
-        <div class="preview-item">
-          <span class="preview-label">Size:</span>
-          <span class="preview-value" id="preview-size">-</span>
-        </div>
-        <div class="preview-item">
-          <span class="preview-label">Holder Type:</span>
-          <span class="preview-value" id="preview-holder">-</span>
-        </div>
-        <div class="preview-item">
-          <span class="preview-label">Finish:</span>
-          <span class="preview-value" id="preview-finish">-</span>
-        </div>
-        <div class="preview-item">
-          <span class="preview-label">Number of Designs:</span>
-          <span class="preview-value" id="preview-designs">-</span>
-        </div>
-        <div class="preview-item">
-          <span class="preview-label">Quantity per Design:</span>
-          <span class="preview-value" id="preview-quantity">-</span>
-        </div>
-
-        <div class="price-breakdown">
-          <div class="price-row">
-            <span>Base Price per Design:</span>
-            <span id="price-base">$0.00</span>
-          </div>
-          <div class="price-row">
-            <span>Number of Designs:</span>
-            <span id="price-designs">1</span>
-          </div>
-          <div class="price-row total">
-            <span>Total Price:</span>
-            <span id="price-total">$0.00</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Navigation Buttons -->
-    <div class="button-group" id="button-group">
-      <button type="button" class="btn-secondary" id="prev-btn" style="display: none;">Back</button>
-      <button type="button" class="btn-primary" id="next-btn">Next</button>
-      <button type="submit" class="btn-primary" id="submit-btn" style="display: none;">Add to Cart</button>
-    </div>
-
-    <input type="hidden" name="id" id="variant-id" value="">
-    <input type="hidden" name="quantity" id="form-quantity" value="">
-    <input type="hidden" name="properties[Size]" id="form-size" value="">
-    <input type="hidden" name="properties[Holder Type]" id="form-holder" value="">
-    <input type="hidden" name="properties[Finish]" id="form-finish" value="">
-    <input type="hidden" name="properties[Quantity per Design]" id="form-qty-per-design" value="">
-    <input type="hidden" name="properties[Number of Designs]" id="form-num-designs" value="">
-    <input type="hidden" name="properties[Uploaded Files]" id="form-files" value="">
   </form>
 </div>
 
 <script>
-  let currentStep = 1;
-  const totalSteps = 5;
-  let uploadedFiles = [];
+(function() {
+  // TESTING MODE — set to false to require artwork before submitting
+  const TESTING_MODE = true;
 
-  const priceData = {
-    25: 2.50,
-    50: 4.00,
-    100: 7.50,
-    250: 15.00
-  };
+  const variants = {{ product.variants | json }} || [];
+  const state = { size: null, finish: null, variantId: null, price: null, artworkFile: null };
 
-  const sizeMap = {
-    'standard': { 'One Touch': 'custom-card-stickers-onetouch-standard-regular', 'Toploader': 'custom-card-stickers-toploader-standard-regular' },
-    'wide': { 'One Touch': 'custom-card-stickers-onetouch-wide-regular', 'Toploader': 'custom-card-stickers-toploader-wide-regular' }
-  };
+  // Find a variant matching size and finish
+  function findVariant(size, finish) {
+    return variants.find(v => v.option1 === size && v.option2 === finish) || null;
+  }
 
-  function showStep(step) {
-    for (let i = 1; i <= totalSteps; i++) {
-      const stepEl = document.getElementById(`step${i}`);
-      if (stepEl) stepEl.classList.remove('active');
-    }
-    const activeStep = document.getElementById(`step${step}`);
-    if (activeStep) activeStep.classList.add('active');
+  // Get price for a specific size/finish combo
+  function getPriceForSizeFinish(size, finish) {
+    const v = findVariant(size, finish);
+    return v ? (v.price / 100).toFixed(2) : null;
+  }
 
-    // Update progress dots
-    for (let i = 1; i <= totalSteps; i++) {
-      const dot = document.getElementById(`step${i}-dot`);
-      if (dot) {
-        dot.classList.remove('active', 'completed');
-        if (i < step) {
-          dot.classList.add('completed');
-        } else if (i === step) {
-          dot.classList.add('active');
+  // Update all finish prices based on selected size
+  function updateFinishPrices() {
+    const finishes = [
+      { name: 'Regular',       priceEl: 'price-regular',  value: 'Regular' },
+      { name: 'Holographic',   priceEl: 'price-holo',     value: 'Holographic' },
+      { name: 'Cracked Ice',   priceEl: 'price-cracked',  value: 'Cracked Ice' }
+    ];
+
+    finishes.forEach(function(finish) {
+      const price = getPriceForSizeFinish(state.size, finish.value);
+      const priceEl = document.getElementById(finish.priceEl);
+      const card = document.querySelector('[data-option="finish"][data-value="' + finish.value + '"]');
+
+      if (priceEl) {
+        priceEl.textContent = price ? '$' + price : 'Unavailable';
+        priceEl.style.color = price ? 'var(--bd-gold)' : '#666';
+      }
+
+      if (card) {
+        if (!price) {
+          card.classList.add('disabled');
+        } else {
+          card.classList.remove('disabled');
         }
       }
+    });
+
+    // Clear finish selection if previously selected finish is now unavailable
+    if (state.finish && !getPriceForSizeFinish(state.size, state.finish)) {
+      state.finish = null;
+      state.variantId = null;
+      state.price = null;
+      document.querySelectorAll('[data-option="finish"]').forEach(card => card.classList.remove('selected'));
     }
+  }
 
-    // Update button visibility
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const submitBtn = document.getElementById('submit-btn');
-    if (prevBtn) prevBtn.style.display = step === 1 ? 'none' : 'block';
-    if (nextBtn) nextBtn.style.display = step === totalSteps ? 'none' : 'block';
-    if (submitBtn) submitBtn.style.display = step === totalSteps ? 'block' : 'none';
+  // Navigate to a specific step
+  function goToStep(step) {
+    // Hide all steps
+    document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+    // Show target step
+    document.querySelector('.form-step[data-step="' + step + '"]').classList.add('active');
 
-    if (step >= 2) {
-      updateSummary();
-      document.getElementById('sticky-summary').classList.add('visible');
+    // Update progress dots
+    document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+      dot.classList.remove('active', 'completed');
+      const dotStep = index + 1;
+      if (dotStep === step) {
+        dot.classList.add('active');
+      } else if (dotStep < step) {
+        dot.classList.add('completed');
+      }
+    });
+
+    // Show summary if not on step 1
+    const summary = document.getElementById('form-summary');
+    if (step > 1) {
+      summary.classList.add('visible');
     } else {
-      document.getElementById('sticky-summary').classList.remove('visible');
+      summary.classList.remove('visible');
     }
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // Update the sticky summary display
   function updateSummary() {
-    const size = document.querySelector('input[name="size"]:checked')?.value || '-';
-    const holder = document.querySelector('input[name="holder_type"]:checked')?.value || '-';
-    const finish = document.querySelector('input[name="finish"]:checked')?.value || '-';
-    const quantity = document.querySelector('input[name="quantity"]:checked')?.value || '-';
-    const price = quantity !== '-' ? (priceData[parseInt(quantity)] * uploadedFiles.length || priceData[parseInt(quantity)]) : 0;
-
-    document.getElementById('summary-size').textContent = size;
-    document.getElementById('summary-holder').textContent = holder;
-    document.getElementById('summary-finish').textContent = finish;
-    document.getElementById('summary-quantity').textContent = quantity;
-    document.getElementById('summary-price').textContent = '$' + price.toFixed(2);
-  }
-
-  function validateStep(step) {
-    if (step === 1) {
-      return !!document.querySelector('input[name="size"]:checked');
-    } else if (step === 2) {
-      return !!document.querySelector('input[name="holder_type"]:checked');
-    } else if (step === 3) {
-      return !!document.querySelector('input[name="finish"]:checked');
-    } else if (step === 4) {
-      return !!document.querySelector('input[name="quantity"]:checked') && uploadedFiles.length > 0;
+    document.getElementById('summary-size').textContent = state.size || '—';
+    document.getElementById('summary-finish').textContent = state.finish || '—';
+    if (state.price) {
+      document.getElementById('summary-price').textContent = '$' + state.price;
     }
-    return true;
   }
+
+  // Handle size selection
+  document.querySelectorAll('[data-option="size"]').forEach(card => {
+    card.addEventListener('click', function() {
+      document.querySelectorAll('[data-option="size"]').forEach(c => c.classList.remove('selected'));
+      this.classList.add('selected');
+      state.size = this.dataset.value;
+      updateSummary();
+    });
+  });
+
+  // Handle finish selection
+  document.querySelectorAll('[data-option="finish"]').forEach(card => {
+    card.addEventListener('click', function() {
+      document.querySelectorAll('[data-option="finish"]').forEach(c => c.classList.remove('selected'));
+      this.classList.add('selected');
+      state.finish = this.dataset.value;
+      const v = findVariant(state.size, state.finish);
+      if (v) {
+        state.variantId = v.id;
+        state.price = (v.price / 100).toFixed(2);
+      }
+      updateSummary();
+    });
+  });
+
+  // Step 1: Next button
+  document.getElementById('step1-next').addEventListener('click', function() {
+    if (!state.size) {
+      alert('Please select a size.');
+      return;
+    }
+    updateFinishPrices();
+    goToStep(2);
+  });
+
+  // Step 2: Back button
+  document.getElementById('step2-back').addEventListener('click', function() {
+    goToStep(1);
+  });
+
+  // Step 2: Next button
+  document.getElementById('step2-next').addEventListener('click', function() {
+    if (!state.finish) {
+      alert('Please select a finish.');
+      return;
+    }
+    goToStep(3);
+  });
+
+  // Step 3: Back button
+  document.getElementById('step3-back').addEventListener('click', function() {
+    goToStep(2);
+  });
 
   // File upload handling
-  const fileUploadArea = document.getElementById('file-upload-area');
+  const uploadZone = document.getElementById('upload-zone');
   const fileInput = document.getElementById('file-input');
-  const fileList = document.getElementById('file-list');
+  const uploadPreview = document.getElementById('upload-preview');
+  const removeFileBtn = document.getElementById('remove-file-btn');
 
-  fileUploadArea.addEventListener('click', () => fileInput.click());
-
-  fileUploadArea.addEventListener('dragover', (e) => {
+  uploadZone.addEventListener('dragover', function(e) {
     e.preventDefault();
-    fileUploadArea.classList.add('dragover');
+    uploadZone.classList.add('drag-over');
   });
 
-  fileUploadArea.addEventListener('dragleave', () => {
-    fileUploadArea.classList.remove('dragover');
+  uploadZone.addEventListener('dragleave', function() {
+    uploadZone.classList.remove('drag-over');
   });
 
-  fileUploadArea.addEventListener('drop', (e) => {
+  uploadZone.addEventListener('drop', function(e) {
     e.preventDefault();
-    fileUploadArea.classList.remove('dragover');
-    const files = Array.from(e.dataTransfer.files);
-    handleFiles(files);
-  });
-
-  fileInput.addEventListener('change', (e) => {
-    handleFiles(Array.from(e.target.files));
-  });
-
-  function handleFiles(files) {
-    files.forEach(file => {
-      if (file.size > 10 * 1024 * 1024) {
-        alert('File ' + file.name + ' is too large (max 10MB)');
-        return;
-      }
-      if (!['image/png', 'image/jpeg', 'image/gif'].includes(file.type)) {
-        alert('File ' + file.name + ' must be PNG, JPG, or GIF');
-        return;
-      }
-      uploadedFiles.push(file);
-    });
-    renderFileList();
-    updatePricePreview();
-  }
-
-  function renderFileList() {
-    fileList.innerHTML = '';
-    uploadedFiles.forEach((file, index) => {
-      const li = document.createElement('li');
-      li.className = 'file-item';
-      li.innerHTML = `
-        <span>${file.name}</span>
-        <button type="button" onclick="removeFile(${index})">Remove</button>
-      `;
-      fileList.appendChild(li);
-    });
-  }
-
-  function removeFile(index) {
-    uploadedFiles.splice(index, 1);
-    renderFileList();
-    updatePricePreview();
-  }
-
-  function updatePricePreview() {
-    const quantity = parseInt(document.querySelector('input[name="quantity"]:checked')?.value || 25);
-    const basePrice = priceData[quantity];
-    const numDesigns = uploadedFiles.length;
-    const totalPrice = basePrice * numDesigns;
-
-    document.getElementById('price-base').textContent = '$' + basePrice.toFixed(2);
-    document.getElementById('price-designs').textContent = numDesigns;
-    document.getElementById('price-total').textContent = '$' + totalPrice.toFixed(2);
-
-    // Update summary
-    const summaryPrice = document.getElementById('summary-price');
-    if (summaryPrice) summaryPrice.textContent = '$' + totalPrice.toFixed(2);
-  }
-
-  // Step navigation
-  document.getElementById('prev-btn').addEventListener('click', () => {
-    if (currentStep > 1) {
-      currentStep--;
-      showStep(currentStep);
+    uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) {
+      handleFileSelect(e.dataTransfer.files[0]);
     }
   });
 
-  document.getElementById('next-btn').addEventListener('click', () => {
-    if (validateStep(currentStep)) {
-      currentStep++;
-      showStep(currentStep);
-      updatePreview();
-    } else {
-      alert('Please fill in all required fields for this step.');
+  fileInput.addEventListener('change', function() {
+    if (this.files[0]) {
+      handleFileSelect(this.files[0]);
     }
   });
 
-  // Quantity change listener
-  document.querySelectorAll('input[name="quantity"]').forEach(input => {
-    input.addEventListener('change', updatePricePreview);
+  removeFileBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    state.artworkFile = null;
+    uploadZone.classList.remove('has-file');
+    uploadPreview.classList.remove('show');
+    fileInput.value = '';
+    document.getElementById('upload-title').textContent = 'Upload Your Artwork';
+    document.getElementById('upload-hint').textContent = 'Drag & drop or tap to browse — mobile camera supported';
   });
 
-  function updatePreview() {
-    const size = document.querySelector('input[name="size"]:checked')?.value || '-';
-    const holder = document.querySelector('input[name="holder_type"]:checked')?.value || '-';
-    const finish = document.querySelector('input[name="finish"]:checked')?.value || '-';
-    const quantity = document.querySelector('input[name="quantity"]:checked')?.value || '-';
+  function handleFileSelect(file) {
+    state.artworkFile = file.name;
+    uploadZone.classList.add('has-file');
+    document.getElementById('preview-file-name').textContent = file.name;
+    document.getElementById('preview-file-size').textContent = formatBytes(file.size);
+    document.getElementById('upload-title').textContent = '✓ Ready to print';
+    document.getElementById('upload-hint').textContent = file.name;
+    uploadPreview.classList.add('show');
+  }
 
-    document.getElementById('preview-size').textContent = size;
-    document.getElementById('preview-holder').textContent = holder;
-    document.getElementById('preview-finish').textContent = finish;
-    document.getElementById('preview-designs').textContent = uploadedFiles.length;
-    document.getElementById('preview-quantity').textContent = quantity;
-
-    updatePricePreview();
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
   }
 
   // Form submission
-  document.getElementById('bigdawgs-form').addEventListener('submit', (e) => {
+  document.getElementById('product-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const size = document.querySelector('input[name="size"]:checked')?.value;
-    const holder = document.querySelector('input[name="holder_type"]:checked')?.value;
-    const finish = document.querySelector('input[name="finish"]:checked')?.value;
-    const quantity = document.querySelector('input[name="quantity"]:checked')?.value;
+    // Validate size and finish
+    if (!state.size || !state.finish) {
+      alert('Please complete all steps before submitting.');
+      return;
+    }
 
-    // Find the variant ID based on selections
-    const variantMap = {
-      'standard': {
-        'One Touch': {
-          'Regular': '44159751282874',
-          'Holo': '44159751315642',
-          'Cracked Ice': '44159751348410'
-        },
-        'Toploader': {
-          'Regular': '44159751381178',
-          'Holo': '44159751413946',
-          'Cracked Ice': '44159751446714'
-        }
-      },
-      'wide': {
-        'One Touch': {
-          'Regular': '44159751479482',
-          'Holo': '44159751512250',
-          'Cracked Ice': '44159751545018'
-        },
-        'Toploader': {
-          'Regular': '44159751577786',
-          'Holo': '44159751610554',
-          'Cracked Ice': '44159751643322'
-        }
-      }
-    };
+    // Validate variant exists
+    if (!state.variantId) {
+      alert('The ' + state.size + ' / ' + state.finish + ' combination isn\'t currently available. Please choose a different size or finish.');
+      return;
+    }
 
-    const variantId = variantMap[size]?.[holder]?.[finish] || '';
-    document.getElementById('variant-id').value = variantId;
-    document.getElementById('form-size').value = size;
-    document.getElementById('form-holder').value = holder;
-    document.getElementById('form-finish').value = finish;
-    document.getElementById('form-qty-per-design').value = quantity;
-    document.getElementById('form-num-designs').value = uploadedFiles.length;
-    document.getElementById('form-files').value = uploadedFiles.map(f => f.name).join(', ');
+    // Get artwork
+    const artworkUrl = document.getElementById('artwork-url').value.trim();
+    if (!TESTING_MODE && !state.artworkFile && !artworkUrl) {
+      alert('Please upload your artwork or paste a link.');
+      return;
+    }
 
-    // Calculate total quantity (per design qty × number of designs)
-    const totalQuantity = parseInt(quantity) * uploadedFiles.length;
-    document.getElementById('form-quantity').value = totalQuantity;
+    // Set hidden fields
+    document.getElementById('variant-id').value = state.variantId;
+    document.getElementById('prop-size').value = state.size;
+    document.getElementById('prop-finish').value = state.finish;
+    document.getElementById('prop-artwork').value = state.artworkFile
+      ? 'File: ' + state.artworkFile + ' (will be emailed)'
+      : artworkUrl;
 
-    var submitBtn = document.getElementById('submit-btn');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="loading-spinner"></span>Adding to Cart...';
-
-    setTimeout(function() {
-      e.target.submit();
-    }, 400);
-  }
+    // Submit
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Adding to Cart...';
+    setTimeout(() => { e.target.submit(); }, 400);
+  });
+})();
 </script>
 
 {% schema %}
