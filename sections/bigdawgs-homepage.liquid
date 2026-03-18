@@ -410,6 +410,8 @@
   .bd-btn-white:hover { background: var(--bd-light); transform: translateY(-2px); color: var(--bd-red); text-decoration: none; }
 </style>
 
+{% render 'finish-effects' %}
+
 <!-- HERO -->
 <section class="bd-hero">
   <div class="bd-hero-inner">
@@ -430,9 +432,9 @@
     <div class="bd-hero-visual" aria-hidden="true">
       <div class="bd-hero-visual-title">CHOOSE YOUR FINISH</div>
       <div class="bd-hero-pill-list">
-        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-finish-pill bd-pill-ice">Cracked Ice</a>
-        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-finish-pill bd-pill-holo">Holographic</a>
-        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-finish-pill bd-pill-regular">Matte</a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-finish-pill bd-ftag bd-ftag--ice"><span class="bd-ftag-text">Cracked Ice</span><svg class="bd-ftag-ice-svg" viewBox="0 0 100 28" preserveAspectRatio="none">{% render 'finish-ice-svg' %}</svg></a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-finish-pill bd-ftag bd-ftag--holo">Holographic</a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-finish-pill bd-ftag bd-ftag--matte">Matte</a>
       </div>
       <div class="bd-hero-types">One Touch &bull; Toploader</div>
       <div class="bd-hero-sizes">Small (0.5&quot;) &bull; Medium (0.75&quot;) &bull; Large (1.0&quot;)</div>
@@ -461,37 +463,37 @@
     <p class="bd-section-sub">Every sticker is custom-printed with your logo. Pick your holder type, finish, and size — then upload your artwork.</p>
     <div class="bd-products-grid">
       <div class="bd-product-card">
-        <span class="bd-finish-tag bd-tag-regular">Matte</span>
+        <span class="bd-ftag bd-ftag--matte">Matte</span>
         <h3>One Touch Matte Stickers</h3>
         <p>Clean, professional finish for One Touch holders. Sharp print, crisp look.</p>
         <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Build My Matte Order &rarr;</a>
       </div>
       <div class="bd-product-card">
-        <span class="bd-finish-tag bd-tag-holo">Holographic</span>
+        <span class="bd-ftag bd-ftag--holo">Holographic</span>
         <h3>One Touch Holographic Stickers</h3>
         <p>Full rainbow color-shift holographic finish. Turn heads at every card show and break.</p>
         <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Configure Holographic &rarr;</a>
       </div>
       <div class="bd-product-card">
-        <span class="bd-finish-tag bd-tag-ice">Cracked Ice</span>
+        <span class="bd-ftag bd-ftag--ice"><span class="bd-ftag-text">Cracked Ice</span><svg class="bd-ftag-ice-svg" viewBox="0 0 100 28" preserveAspectRatio="none">{% render 'finish-ice-svg' %}</svg></span>
         <h3>One Touch Cracked Ice Stickers</h3>
         <p>Unique fractured pattern — bold, distinctive, and unlike anything else in the hobby space.</p>
         <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Get Cracked Ice Pricing &rarr;</a>
       </div>
       <div class="bd-product-card">
-        <span class="bd-finish-tag bd-tag-regular">Matte</span>
+        <span class="bd-ftag bd-ftag--matte">Matte</span>
         <h3>Toploader Matte Stickers</h3>
         <p>Crisp matte-finish stickers perfectly sized for standard toploaders. Great for singles and sets.</p>
         <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Configure Toploader &rarr;</a>
       </div>
       <div class="bd-product-card">
-        <span class="bd-finish-tag bd-tag-holo">Holographic</span>
+        <span class="bd-ftag bd-ftag--holo">Holographic</span>
         <h3>Toploader Holographic Stickers</h3>
         <p>Holographic shine on your toploaders. Elevate every card you sell or display.</p>
         <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Build Holo Toploader &rarr;</a>
       </div>
       <div class="bd-product-card">
-        <span class="bd-finish-tag bd-tag-ice">Cracked Ice</span>
+        <span class="bd-ftag bd-ftag--ice"><span class="bd-ftag-text">Cracked Ice</span><svg class="bd-ftag-ice-svg" viewBox="0 0 100 28" preserveAspectRatio="none">{% render 'finish-ice-svg' %}</svg></span>
         <h3>Toploader Cracked Ice Stickers</h3>
         <p>The cracked ice pattern on toploaders — a signature look that collectors remember.</p>
         <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Configure Cracked Ice &rarr;</a>

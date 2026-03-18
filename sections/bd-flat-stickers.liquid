@@ -193,6 +193,8 @@
   }
 </style>
 
+{% render 'finish-effects' %}
+
 <div class="bdf-container">
   <div class="bdf-progress">
     <div class="bdf-dot active" data-step="1"></div>
@@ -253,17 +255,17 @@
 
       <div class="bdf-finish-grid">
         <div class="bdf-finish-card" data-opt="finish" data-value="Regular">
-          <div class="bdf-finish-name">Matte</div>
+          <div class="bdf-finish-name"><span class="bd-ftag bd-ftag--matte">Matte</span></div>
           <div class="bdf-finish-desc">Clean matte vinyl — professional and sharp</div>
           <div class="bdf-finish-price" id="bdf-price-regular">—</div>
         </div>
         <div class="bdf-finish-card" data-opt="finish" data-value="Holographic">
-          <div class="bdf-finish-name">Holographic</div>
+          <div class="bdf-finish-name"><span class="bd-ftag bd-ftag--holo">Holographic</span></div>
           <div class="bdf-finish-desc">Full rainbow color-shift — impossible to ignore</div>
           <div class="bdf-finish-price" id="bdf-price-holo">—</div>
         </div>
         <div class="bdf-finish-card" data-opt="finish" data-value="Cracked Ice">
-          <div class="bdf-finish-name">Cracked Ice</div>
+          <div class="bdf-finish-name"><span class="bd-ftag bd-ftag--ice"><span class="bd-ftag-text">Cracked Ice</span><svg class="bd-ftag-ice-svg" viewBox="0 0 100 28" preserveAspectRatio="none">{% render 'finish-ice-svg' %}</svg></span></div>
           <div class="bdf-finish-desc">Unique fractured-crystal pattern — bold and distinct</div>
           <div class="bdf-finish-price" id="bdf-price-cracked">—</div>
         </div>

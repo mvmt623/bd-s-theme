@@ -1,0 +1,103 @@
+{%- comment -%}
+  Big Dawgs — Finish Effect Tags (V13 Approved)
+  Reusable snippet for Matte / Holographic / Cracked Ice styled tags.
+
+  Usage:
+    {% render 'finish-effects' %}           — just outputs CSS + SVG defs (put in <head> or once per page)
+    For tags, use these classes directly in HTML:
+      <span class="bd-ftag bd-ftag--matte">MATTE</span>
+      <span class="bd-ftag bd-ftag--holo">HOLOGRAPHIC</span>
+      <span class="bd-ftag bd-ftag--ice"><span class="bd-ftag-text">CRACKED ICE</span><svg class="bd-ftag-ice-svg" viewBox="0 0 100 28" preserveAspectRatio="none">{% render 'finish-ice-svg' %}</svg></span>
+{%- endcomment -%}
+
+<!-- SVG filter definitions for cracked ice hue shifts -->
+<svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+  <defs>
+    <filter id="bdh0"><feColorMatrix type="hueRotate" values="0"/></filter>
+    <filter id="bdh90"><feColorMatrix type="hueRotate" values="90"/></filter>
+    <filter id="bdh150"><feColorMatrix type="hueRotate" values="150"/></filter>
+    <filter id="bdh185"><feColorMatrix type="hueRotate" values="185"/></filter>
+    <filter id="bdh210"><feColorMatrix type="hueRotate" values="210"/></filter>
+    <filter id="bdh240"><feColorMatrix type="hueRotate" values="240"/></filter>
+    <filter id="bdh270"><feColorMatrix type="hueRotate" values="270"/></filter>
+    <filter id="bdh300"><feColorMatrix type="hueRotate" values="300"/></filter>
+    <filter id="bdh305"><feColorMatrix type="hueRotate" values="305"/></filter>
+    <filter id="bdh330"><feColorMatrix type="hueRotate" values="330"/></filter>
+  </defs>
+</svg>
+
+<style>
+  /* ═══ BASE TAG ═══ */
+  .bd-ftag {
+    display: inline-block;
+    padding: .3rem .85rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+    line-height: 1.4;
+  }
+
+  /* ═══ MATTE ═══ */
+  .bd-ftag--matte {
+    background: #2a2a2a;
+    color: #ccc;
+    border: 1px solid #444;
+  }
+
+  /* ═══ HOLOGRAPHIC ═══ */
+  .bd-ftag--holo {
+    background: linear-gradient(90deg, #ff006e, #fb5607, #ffbe0b, #06d6a0, #118ab2, #8338ec, #ff006e);
+    background-size: 400% 100%;
+    animation: bd-ftag-holo 5s linear infinite;
+    border: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,.5);
+  }
+  .bd-ftag--holo::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+    animation: bd-ftag-shimmer 2.5s ease-in-out infinite;
+  }
+  @keyframes bd-ftag-holo {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 400% 50%; }
+  }
+  @keyframes bd-ftag-shimmer {
+    0%   { left: -100%; }
+    100% { left: 200%; }
+  }
+
+  /* ═══ CRACKED ICE ═══ */
+  .bd-ftag--ice {
+    background: linear-gradient(90deg, #0050cc, #7c3aed, #1090ff, #a855f7, #0070ee, #c084fc, #003da8, #8b5cf6, #40b0ff, #0050cc);
+    background-size: 400% 100%;
+    animation: bd-ftag-ice 6s linear infinite;
+    border: 1px solid rgba(120,100,255,.4);
+    text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 8px rgba(0,0,0,.5);
+  }
+  @keyframes bd-ftag-ice {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 400% 50%; }
+  }
+  .bd-ftag--ice .bd-ftag-text {
+    position: relative;
+    z-index: 2;
+  }
+  .bd-ftag-ice-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+</style>

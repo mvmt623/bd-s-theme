@@ -618,6 +618,8 @@
   }
 </style>
 
+{% render 'finish-effects' %}
+
 <div class="bigdawgs-form-container">
   <div class="form-progress-bar">
     <div class="progress-dot active" data-step="1"></div>
@@ -679,17 +681,17 @@
 
       <div class="card-grid three-cols">
         <div class="option-card" data-value="Matte" data-step="2">
-          <div class="option-card-title">Matte</div>
+          <div class="option-card-title"><span class="bd-ftag bd-ftag--matte">Matte</span></div>
           <div class="option-card-subtext">Clean, professional matte look</div>
           <div class="option-card-price">Starting at $6</div>
         </div>
         <div class="option-card" data-value="Holographic" data-step="2">
-          <div class="option-card-title">Holographic</div>
+          <div class="option-card-title"><span class="bd-ftag bd-ftag--holo">Holographic</span></div>
           <div class="option-card-subtext">Rainbow shine, eye-catching</div>
           <div class="option-card-price">Starting at $7</div>
         </div>
         <div class="option-card" data-value="Cracked Ice" data-step="2">
-          <div class="option-card-title">Cracked Ice</div>
+          <div class="option-card-title"><span class="bd-ftag bd-ftag--ice"><span class="bd-ftag-text">Cracked Ice</span><svg class="bd-ftag-ice-svg" viewBox="0 0 100 28" preserveAspectRatio="none">{% render 'finish-ice-svg' %}</svg></span></div>
           <div class="option-card-subtext">Unique fractured-crystal pattern</div>
           <div class="option-card-price">Starting at $7</div>
         </div>

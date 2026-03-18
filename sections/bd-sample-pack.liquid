@@ -121,6 +121,8 @@
   @keyframes bdspSpin { to { transform: rotate(360deg); } }
 </style>
 
+{% render 'finish-effects' %}
+
 <div class="bdsp-container">
   <h2 class="bdsp-heading">Choose Your Sample Pack</h2>
   <p class="bdsp-sub">Try before you commit. Feel the quality of our custom sticker finishes before placing a bulk order.</p>
@@ -137,18 +139,18 @@
   <form id="bdsp-form" action="/cart/add" method="post">
     <div class="bdsp-grid">
       <div class="bdsp-card" data-variant="{{ regular_variant.id }}" data-name="Matte">
-        <div class="bdsp-card-name">Matte</div>
+        <div class="bdsp-card-name"><span class="bd-ftag bd-ftag--matte">Matte</span></div>
         <div class="bdsp-card-desc">Clean vinyl — sharp, professional, the go-to for card shops.</div>
         <div class="bdsp-card-price">{{ regular_variant.price | money_without_trailing_zeros }}</div>
       </div>
       <div class="bdsp-card" data-variant="{{ holo_variant.id }}" data-name="Holographic">
         <div class="bdsp-badge">Popular</div>
-        <div class="bdsp-card-name">Holographic</div>
+        <div class="bdsp-card-name"><span class="bd-ftag bd-ftag--holo">Holographic</span></div>
         <div class="bdsp-card-desc">Full rainbow color-shift — eye-catching and impossible to ignore.</div>
         <div class="bdsp-card-price">{{ holo_variant.price | money_without_trailing_zeros }}</div>
       </div>
       <div class="bdsp-card" data-variant="{{ cracked_variant.id }}" data-name="Cracked Ice">
-        <div class="bdsp-card-name">Cracked Ice</div>
+        <div class="bdsp-card-name"><span class="bd-ftag bd-ftag--ice"><span class="bd-ftag-text">Cracked Ice</span><svg class="bd-ftag-ice-svg" viewBox="0 0 100 28" preserveAspectRatio="none">{% render 'finish-ice-svg' %}</svg></span></div>
         <div class="bdsp-card-desc">Unique fractured-crystal pattern — bold and distinct on any holder.</div>
         <div class="bdsp-card-price">{{ cracked_variant.price | money_without_trailing_zeros }}</div>
       </div>
