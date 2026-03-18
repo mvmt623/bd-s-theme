@@ -16,10 +16,15 @@
     --bd-white: #FFFFFF;
   }
 
-  /* ─── PAGE-WIDE DARK OVERRIDE ───
-     Wrapped inside handle check — safe, only applies to /collections/all */
+  /* ─── PAGE-WIDE DARK OVERRIDE ─── */
   body {
     background-color: #0f0f0f !important;
+  }
+
+  /* Hide the redundant generic "Products" heading section —
+     our hero already serves as the page header */
+  [id$="__section"] {
+    display: none !important;
   }
 
   /* ── HERO ── */
@@ -147,62 +152,66 @@
     flex-shrink: 0;
   }
 
-  /* ─── PRODUCT GRID DARK OVERRIDE ─── */
-  #shopify-section-main,
-  #shopify-section-main .section-background {
+  /* ─── PRODUCT GRID DARK OVERRIDE ───
+     Shopify dynamically prefixes section IDs with the template ID.
+     Using [id$="__main"] and [id$="__section"] attribute selectors
+     to match regardless of the template prefix. */
+
+  /* Dark background for the main collection section */
+  [id$="__main"],
+  [id$="__main"] .section-background {
     background-color: #0f0f0f !important;
   }
 
   /* Product card dark treatment */
-  #shopify-section-main product-card {
+  [id$="__main"] product-card {
     background: #181818 !important;
     border-radius: 10px !important;
     overflow: hidden !important;
     transition: transform .25s ease, box-shadow .25s ease !important;
     display: block !important;
   }
-  #shopify-section-main product-card:hover {
+  [id$="__main"] product-card:hover {
     transform: translateY(-4px) !important;
     box-shadow: 0 16px 40px rgba(0,0,0,.6) !important;
   }
-  #shopify-section-main product-card .media img,
-  #shopify-section-main product-card img {
+  [id$="__main"] product-card .media img,
+  [id$="__main"] product-card img {
     transition: transform .3s ease !important;
   }
-  #shopify-section-main product-card:hover .media img,
-  #shopify-section-main product-card:hover img {
+  [id$="__main"] product-card:hover .media img,
+  [id$="__main"] product-card:hover img {
     transform: scale(1.04) !important;
   }
   /* Product title */
-  #shopify-section-main product-card .product-card-title,
-  #shopify-section-main product-card [class*="title"],
-  #shopify-section-main product-card h2,
-  #shopify-section-main product-card h3,
-  #shopify-section-main product-card .h6,
-  #shopify-section-main product-card .rte {
+  [id$="__main"] product-card .product-card-title,
+  [id$="__main"] product-card [class*="title"],
+  [id$="__main"] product-card h2,
+  [id$="__main"] product-card h3,
+  [id$="__main"] product-card .h6,
+  [id$="__main"] product-card .rte {
     color: #eeeeee !important;
     background: transparent !important;
     background-color: transparent !important;
   }
   /* Price */
-  #shopify-section-main product-card product-price,
-  #shopify-section-main product-card [class*="price"],
-  #shopify-section-main product-card .price {
+  [id$="__main"] product-card product-price,
+  [id$="__main"] product-card [class*="price"],
+  [id$="__main"] product-card .price {
     color: #aaa !important;
   }
   /* Card info area */
-  #shopify-section-main product-card .product-card-info,
-  #shopify-section-main product-card .card-info {
+  [id$="__main"] product-card .product-card-info,
+  [id$="__main"] product-card .card-info {
     padding: .75rem 1rem 1rem !important;
     background: #181818 !important;
   }
-  /* Filter + sort bar text */
-  #shopify-section-main .facets-container,
-  #shopify-section-main .facets-wrap,
-  #shopify-section-main [class*="facet"] {
+  /* Filter/sort bar */
+  [id$="__main"] [class*="facet"],
+  [id$="__main"] [class*="sort"] {
     color: #999 !important;
   }
-  #shopify-section-main [class*="count"] {
+  [id$="__main"] [class*="count"] {
     color: #666 !important;
   }
 
