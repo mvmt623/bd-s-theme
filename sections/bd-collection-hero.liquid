@@ -279,14 +279,20 @@
 </div>
 
 {% comment %}
-  Bake product type data from Liquid into a JS map.
-  This gives the client-side filter accurate type values
-  regardless of what strings are used in the Shopify admin —
-  no dependency on Shopify Storefront Filters API.
+  product.type is not set in this store's admin, so we derive the
+  filter category from the product handle instead — which IS descriptive.
+  Produces: { "custom-card-stickers": "card sticker", ... }
 {% endcomment %}
 <script>
 window.__bdProductTypes = {
-  {% for product in collection.products %}{{ product.handle | json }}: {{ product.type | downcase | json }}{% unless forloop.last %},{% endunless %}{% endfor %}
+  {% for product in collection.products %}
+  {% if product.handle contains 'card-sticker' %}{% assign bd_cat = 'card sticker' %}
+  {% elsif product.handle contains 'flat-sticker' %}{% assign bd_cat = 'flat sticker' %}
+  {% elsif product.handle contains 'sample' %}{% assign bd_cat = 'sample pack' %}
+  {% else %}{% assign bd_cat = 'accessor' %}
+  {% endif %}
+  {{ product.handle | json }}: {{ bd_cat | json }}{% unless forloop.last %},{% endunless %}
+  {% endfor %}
 };
 </script>
 
@@ -326,7 +332,7 @@ window.__bdProductTypes = {
     return Array.prototype.slice.call(items);
   }
 
-  /* Show/hide items — keyword is a lowercase substring to match against product.type */
+  /* Show/hide items — keyword is a lowercase substring to match against mapped category */
   function filterProducts(keyword) {
     getProductItems().forEach(function (item) {
       if (!keyword) {
@@ -335,9 +341,8 @@ window.__bdProductTypes = {
       }
       var handle = getHandle(item);
       if (!handle) { item.style.display = ''; return; }
-      var type = (window.__bdProductTypes && window.__bdProductTypes[handle]) || '';
-      /* Substring match handles "custom card stickers" matching keyword "card sticker" */
-      item.style.display = type.indexOf(keyword) !== -1 ? '' : 'none';
+      var cat = (window.__bdProductTypes && window.__bdProductTypes[handle]) || '';
+      item.style.display = cat.indexOf(keyword) !== -1 ? '' : 'none';
     });
   }
 
