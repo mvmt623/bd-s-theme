@@ -7,21 +7,31 @@
 {%- liquid
   comment
     Safely look up sample pack variants by title.
-    Falls back to first variant so checkout never gets an empty ID.
+    Falls back gracefully so checkout never gets an empty ID.
+    Holographic and Cracked Ice may share the same Shopify variant;
+    the selected finish is recorded in cart properties.
   endcomment
   assign regular_variant = product.variants[0]
-  assign holo_variant = product.variants[1]
+  assign holo_variant     = product.variants[1]
+  assign cracked_variant  = product.variants[1]
   unless holo_variant
-    assign holo_variant = product.variants[0]
+    assign holo_variant    = product.variants[0]
+    assign cracked_variant = product.variants[0]
   endunless
   for v in product.variants
-    if v.title == 'Regular'
+    if v.title == 'Regular' or v.title == 'Matte'
       assign regular_variant = v
     endif
     if v.title == 'Holo / Cracked Ice' or v.title == 'Holographic' or v.title == 'Holo'
       assign holo_variant = v
     endif
+    if v.title == 'Cracked Ice'
+      assign cracked_variant = v
+    endif
   endfor
+  unless cracked_variant
+    assign cracked_variant = holo_variant
+  endunless
 -%}
 
 <style>
@@ -56,14 +66,14 @@
   .bdsp-what li::before { content: "✓ "; color: var(--bd-gold); }
 
   .bdsp-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 16px; margin-bottom: 28px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px; margin-bottom: 28px;
   }
-  @media (max-width: 480px) { .bdsp-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .bdsp-grid { grid-template-columns: 1fr; } }
 
   .bdsp-card {
     border: 2px solid var(--bd-gray); border-radius: 8px;
-    padding: 24px 18px; text-align: center; cursor: pointer;
+    padding: 22px 16px; text-align: center; cursor: pointer;
     background: var(--bd-dark); transition: all .25s; position: relative;
   }
   .bdsp-card:hover { border-color: var(--bd-red); transform: translateY(-2px); }
@@ -71,13 +81,7 @@
     border-color: var(--bd-red); background: rgba(204,0,0,.1);
     box-shadow: 0 0 20px rgba(204,0,0,.25);
   }
-  .bdsp-swatch {
-    width: 52px; height: 52px; border-radius: 50%;
-    margin: 0 auto 14px; border: 3px solid rgba(255,255,255,.15);
-  }
-  .bdsp-swatch.regular { background: linear-gradient(135deg,#e8e8e8,#c0c0c0); }
-  .bdsp-swatch.holo    { background: linear-gradient(135deg,#ff00cc,#3333ff,#00ffcc,#ffcc00); }
-  .bdsp-card-name  { font-size: 17px; font-weight: 700; color: var(--bd-white); margin-bottom: 6px; }
+  .bdsp-card-name  { font-size: 16px; font-weight: 700; color: var(--bd-white); margin-bottom: 6px; }
   .bdsp-card-desc  { font-size: 12px; color: #aaa; margin-bottom: 12px; line-height: 1.5; }
   .bdsp-card-price { font-size: 22px; font-weight: 800; color: var(--bd-gold); }
   .bdsp-badge {
@@ -133,22 +137,26 @@
   <form id="bdsp-form" action="/cart/add" method="post">
     <div class="bdsp-grid">
       <div class="bdsp-card" data-variant="{{ regular_variant.id }}" data-name="Matte">
-        <div class="bdsp-swatch regular"></div>
         <div class="bdsp-card-name">Matte</div>
-        <div class="bdsp-card-desc">Clean, matte vinyl. Sharp and professional — the go-to for card shops.</div>
+        <div class="bdsp-card-desc">Clean vinyl — sharp, professional, the go-to for card shops.</div>
         <div class="bdsp-card-price">{{ regular_variant.price | money_without_trailing_zeros }}</div>
       </div>
-      <div class="bdsp-card" data-variant="{{ holo_variant.id }}" data-name="Holo / Cracked Ice">
-        <div class="bdsp-badge">Most Popular</div>
-        <div class="bdsp-swatch holo"></div>
-        <div class="bdsp-card-name">Holo / Cracked Ice</div>
-        <div class="bdsp-card-desc">Both premium finishes in one pack — rainbow holo plus fractured-ice pattern.</div>
+      <div class="bdsp-card" data-variant="{{ holo_variant.id }}" data-name="Holographic">
+        <div class="bdsp-badge">Popular</div>
+        <div class="bdsp-card-name">Holographic</div>
+        <div class="bdsp-card-desc">Full rainbow color-shift — eye-catching and impossible to ignore.</div>
         <div class="bdsp-card-price">{{ holo_variant.price | money_without_trailing_zeros }}</div>
+      </div>
+      <div class="bdsp-card" data-variant="{{ cracked_variant.id }}" data-name="Cracked Ice">
+        <div class="bdsp-card-name">Cracked Ice</div>
+        <div class="bdsp-card-desc">Unique fractured-crystal pattern — bold and distinct on any holder.</div>
+        <div class="bdsp-card-price">{{ cracked_variant.price | money_without_trailing_zeros }}</div>
       </div>
     </div>
 
     <input type="hidden" name="id" id="bdsp-variant-id" value="">
     <input type="hidden" name="quantity" value="1">
+    <input type="hidden" name="properties[Finish]" id="bdsp-prop-finish" value="">
 
     <button type="submit" class="bdsp-submit" id="bdsp-submit" disabled>
       Select a Pack Above
@@ -172,6 +180,7 @@
       this.classList.add('selected');
       selectedVariant = this.dataset.variant;
       document.getElementById('bdsp-variant-id').value = selectedVariant;
+      document.getElementById('bdsp-prop-finish').value = this.dataset.name;
       submitBtn.textContent = 'Add to Cart — ' + this.dataset.name;
       submitBtn.classList.add('ready');
       submitBtn.disabled = false;
