@@ -131,119 +131,243 @@
     letter-spacing: .5px;
   }
 
-  /* ─── CART SECTION DARK OVERRIDE ─── */
+  /* ══════════════════════════════════════════
+     CART SECTION — COMPREHENSIVE DARK OVERRIDE
+     Covers every element the theme's color-scheme-1
+     injects dark text/bg into.
+  ══════════════════════════════════════════ */
+
+  /* Top-level section wrapper */
   [id$="__cart-section"],
-  [id$="__cart-section"] .section-background {
+  [id$="__cart-section"] .section-background,
+  [id$="__cart-section"] .color-scheme-1,
+  [id$="__cart-section"] [class*="color-scheme"] {
     background-color: var(--bd-black) !important;
     color: var(--bd-white) !important;
   }
 
-  /* Cart form layout */
+  /* Cart page layout wrappers */
+  [id$="__cart-section"] .cart-page,
+  [id$="__cart-section"] .cart-page__items,
+  [id$="__cart-section"] .cart-items__wrapper,
   [id$="__cart-section"] .cart-form {
+    color: #eeeeee !important;
     background: transparent !important;
+    background-color: transparent !important;
   }
 
-  /* Cart item rows */
+  /* Cart title + item count */
+  [id$="__cart-section"] .cart-page__title,
+  [id$="__cart-section"] .cart-title,
+  [id$="__cart-section"] .h4,
+  [id$="__cart-section"] h4,
+  [id$="__cart-section"] .cart-bubble__text,
+  [id$="__cart-section"] .cart-bubble__text-count {
+    color: #ffffff !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* ── CART ITEM ROWS ── */
   [id$="__cart-section"] cart-items-component,
   [id$="__cart-section"] .cart-items,
-  [id$="__cart-section"] .cart-item {
+  [id$="__cart-section"] .cart-item,
+  [id$="__cart-section"] .cart-items__table-row {
+    color: #eeeeee !important;
     background: transparent !important;
-    color: var(--bd-white) !important;
-    border-color: var(--bd-border) !important;
+    border-color: #2a2a2a !important;
   }
+
+  /* Product name / title */
+  [id$="__cart-section"] .cart-items__product-title,
   [id$="__cart-section"] .cart-item__title,
   [id$="__cart-section"] .cart-item__name,
   [id$="__cart-section"] [class*="cart-item"] a,
   [id$="__cart-section"] [class*="cart-item"] h2,
   [id$="__cart-section"] [class*="cart-item"] h3,
-  [id$="__cart-section"] [class*="cart-item"] p {
-    color: #eee !important;
+  [id$="__cart-section"] [class*="cart-items"] a {
+    color: #ffffff !important;
     background: transparent !important;
     background-color: transparent !important;
   }
-  [id$="__cart-section"] .cart-item__price,
-  [id$="__cart-section"] [class*="price"] {
-    color: #bbb !important;
-  }
-  /* Quantity controls */
-  [id$="__cart-section"] quantity-input,
-  [id$="__cart-section"] .quantity {
-    background: #1e1e1e !important;
-    border-color: #333 !important;
-    color: #eee !important;
-  }
-  [id$="__cart-section"] .quantity__button,
-  [id$="__cart-section"] [class*="quantity"] button {
+
+  /* ── PRODUCT DETAILS / VARIANT TEXT (previously illegible) ──
+     The theme sets these to rgba(0,0,0,0.7) — near-black on dark bg.
+     Override to a readable muted tone. */
+  [id$="__cart-section"] .cart-items__details,
+  [id$="__cart-section"] .cart-items__product-info,
+  [id$="__cart-section"] .cart-items__variants-wrapper,
+  [id$="__cart-section"] .cart-items__properties,
+  [id$="__cart-section"] .cart-items__property,
+  [id$="__cart-section"] .cart-primary-typography,
+  [id$="__cart-section"] [class*="cart-items__property"],
+  [id$="__cart-section"] [class*="cart-items__variant"] {
+    color: #aaaaaa !important;
     background: transparent !important;
-    color: #bbb !important;
-    border-color: #333 !important;
+    background-color: transparent !important;
   }
-  [id$="__cart-section"] .quantity__input,
+
+  /* Property labels vs values — give labels a slightly brighter tone */
+  [id$="__cart-section"] .cart-items__property:first-child,
+  [id$="__cart-section"] .cart-items__property-name {
+    color: #888 !important;
+  }
+  [id$="__cart-section"] .cart-items__property-value {
+    color: #bbb !important;
+  }
+
+  /* Price */
+  [id$="__cart-section"] .cart-item__price,
+  [id$="__cart-section"] product-price,
+  [id$="__cart-section"] [class*="price"] {
+    color: #cccccc !important;
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* ── QUANTITY CONTROLS ── */
+  [id$="__cart-section"] .cart-items__quantity,
+  [id$="__cart-section"] [class*="quantity-wrapper"],
+  [id$="__cart-section"] quantity-input {
+    background: #1e1e1e !important;
+    border: 1px solid #333 !important;
+    border-radius: 6px !important;
+    overflow: hidden;
+  }
+  [id$="__cart-section"] .quantity-minus,
+  [id$="__cart-section"] .quantity-plus,
+  [id$="__cart-section"] button.quantity-minus,
+  [id$="__cart-section"] button.quantity-plus {
+    background: transparent !important;
+    color: #aaa !important;
+    border: none !important;
+  }
+  [id$="__cart-section"] .quantity-minus:hover,
+  [id$="__cart-section"] .quantity-plus:hover {
+    color: #fff !important;
+  }
+  [id$="__cart-section"] input[type="number"],
+  [id$="__cart-section"] .quantity-input,
   [id$="__cart-section"] [class*="quantity"] input {
     background: transparent !important;
-    color: #eee !important;
+    color: #eeeeee !important;
+    border: none !important;
+    text-align: center;
   }
-  /* Remove link */
-  [id$="__cart-section"] [class*="remove"],
+
+  /* ── REMOVE BUTTON ── */
+  [id$="__cart-section"] .cart-items__remove,
+  [id$="__cart-section"] button.cart-items__remove,
+  [id$="__cart-section"] cart-remove-button button,
   [id$="__cart-section"] cart-remove-button a,
-  [id$="__cart-section"] cart-remove-button button {
+  [id$="__cart-section"] [class*="remove"] {
     color: #555 !important;
+    background: transparent !important;
   }
-  [id$="__cart-section"] [class*="remove"]:hover,
-  [id$="__cart-section"] cart-remove-button a:hover,
+  [id$="__cart-section"] .cart-items__remove:hover,
+  [id$="__cart-section"] button.cart-items__remove:hover,
   [id$="__cart-section"] cart-remove-button button:hover {
     color: var(--bd-red) !important;
   }
 
-  /* ─── CART SUMMARY / SIDEBAR ─── */
+  /* ── CART SUMMARY / SIDEBAR ── */
   [id$="__cart-section"] .cart-page__summary,
-  [id$="__cart-section"] .cart-page__summary .section-background {
+  [id$="__cart-section"] .cart-page__summary .section-background,
+  [id$="__cart-section"] .cart-page__summary [class*="color-scheme"] {
     background-color: var(--bd-black) !important;
+    color: var(--bd-white) !important;
   }
   [id$="__cart-section"] .cart-summary {
-    background: var(--bd-card) !important;
-    border: 1px solid var(--bd-border) !important;
+    background: #181818 !important;
+    border: 1px solid #2a2a2a !important;
     border-radius: 12px !important;
     overflow: hidden !important;
   }
+
+  /* Totals text */
   [id$="__cart-section"] .cart-totals,
-  [id$="__cart-section"] [class*="totals"] {
-    background: transparent !important;
-    color: var(--bd-white) !important;
-  }
+  [id$="__cart-section"] [class*="totals"],
   [id$="__cart-section"] .cart-totals__subtotal,
   [id$="__cart-section"] [class*="subtotal"],
   [id$="__cart-section"] [class*="total-label"],
-  [id$="__cart-section"] [class*="total-value"] {
-    color: #ddd !important;
-    background: transparent !important;
-    background-color: transparent !important;
-  }
-  /* Total line */
+  [id$="__cart-section"] [class*="total-value"],
   [id$="__cart-section"] .cart-totals__total,
-  [id$="__cart-section"] [class*="cart-total"] strong,
   [id$="__cart-section"] [class*="cart-total"] {
-    color: #fff !important;
+    color: #dddddd !important;
     background: transparent !important;
     background-color: transparent !important;
   }
-  /* Dividers inside summary */
+  [id$="__cart-section"] .cart-totals__total strong,
+  [id$="__cart-section"] [class*="cart-total"] strong {
+    color: #ffffff !important;
+  }
+
+  /* Summary dividers */
   [id$="__cart-section"] .cart-summary hr,
   [id$="__cart-section"] .cart-totals hr,
   [id$="__cart-section"] [class*="divider"] {
-    border-color: var(--bd-border) !important;
-  }
-  /* Discount / coupon input */
-  [id$="__cart-section"] [class*="discount"],
-  [id$="__cart-section"] [class*="coupon"],
-  [id$="__cart-section"] [id*="discount"],
-  [id$="__cart-section"] [name*="discount"] {
-    background: #1e1e1e !important;
-    border-color: #333 !important;
-    color: #eee !important;
+    border-color: #2a2a2a !important;
   }
 
-  /* ─── CHECKOUT BUTTON ─── */
+  /* ── ALL FORM INPUTS ── */
+  [id$="__cart-section"] input,
+  [id$="__cart-section"] textarea,
+  [id$="__cart-section"] select {
+    background-color: #1a1a1a !important;
+    background: #1a1a1a !important;
+    color: #eeeeee !important;
+    border-color: #333333 !important;
+    border-radius: 6px !important;
+  }
+  [id$="__cart-section"] input::placeholder,
+  [id$="__cart-section"] textarea::placeholder {
+    color: #555 !important;
+  }
+  [id$="__cart-section"] input:focus,
+  [id$="__cart-section"] textarea:focus {
+    border-color: #555 !important;
+    outline: none !important;
+  }
+
+  /* Discount label */
+  [id$="__cart-section"] [class*="discount"] label,
+  [id$="__cart-section"] [class*="discount"] span,
+  [id$="__cart-section"] [for*="discount"] {
+    color: #888 !important;
+  }
+
+  /* Apply button for discount */
+  [id$="__cart-section"] [class*="discount"] button,
+  [id$="__cart-section"] [class*="apply"] {
+    color: #aaa !important;
+    background: transparent !important;
+    border-color: #333 !important;
+  }
+  [id$="__cart-section"] [class*="discount"] button:hover {
+    color: #fff !important;
+    border-color: #555 !important;
+  }
+
+  /* Shop Pay / payment icons text */
+  [id$="__cart-section"] [class*="installment"],
+  [id$="__cart-section"] [class*="shop-pay"],
+  [id$="__cart-section"] .shopify-payment-terms,
+  [id$="__cart-section"] [class*="payment-terms"] {
+    color: #666 !important;
+  }
+  [id$="__cart-section"] [class*="installment"] a,
+  [id$="__cart-section"] [class*="payment-terms"] a {
+    color: #888 !important;
+  }
+
+  /* Taxes & shipping note under total */
+  [id$="__cart-section"] [class*="tax"],
+  [id$="__cart-section"] [class*="shipping-note"],
+  [id$="__cart-section"] .cart-totals__taxes {
+    color: #555 !important;
+  }
+
+  /* ── CHECKOUT BUTTON ── */
   [id$="__cart-section"] .cart__checkout-button,
   [id$="__cart-section"] button[name="checkout"] {
     background: var(--bd-red) !important;
@@ -268,8 +392,6 @@
   }
 
   /* ─── BD CONVERSION INJECTED ELEMENTS ─── */
-
-  /* Trust badges strip above checkout */
   .bd-trust-strip {
     display: flex;
     gap: .5rem;
@@ -285,14 +407,10 @@
     font-weight: 700;
     letter-spacing: .8px;
     text-transform: uppercase;
-    color: #777;
+    color: #666;
   }
-  .bd-trust-badge svg {
-    flex-shrink: 0;
-    opacity: .7;
-  }
+  .bd-trust-badge svg { flex-shrink: 0; opacity: .6; }
 
-  /* Guarantee line */
   .bd-guarantee {
     text-align: center;
     font-size: .7rem;
@@ -301,11 +419,8 @@
     margin: .5rem 0 0;
     line-height: 1.5;
   }
-  .bd-guarantee strong {
-    color: #888;
-  }
+  .bd-guarantee strong { color: #777; }
 
-  /* Urgency nudge */
   .bd-urgency {
     display: flex;
     align-items: center;
@@ -332,10 +447,8 @@
   }
   @keyframes bd-pulse {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: .4; transform: scale(.7); }
+    50%       { opacity: .4; transform: scale(.7); }
   }
-
-  /* Checkout note */
   .bd-checkout-note {
     text-align: center;
     font-size: .65rem;
@@ -344,17 +457,17 @@
     margin-top: .6rem;
   }
 
-  /* ─── "YOU MAY ALSO LIKE" SECTION DARK OVERRIDE ─── */
+  /* ─── "YOU MAY ALSO LIKE" DARK OVERRIDE ─── */
   [id$="__product_list_NNFgcy"],
   [id$="__product_list_NNFgcy"] .section-background,
   [id$="__product_list_NNFgcy"] [class*="color-scheme"] {
-    background-color: #111 !important;
-    color: #eee !important;
+    background-color: #111111 !important;
+    color: #eeeeee !important;
   }
   [id$="__product_list_NNFgcy"] h2,
   [id$="__product_list_NNFgcy"] h3,
   [id$="__product_list_NNFgcy"] [class*="title"] {
-    color: #eee !important;
+    color: #eeeeee !important;
     background: transparent !important;
     background-color: transparent !important;
   }
@@ -366,16 +479,12 @@
   [id$="__product_list_NNFgcy"] product-card h2,
   [id$="__product_list_NNFgcy"] product-card h3,
   [id$="__product_list_NNFgcy"] product-card [class*="title"] {
-    color: #ddd !important;
+    color: #dddddd !important;
     background: transparent !important;
     background-color: transparent !important;
   }
-  [id$="__product_list_NNFgcy"] [class*="price"] {
-    color: #999 !important;
-  }
-  [id$="__product_list_NNFgcy"] a[class*="view"] {
-    color: var(--bd-red) !important;
-  }
+  [id$="__product_list_NNFgcy"] [class*="price"] { color: #999 !important; }
+  [id$="__product_list_NNFgcy"] a[class*="view"] { color: var(--bd-red) !important; }
 
   /* ─── EMPTY CART STATE ─── */
   [id$="__cart-section"] [class*="empty"],
@@ -396,7 +505,6 @@
 <div class="bd-cart-header">
   <div class="bd-cart-header-inner">
 
-    <!-- Step indicator -->
     <div class="bd-cart-steps">
       <div class="bd-step bd-step--done">
         <div class="bd-step-dot">✓</div>
@@ -421,7 +529,6 @@
 </div>
 
 <script>
-/* ─── CONVERSION PSYCHOLOGY INJECTOR ─── */
 (function () {
   'use strict';
 
@@ -435,12 +542,8 @@
 
   function inject() {
     var checkoutBtn = document.querySelector('[id$="__cart-section"] button[name="checkout"]');
-    if (!checkoutBtn) {
-      setTimeout(inject, 600);
-      return;
-    }
+    if (!checkoutBtn) { setTimeout(inject, 600); return; }
 
-    /* ── 1. Urgency nudge — above checkout button ── */
     if (!document.querySelector('.bd-urgency')) {
       var urgency = document.createElement('div');
       urgency.className = 'bd-urgency';
@@ -448,36 +551,32 @@
       checkoutBtn.parentNode.insertBefore(urgency, checkoutBtn);
     }
 
-    /* ── 2. Trust badge strip — above checkout ── */
     if (!document.querySelector('.bd-trust-strip')) {
       var strip = document.createElement('div');
       strip.className = 'bd-trust-strip';
       strip.innerHTML =
         '<span class="bd-trust-badge">' +
-          '<svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M5.5 0L0 2v4c0 3.3 2.3 6.4 5.5 7C8.7 12.4 11 9.3 11 6V2L5.5 0z" fill="#555"/></svg>' +
+          '<svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M5.5 0L0 2v4c0 3.3 2.3 6.4 5.5 7C8.7 12.4 11 9.3 11 6V2L5.5 0z" fill="#666"/></svg>' +
           '&nbsp;Secure Checkout' +
         '</span>' +
         '<span class="bd-trust-badge">' +
-          '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="0.5" y="0.5" width="11" height="11" rx="5.5" stroke="#555"/><path d="M3.5 6l2 2 3-3" stroke="#555" stroke-width="1.2" stroke-linecap="round"/></svg>' +
+          '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x=".5" y=".5" width="11" height="11" rx="5.5" stroke="#666"/><path d="M3.5 6l2 2 3-3" stroke="#666" stroke-width="1.2" stroke-linecap="round"/></svg>' +
           '&nbsp;Collector Approved' +
         '</span>' +
         '<span class="bd-trust-badge">' +
-          '<svg width="13" height="10" viewBox="0 0 13 10" fill="none"><rect x="0.5" y="0.5" width="12" height="9" rx="1.5" stroke="#555"/><path d="M0 3h13" stroke="#555"/></svg>' +
+          '<svg width="13" height="10" viewBox="0 0 13 10" fill="none"><rect x=".5" y=".5" width="12" height="9" rx="1.5" stroke="#666"/><path d="M0 3h13" stroke="#666"/></svg>' +
           '&nbsp;All Major Cards' +
         '</span>';
       checkoutBtn.parentNode.insertBefore(strip, checkoutBtn);
     }
 
-    /* ── 3. Guarantee line — below checkout button ── */
     if (!document.querySelector('.bd-guarantee')) {
       var guarantee = document.createElement('p');
       guarantee.className = 'bd-guarantee';
       guarantee.innerHTML = '<strong>100% satisfaction guarantee</strong> — if something\'s off, we make it right.';
-      var next = checkoutBtn.nextSibling;
-      checkoutBtn.parentNode.insertBefore(guarantee, next || null);
+      checkoutBtn.parentNode.insertBefore(guarantee, checkoutBtn.nextSibling || null);
     }
 
-    /* ── 4. Shipping note below guarantee ── */
     if (!document.querySelector('.bd-checkout-note')) {
       var note = document.createElement('p');
       note.className = 'bd-checkout-note';
