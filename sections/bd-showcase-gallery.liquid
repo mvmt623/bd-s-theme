@@ -416,6 +416,10 @@
   /* ══════════════════════════════════
      FINISH EXPLAINER
   ══════════════════════════════════ */
+  .bdsg-finish-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .bdsg-finish-icon img { width: 100%; max-width: 220px; height: auto; border-radius: 8px; display: block; margin: 0 auto; }
+  .bdsg-finish-video { width: 100%; max-width: 220px; aspect-ratio: 1/1; border-radius: 50%; overflow: hidden; margin: 0 auto; }
+  .bdsg-finish-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
   .bdsg-explainer {
     background: var(--bd-mid);
     padding: 3.5rem 1.5rem;
@@ -426,13 +430,10 @@
   .bdsg-explainer-header h3 { color: var(--bd-white); font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 800; margin: 0 0 .5rem; }
   .bdsg-explainer-header p { color: rgba(255,255,255,0.5); font-size: .9rem; margin: 0; }
   .bdsg-explainer-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; }
-  .bdsg-tile { background: var(--bd-dark); border: 1px solid var(--bd-gray); border-radius: 10px; padding: 1.4rem 1.3rem; }
-  .bdsg-tile-dot { width: 28px; height: 28px; border-radius: 50%; margin-bottom: .85rem; display: block; }
-  .bdsg-tile-dot--matte   { background: linear-gradient(135deg,#3c3c3c,#666); }
-  .bdsg-tile-dot--holo    { background: linear-gradient(135deg,#6a11cb,#2575fc,#00c6ff); }
-  .bdsg-tile-dot--cracked { background: linear-gradient(135deg,#b0b0b0,#e8e8e8,#909090); }
-  .bdsg-tile h4 { color: var(--bd-white); font-size: .95rem; font-weight: 800; margin: 0 0 .4rem; }
-  .bdsg-tile p { color: rgba(255,255,255,0.55); font-size: .83rem; line-height: 1.5; margin: 0; }
+  .bdsg-tile { background: #222; border: 1px solid #333; border-radius: 8px; padding: 2rem 1.5rem; text-align: center; }
+  .bdsg-tile:hover { border-color: var(--bd-red); }
+  .bdsg-tile h4 { color: var(--bd-white); font-size: 1.15rem; font-weight: 800; text-transform: uppercase; margin: 0 0 .75rem; letter-spacing: 1px; }
+  .bdsg-tile p { color: #999; font-size: .88rem; line-height: 1.65; margin: 0; }
 
   /* ══════════════════════════════════
      CTA STRIP
@@ -695,19 +696,27 @@
     </div>
     <div class="bdsg-explainer-tiles">
       <div class="bdsg-tile">
-        <span class="bdsg-tile-dot bdsg-tile-dot--matte"></span>
+        <div class="bdsg-finish-icon"><img src="https://cdn.shopify.com/s/files/1/0738/3724/8706/files/bd-A.png?v=1773082307"></div>
         <h4>Matte</h4>
-        <p>Smooth, non-reflective surface with rich ink depth. Clean and professional — no glare under any light.</p>
+        <p>Clean, professional, zero glare. Matte finish card holder stickers are the go-to for sellers who want a sharp, understated look. Perfect for brand-focused card shops and bulk orders.</p>
       </div>
       <div class="bdsg-tile">
-        <span class="bdsg-tile-dot bdsg-tile-dot--holo"></span>
+        <div class="bdsg-finish-icon"><div class="bdsg-finish-video">
+          <video autoplay loop muted playsinline>
+            <source src="https://cdn.shopify.com/videos/c/o/v/5b66dc1e7bfe4005bb25ee02d6897e59.mp4" type="video/mp4">
+          </video>
+        </div></div>
         <h4>Holographic</h4>
-        <p>Full rainbow spectrum that shifts with every angle. Our most eye-catching finish — built to stop the scroll and turn heads in any case.</p>
+        <p>Full rainbow color-shifting effect. Holographic stickers turn heads at card shows, breaks, and on social. The most eye-catching option in the hobby.</p>
       </div>
       <div class="bdsg-tile">
-        <span class="bdsg-tile-dot bdsg-tile-dot--cracked"></span>
+        <div class="bdsg-finish-icon"><div class="bdsg-finish-video">
+          <video autoplay loop muted playsinline>
+            <source src="https://cdn.shopify.com/videos/c/o/v/ee4d3ff648bc45108d0349ccb2eadcae.mp4" type="video/mp4">
+          </video>
+        </div></div>
         <h4>Cracked Ice</h4>
-        <p>A shatter-pattern prismatic texture with silver-chrome shimmer. Bold, icy, and unmistakably unique.</p>
+        <p>A unique fractured, shattered-ice pattern distinct from standard holo. Instantly recognizable — a signature look that sets your brand apart.</p>
       </div>
     </div>
   </div>

@@ -339,6 +339,8 @@
   .bd-finish-card:hover { border-color: var(--bd-red); }
   .bd-finish-icon { font-size: 2rem; margin-bottom: 1rem; }
   .bd-finish-icon img { width: 100%; max-width: 220px; height: auto; border-radius: 8px; display: block; margin: 0 auto; }
+  .bd-finish-video { width: 100%; max-width: 220px; aspect-ratio: 1/1; border-radius: 50%; overflow: hidden; margin: 0 auto; }
+  .bd-finish-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
   .bd-finish-card h3 { color: var(--bd-white); font-size: 1.15rem; font-weight: 800; text-transform: uppercase; margin-bottom: .75rem; letter-spacing: 1px; }
   .bd-finish-card p { color: #999; font-size: .88rem; line-height: 1.65; }
   @media (max-width: 640px) { .bd-finishes-grid { grid-template-columns: 1fr; } }
@@ -544,8 +546,8 @@
         <p>Clean, professional, zero glare. Matte finish card holder stickers are the go-to for sellers who want a sharp, understated look. Perfect for brand-focused card shops and bulk orders.</p>
       </div>
       <div class="bd-finish-card">
-        <div class="bd-finish-icon"><div style="width:220px;height:220px;border-radius:50%;overflow:hidden;margin:0 auto;">
-          <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
+        <div class="bd-finish-icon"><div class="bd-finish-video">
+          <video autoplay loop muted playsinline>
             <source src="https://cdn.shopify.com/videos/c/o/v/5b66dc1e7bfe4005bb25ee02d6897e59.mp4" type="video/mp4">
           </video>
         </div></div>
@@ -553,13 +555,11 @@
         <p>Full rainbow color-shifting effect. Holographic stickers turn heads at card shows, breaks, and on social. The most eye-catching option in the hobby.</p>
       </div>
       <div class="bd-finish-card">
-        <div class="bd-finish-icon">
-          <div style="width:220px;height:220px;border-radius:50%;overflow:hidden;margin:0 auto;">
-            <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;">
-              <source src="https://cdn.shopify.com/videos/c/o/v/ee4d3ff648bc45108d0349ccb2eadcae.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
+        <div class="bd-finish-icon"><div class="bd-finish-video">
+          <video autoplay loop muted playsinline>
+            <source src="https://cdn.shopify.com/videos/c/o/v/ee4d3ff648bc45108d0349ccb2eadcae.mp4" type="video/mp4">
+          </video>
+        </div></div>
         <h3>Cracked Ice</h3>
         <p>A unique fractured, shattered-ice pattern distinct from standard holo. Instantly recognizable — a signature look that sets your brand apart.</p>
       </div>

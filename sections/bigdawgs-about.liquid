@@ -276,38 +276,24 @@
     gap: 1.5rem;
   }
   .bd-finish-card {
-    border-radius: 10px;
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 8px;
     padding: 2rem 1.5rem;
     text-align: center;
-    border: 1px solid transparent;
   }
-  .bd-finish-card.regular {
-    background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
-    border-color: #444;
-  }
-  .bd-finish-card.holo {
-    background: linear-gradient(135deg, #1a0a2e, #2d1054);
-    border-color: #6633cc;
-  }
-  .bd-finish-card.cracked {
-    background: linear-gradient(135deg, #0a1a2e, #0d2040);
-    border-color: #336699;
-  }
-  .bd-finish-swatch {
-    width: 64px; height: 64px;
-    border-radius: 50%;
-    margin: 0 auto 1rem;
-    border: 3px solid rgba(255,255,255,.15);
-  }
-  .bd-finish-swatch.regular { background: linear-gradient(135deg, #f0f0f0, #d0d0d0); }
-  .bd-finish-swatch.holo    { background: linear-gradient(135deg, #ff00cc, #3333ff, #00ffcc, #ffcc00); }
-  .bd-finish-swatch.cracked { background: linear-gradient(135deg, #00ccff, #004488, #0088cc); }
+  .bd-finish-card:hover { border-color: var(--bd-red); }
+  .bd-finish-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .bd-finish-icon img { width: 100%; max-width: 220px; height: auto; border-radius: 8px; display: block; margin: 0 auto; }
+  .bd-finish-video { width: 100%; max-width: 220px; aspect-ratio: 1/1; border-radius: 50%; overflow: hidden; margin: 0 auto; }
+  .bd-finish-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
   .bd-finish-card h3 {
     color: var(--bd-white);
-    font-size: 1rem;
-    font-weight: 700;
+    font-size: 1.15rem;
+    font-weight: 800;
     text-transform: uppercase;
-    margin: 0 0 .4rem;
+    margin: 0 0 .75rem;
+    letter-spacing: 1px;
   }
   .bd-finish-card p {
     color: #999;
@@ -502,23 +488,31 @@
   <div class="bd-section-header">
     <span class="bd-eyebrow">Our Finishes</span>
     <h2>Three <span>Finishes</span>, Zero Compromises</h2>
-    <p>We offer three premium print finishes — each one collector-tested.</p>
+    <p>Every finish is custom-printed with your logo. Pick the look that matches your brand.</p>
   </div>
   <div class="bd-finishes-grid">
-    <div class="bd-finish-card regular">
-      <div class="bd-finish-swatch regular"></div>
+    <div class="bd-finish-card">
+      <div class="bd-finish-icon"><img src="https://cdn.shopify.com/s/files/1/0738/3724/8706/files/bd-A.png?v=1773082307"></div>
       <h3>Matte</h3>
-      <p>Clean, professional, and universally versatile. Matte finish that looks sharp under any lighting. The classic choice for everyday collections.</p>
+      <p>Clean, professional, zero glare. Matte finish card holder stickers are the go-to for sellers who want a sharp, understated look. Perfect for brand-focused card shops and bulk orders.</p>
     </div>
-    <div class="bd-finish-card holo">
-      <div class="bd-finish-swatch holo"></div>
+    <div class="bd-finish-card">
+      <div class="bd-finish-icon"><div class="bd-finish-video">
+        <video autoplay loop muted playsinline>
+          <source src="https://cdn.shopify.com/videos/c/o/v/5b66dc1e7bfe4005bb25ee02d6897e59.mp4" type="video/mp4">
+        </video>
+      </div></div>
       <h3>Holographic</h3>
-      <p>Full-spectrum rainbow holographic finish. Absolutely stunning under show lighting. Your cards will be impossible to ignore at any table.</p>
+      <p>Full rainbow color-shifting effect. Holographic stickers turn heads at card shows, breaks, and on social. The most eye-catching option in the hobby.</p>
     </div>
-    <div class="bd-finish-card cracked">
-      <div class="bd-finish-swatch cracked"></div>
+    <div class="bd-finish-card">
+      <div class="bd-finish-icon"><div class="bd-finish-video">
+        <video autoplay loop muted playsinline>
+          <source src="https://cdn.shopify.com/videos/c/o/v/ee4d3ff648bc45108d0349ccb2eadcae.mp4" type="video/mp4">
+        </video>
+      </div></div>
       <h3>Cracked Ice</h3>
-      <p>Our signature fractured-crystal pattern. Like a holo but wilder — shifts from deep blue to ice white as the angle changes. Show-stopper material.</p>
+      <p>A unique fractured, shattered-ice pattern distinct from standard holo. Instantly recognizable — a signature look that sets your brand apart.</p>
     </div>
   </div>
 </section>
