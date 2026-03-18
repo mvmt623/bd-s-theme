@@ -1,41 +1,20 @@
-eyUgY29tbWVudCAlfQogIEJJRyBEQVdHUyAtIEN1c3RvbSBDYXJkIFN0aWNrZXJzIFByb2R1Y3QgRm9ybQogIEEgbXVsdGktc3RlcCBmb3JtIGZvciBjb25maWd1cmluZyBhbmQgb3JkZXJpbmcgY3VzdG9tIGNhcmQgc3RpY2tlcnMKICBmb3IgT25lIFRvdWNoIGFuZCBUb3Bsb2FkZXIgY2FyZCBob2xkZXJzLgogIHYyOiBSZWFsIHByaWNpbmcsIHJlbmFtZWQgZmluaXNoZXMgKFJlZ3VsYXIvSG9sby9DcmFja2VkIEljZSksIHNpemVzIFNtYWxsL01lZGl1bS9MYXJnZSwKICAgICAgZHJhZy1hbmQtZHJvcCBmaWxlIHVwbG9hZCB3aXRoIG1vYmlsZSBjYW1lcmEgc3VwcG9ydAp7JSBlbmRjb21tZW50ICV9Cgp7JS0gbGlxdWlkCiAgYXNzaWduIHByb2R1Y3QgPSBhbGxfcHJvZHVjdHNbJ2N1c3RvbS1jYXJkLXN0aWNrZXJzJ10KICBpZiBwcm9kdWN0ID09IGVtcHR5CiAgICBhc3NpZ24gcHJvZHVjdCA9IGNvbGxlY3Rpb24ucHJvZHVjdHMuZmlyc3QKICBlbmRpZgotJX0KCjxzdHlsZT4KICAKICAG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AGeyUgY29tbWVudCAlfQogIEJJRyBEQVdHUyAtIEN1c3RvbSBDYXJkIFN0aWNrZXJzIFByb2R1Y3QgRm9ybQogIEEgbXVsdGktc3RlcCBmb3JtIGZvciBjb25maWd1cmluZyBhbmQgb3JkZXJpbmcgY3VzdG9tIGNhcmQgc3RpY2tlcnMKICBmb3IgT25lIFRvdWNoIGFuZCBUb3Bsb2FkZXIgY2FyZCBob2xkZXJzLgogIHYyOiBSZWFsIHByaWNpbmcsIHJlbmFtZWQgZmluaXNoZXMgKFJlZ3VsYXIvSG9sby9DcmFja2VkIEljZSksIHNpemVzIFNtYWxsL01lZGl1bS9MYXJnZSwKICAgICAgZHJhZy1hbmQtZHJvcCBmaWxlIHVwbG9hZCB3aXRoIG1vYmlsZSBjYW1lcmEgc3VwcG9ydAp7JSBlbmRjb21tZW50ICV9Cgp7JS0gbGlxdWlkCiAgYXNzaWduIHByb2R1Y3QgPSBhbGxfcHJvZHVjdHNbJ2N1c3RvbS1jYXJkLXN0aWNrZXJzJ10KICBpZiBwcm9kdWN0ID09IGVtcHR5CiAgICBhc3NpZ24gcHJvZHVjdCA9IGNvbGxlY3Rpb24ucHJvZHVjdHMuZmlyc3QKICBlbmRpZgotJX0KCjxzdHlsZT4KICAKICAG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-AG
-:root {
+{% comment %}
+  BIG DAWGS - Custom Card Stickers Product Form
+  A multi-step form for configuring and ordering custom card stickers
+  for One Touch and Toploader card holders.
+  v2: Real pricing, renamed finishes (Regular/Holo/Cracked Ice), sizes Small/Medium/Large,
+      drag-and-drop file upload with mobile camera support
+{% endcomment %}
+
+{%- liquid
+  assign product = all_products['custom-card-stickers']
+  if product == empty
+    assign product = collection.products.first
+  endif
+-%}
+
+<style>
+  :root {
     --bd-red: #CC0000;
     --bd-red-dark: #990000;
     --bd-gold: #D4A017;
@@ -757,7 +736,7 @@ AG
       <h2 class="step-heading">Select Quantity</h2>
       <p class="step-subtext">Choose your order quantity – bigger tiers = more per dollar</p>
 
-      <div class="quantity-note">All prices shown are flat – no hidden fees. Select the tier that works for your collection.</div>
+      <div class="quantity-note">All prices shown are flat — no hidden fees. Select the tier that works for your collection.</div>
 
       <table class="quantity-table">
         <thead>
@@ -780,8 +759,8 @@ AG
 
     <!-- STEP 5: Artwork & Details -->
     <div class="form-step" data-step="5">
-      <h2 class="step-heading">Artwork & Details</h2>
-      <p class="step-subtext">Upload your artwork – we'll confirm before printing</p>
+      <h2 class="step-heading">Artwork &amp; Details</h2>
+      <p class="step-subtext">Upload your artwork — we'll confirm before printing</p>
 
       <!-- File Upload Zone -->
       <div class="form-field">
@@ -883,24 +862,24 @@ AG
 </div>
 
 <script>
-  // 🖼️ 🖼️  PRICING DATA 🖼️ 🖼️ 
-  // Key format: "holderType|size|finishCategory" (finishCategory: "regular" or "holo")
+  // ── PRICING DATA ──
+  // Key format: "holderType|size|finishCategory"  (finishCategory: "regular" or "holo")
   // Holographic and Cracked Ice share the same price tiers (both = "holo" category)
-  // Each tier: { qty, price, best } – sourced from Big Dawgs Pricing Sheet
+  // Each tier: { qty, price, best }  — sourced from Big Dawgs Pricing Sheet
   const quantityTiers = {
-    // 🖼️ 🖼️  ONE TOUCH – REGULAR (Matte) 🖼️ 🖼️ 
+    // ── ONE TOUCH — REGULAR (Matte) ──
     "One Touch|Small|regular":  [{qty:30,price:6},{qty:60,price:10},{qty:120,price:15},{qty:250,price:27},{qty:500,price:50},{qty:1000,price:90,best:true},{qty:2500,price:150},{qty:5000,price:250},{qty:10000,price:400}],
     "One Touch|Medium|regular": [{qty:25,price:6},{qty:50,price:10},{qty:100,price:15},{qty:250,price:30},{qty:500,price:55},{qty:1000,price:100,best:true},{qty:2500,price:175},{qty:5000,price:300},{qty:10000,price:500}],
     "One Touch|Large|regular":  [{qty:15,price:6},{qty:35,price:10},{qty:70,price:15},{qty:100,price:20},{qty:250,price:40},{qty:500,price:75},{qty:1000,price:125,best:true},{qty:2500,price:225},{qty:5000,price:400},{qty:10000,price:700}],
-    // 🖼️ 🖼️  ONE TOUCH – HOLO / CRACKED ICE 🖼️ 🖼️ 
-    "One Touch|Small|holo":      [{qty:30,price:7},{qty:60,price:13},{qty:120,price:20},{qty:250,price:35},{qty:500,price:70},{qty:1000,price:100,best:true},{qty:2500,price:200},{qty:5000,price:350},{qty:10000,price:600}],
-    "One Touch|Medium|holo":     [{qty:25,price:7},{qty:50,price:13},{qty:100,price:20},{qty:250,price:40},{qty:500,price:70},{qty:1000,price:135,best:true},{qty:2500,price:250},{qty:5000,price:450},{qty:10000,price:800}],
-    "One Touch|Large|holo":      [{qty:15,price:7},{qty:35,price:13},{qty:70,price:20},{qty:100,price:25},{qty:250,price:50},{qty:500,price:90},{qty:1000,price:165,best:true},{qty:2500,price:300},{qty:5000,price:550},{qty:10000,price:1000}],
-    // 🖼️ 🖼️  TOPLOADER – REGULAR (Matte) 🖼️ 🖼️ 
+    // ── ONE TOUCH — HOLO / CRACKED ICE ──
+    "One Touch|Small|holo":     [{qty:30,price:7},{qty:60,price:13},{qty:120,price:20},{qty:250,price:35},{qty:500,price:70},{qty:1000,price:100,best:true},{qty:2500,price:200},{qty:5000,price:350},{qty:10000,price:600}],
+    "One Touch|Medium|holo":    [{qty:25,price:7},{qty:50,price:13},{qty:100,price:20},{qty:250,price:40},{qty:500,price:70},{qty:1000,price:135,best:true},{qty:2500,price:250},{qty:5000,price:450},{qty:10000,price:800}],
+    "One Touch|Large|holo":     [{qty:15,price:7},{qty:35,price:13},{qty:70,price:20},{qty:100,price:25},{qty:250,price:50},{qty:500,price:90},{qty:1000,price:165,best:true},{qty:2500,price:300},{qty:5000,price:550},{qty:10000,price:1000}],
+    // ── TOPLOADER — REGULAR (Matte) ──
     "Toploader|Small|regular":  [{qty:40,price:6},{qty:80,price:10},{qty:160,price:15},{qty:250,price:22},{qty:500,price:40},{qty:1000,price:75,best:true},{qty:2500,price:135},{qty:5000,price:220},{qty:10000,price:350}],
     "Toploader|Medium|regular": [{qty:25,price:6},{qty:55,price:10},{qty:110,price:15},{qty:250,price:25},{qty:500,price:45},{qty:1000,price:80,best:true},{qty:2500,price:145},{qty:5000,price:235},{qty:10000,price:400}],
     "Toploader|Large|regular":  [{qty:20,price:6},{qty:45,price:10},{qty:90,price:15},{qty:250,price:35},{qty:500,price:65},{qty:1000,price:120,best:true},{qty:2500,price:200},{qty:5000,price:375},{qty:10000,price:650}],
-    // 🖼️ 🖼️  TOPLOADER – HOLO / CRACKED ICE 🖼️ 🖼️ 
+    // ── TOPLOADER — HOLO / CRACKED ICE ──
     "Toploader|Small|holo":     [{qty:40,price:7},{qty:80,price:13},{qty:160,price:20},{qty:250,price:27},{qty:500,price:50},{qty:1000,price:90,best:true},{qty:2500,price:165},{qty:5000,price:300},{qty:10000,price:500}],
     "Toploader|Medium|holo":    [{qty:25,price:7},{qty:55,price:13},{qty:110,price:20},{qty:250,price:32},{qty:500,price:60},{qty:1000,price:105,best:true},{qty:2500,price:180},{qty:5000,price:335},{qty:10000,price:600}],
     "Toploader|Large|holo":     [{qty:20,price:7},{qty:45,price:13},{qty:90,price:20},{qty:250,price:45},{qty:500,price:80},{qty:1000,price:150,best:true},{qty:2500,price:275},{qty:5000,price:475},{qty:10000,price:875}]
@@ -976,6 +955,13 @@ AG
         secondaryField.classList.add('visible');
       } else {
         secondaryField.classList.remove('visible');
+      }
+      // Live price update: add $2 when secondary logo is enabled
+      if (formState.price !== null) {
+        var basePrice = parseFloat(formState.price);
+        var total = basePrice + (this.checked ? 2 : 0);
+        document.getElementById('summary-price').textContent = '$' + total;
+        document.getElementById('summary-price-row').style.display = 'flex';
       }
     });
   }
@@ -1318,15 +1304,14 @@ AG
     document.getElementById('prop-finish').value = formState.finish;
     document.getElementById('prop-size').value = formState.size;
     document.getElementById('prop-quantity-tier').value = formState.quantity + ' stickers';
-
-    // Store order total in hidden _price property.
-    // Visible in Shopify admin orders for fulfillment reference.
-    var totalPrice = parseFloat(formState.price);
+    var totalPrice = parseFloat(formState.price) + (secondaryToggle ? 2 : 0);
     document.getElementById('prop-price').value = '$' + totalPrice;
+    document.getElementById('cart-quantity').value = '1';
 
-    // Select the variant whose Shopify price matches the order total.
-    // Shopify stores variant.price in CENTS (e.g. $40.00 = 4000).
-    var selectedPriceCents = Math.round(totalPrice * 100);
+    // Find the variant whose price matches the selected tier price.
+    // IMPORTANT: Shopify serializes variant.price in CENTS (e.g. $6.00 = 600).
+    // formState.price is in whole dollars (e.g. 6). Multiply by 100 to compare.
+    var selectedPriceCents = Math.round(formState.price * 100);
     var variant = productVariants.find(function(v) {
       return parseInt(v.price, 10) === selectedPriceCents;
     }) || productVariants[0];
@@ -1340,10 +1325,72 @@ AG
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span class="loading-spinner"></span>Adding to Cart...';
 
-    // Submit to cart
-    setTimeout(function() {
-      e.target.submit();
-    }, 400);
+    if (secondaryToggle) {
+      // Option B: AJAX add — link main item + $2 Secondary Logo Add-On via shared _group_id
+      setTimeout(function() {
+        var groupId = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+        var mainProperties = {
+          'Holder Type': document.getElementById('prop-holder-type').value,
+          'Finish':       document.getElementById('prop-finish').value,
+          'Size':         document.getElementById('prop-size').value,
+          'Quantity Tier':document.getElementById('prop-quantity-tier').value,
+          'Price':        document.getElementById('prop-price').value,
+          'Secondary Logo':    document.getElementById('prop-secondary-logo').value,
+          'Secondary Artwork': document.getElementById('prop-secondary-artwork').value,
+          '_group_id':    groupId
+        };
+
+        // Step 1: add main sticker item
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id:         parseInt(document.getElementById('variant-id').value, 10),
+            quantity:   1,
+            properties: mainProperties
+          })
+        })
+        .then(function(r) {
+          if (!r.ok) throw new Error('Main item add failed: ' + r.status);
+          return r.json();
+        })
+        .then(function() {
+          // Step 2: add $2 Secondary Logo Add-On — same group_id links them
+          return fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id:       47276076957890,
+              quantity: 1,
+              properties: {
+                '_group_id':  groupId,
+                '_linked_to': 'Secondary Logo Add-On'
+              }
+            })
+          });
+        })
+        .then(function(r) {
+          if (!r.ok) throw new Error('Add-on add failed: ' + r.status);
+          return r.json();
+        })
+        .then(function() {
+          window.location.href = '/cart';
+        })
+        .catch(function(err) {
+          console.error('Cart add error:', err);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Add to Cart';
+          alert('Something went wrong adding to cart. Please try again.');
+        });
+      }, 400);
+
+    } else {
+      // No secondary logo — normal form submit
+      setTimeout(function() {
+        e.target.submit();
+      }, 400);
+    }
   }
 </script>
 
