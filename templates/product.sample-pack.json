@@ -18,5 +18,8 @@
       "settings": {}
     }
   },
-  "order": ["bd-sample-pack-main", "bd-showcase-cta"]
+  "order": [
+    "bd-sample-pack-main",
+    "bd-showcase-cta"
+  ]
 }

@@ -18,5 +18,8 @@
       "settings": {}
     }
   },
-  "order": ["bigdawgs-product-form", "bd-showcase-cta"]
+  "order": [
+    "bigdawgs-product-form",
+    "bd-showcase-cta"
+  ]
 }

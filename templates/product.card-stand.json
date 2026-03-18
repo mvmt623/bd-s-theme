@@ -18,5 +18,8 @@
       "settings": {}
     }
   },
-  "order": ["bd-card-stand-main", "bd-showcase-cta"]
+  "order": [
+    "bd-card-stand-main",
+    "bd-showcase-cta"
+  ]
 }

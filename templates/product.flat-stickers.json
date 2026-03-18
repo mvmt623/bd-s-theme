@@ -18,5 +18,8 @@
       "settings": {}
     }
   },
-  "order": ["bd-flat-stickers-main", "bd-showcase-cta"]
+  "order": [
+    "bd-flat-stickers-main",
+    "bd-showcase-cta"
+  ]
 }
