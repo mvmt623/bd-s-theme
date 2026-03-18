@@ -299,14 +299,16 @@
   }
 
   /* ── Toploader Matte — per-photo position correction ────────────────
-     Sticker sits near the top of this photo. object-position: top shows
-     that region; a modest scale(1.15) closes the extra empty space at rest.
-     transform-origin anchors the hover-zoom on the sticker.
+     This photo has more empty space around the sticker at rest than the
+     other cards, making it appear smaller. A modest default scale(1.15)
+     closes the visual gap.
+     object-position / transform-origin shift the crop and zoom anchor
+     down to where the sticker actually sits in this photo.
      Adjust % values if the sticker position differs in the final photo.
   ────────────────────────────────────────────────────────────────────── */
   .bdsg-card-photo[data-card="tl-matte"] img {
-    object-position: center top;
-    transform-origin: 50% 38%;
+    object-position: center 5%;
+    transform-origin: 50% 33%;
     transform: scale(1.15);
   }
   /* Re-state hover scale so it overrides the base scale(1.15) cleanly */
