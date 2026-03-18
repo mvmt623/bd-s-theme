@@ -956,13 +956,6 @@
       } else {
         secondaryField.classList.remove('visible');
       }
-      // Live price update: add $2 when secondary logo is enabled
-      if (formState.price !== null) {
-        var basePrice = parseFloat(formState.price);
-        var total = basePrice + (this.checked ? 2 : 0);
-        document.getElementById('summary-price').textContent = '$' + total;
-        document.getElementById('summary-price-row').style.display = 'flex';
-      }
     });
   }
 
@@ -1304,93 +1297,33 @@
     document.getElementById('prop-finish').value = formState.finish;
     document.getElementById('prop-size').value = formState.size;
     document.getElementById('prop-quantity-tier').value = formState.quantity + ' stickers';
-    var totalPrice = parseFloat(formState.price) + (secondaryToggle ? 2 : 0);
-    document.getElementById('prop-price').value = '$' + totalPrice;
+    document.getElementById('prop-price').value = '$' + formState.price;
     document.getElementById('cart-quantity').value = '1';
 
     // Find the variant whose price matches the selected tier price.
-    // IMPORTANT: Shopify serializes variant.price in CENTS (e.g. $6.00 = 600).
+    // Shopify stores variant.price in CENTS (e.g. $6.00 = 600).
     // formState.price is in whole dollars (e.g. 6). Multiply by 100 to compare.
     var selectedPriceCents = Math.round(formState.price * 100);
     var variant = productVariants.find(function(v) {
       return parseInt(v.price, 10) === selectedPriceCents;
-    }) || productVariants[0];
-    if (variant) {
-      document.getElementById('variant-id').value = variant.id;
+    });
+
+    // Safety: if no variant matches, alert the customer instead of submitting wrong data
+    if (!variant) {
+      alert('Unable to find a matching product variant for this configuration. Please try a different selection or contact us.');
+      return;
     }
 
-    document.getElementById('cart-quantity').value = '1';
+    document.getElementById('variant-id').value = variant.id;
 
     var submitBtn = document.getElementById('submit-btn');
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span class="loading-spinner"></span>Adding to Cart...';
 
-    if (secondaryToggle) {
-      // Option B: AJAX add — link main item + $2 Secondary Logo Add-On via shared _group_id
-      setTimeout(function() {
-        var groupId = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-
-        var mainProperties = {
-          'Holder Type': document.getElementById('prop-holder-type').value,
-          'Finish':       document.getElementById('prop-finish').value,
-          'Size':         document.getElementById('prop-size').value,
-          'Quantity Tier':document.getElementById('prop-quantity-tier').value,
-          'Price':        document.getElementById('prop-price').value,
-          'Secondary Logo':    document.getElementById('prop-secondary-logo').value,
-          'Secondary Artwork': document.getElementById('prop-secondary-artwork').value,
-          '_group_id':    groupId
-        };
-
-        // Step 1: add main sticker item
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id:         parseInt(document.getElementById('variant-id').value, 10),
-            quantity:   1,
-            properties: mainProperties
-          })
-        })
-        .then(function(r) {
-          if (!r.ok) throw new Error('Main item add failed: ' + r.status);
-          return r.json();
-        })
-        .then(function() {
-          // Step 2: add $2 Secondary Logo Add-On — same group_id links them
-          return fetch('/cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              id:       47276076957890,
-              quantity: 1,
-              properties: {
-                '_group_id':  groupId,
-                '_linked_to': 'Secondary Logo Add-On'
-              }
-            })
-          });
-        })
-        .then(function(r) {
-          if (!r.ok) throw new Error('Add-on add failed: ' + r.status);
-          return r.json();
-        })
-        .then(function() {
-          window.location.href = '/cart';
-        })
-        .catch(function(err) {
-          console.error('Cart add error:', err);
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Add to Cart';
-          alert('Something went wrong adding to cart. Please try again.');
-        });
-      }, 400);
-
-    } else {
-      // No secondary logo — normal form submit
-      setTimeout(function() {
-        e.target.submit();
-      }, 400);
-    }
+    // Single clean form POST for all orders
+    setTimeout(function() {
+      e.target.submit();
+    }, 400);
   }
 </script>
 
