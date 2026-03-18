@@ -1,8 +1,29 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "bd-showcase": {
       "type": "bd-showcase-gallery",
-      "settings": {}
+      "settings": {
+        "ot_matte_image": "shopify://shop_images/s-m-ot.heic",
+        "ot_holo_image": "shopify://shop_images/m-h-ot.jpg",
+        "ot_cracked_image": "shopify://shop_images/l-ci-ot.jpg",
+        "tl_matte_image": "shopify://shop_images/s-m-tl.heic",
+        "tl_holo_image": "shopify://shop_images/m-h-tilJPG.jpg",
+        "tl_cracked_image": "shopify://shop_images/l-ci-tl.jpg",
+        "price_small": "",
+        "price_medium": "",
+        "price_large": "",
+        "cta_url": "",
+        "cta_label": "Order Your Sticker"
+      }
     }
   },
   "order": [
