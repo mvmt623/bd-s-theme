@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Dawgs — Finish Effect Preview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #111; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 2rem; }
+  h1 { text-align: center; font-size: 1.6rem; margin-bottom: .5rem; text-transform: uppercase; letter-spacing: 2px; }
+  .subtitle { text-align: center; color: #888; margin-bottom: 3rem; font-size: .9rem; }
+
+  .section { margin-bottom: 4rem; }
+  .section h2 { color: #D4A017; font-size: .8rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem; border-bottom: 1px solid #333; padding-bottom: .5rem; }
+
+  .row { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; align-items: flex-start; }
+  .option { text-align: center; }
+  .option-label { color: #666; font-size: .7rem; margin-top: .6rem; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* ══════════════════════════════════════════════════════
+     MATTE — clean, solid, professional
+     ══════════════════════════════════════════════════════ */
+  .tag-matte {
+    display: inline-block;
+    padding: .3rem .85rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: #2a2a2a;
+    color: #ccc;
+    border: 1px solid #444;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     HOLOGRAPHIC — animated rainbow shift
+     ══════════════════════════════════════════════════════ */
+
+  /* Option A: Animated gradient shift */
+  .tag-holo-a {
+    display: inline-block;
+    padding: .3rem .85rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: linear-gradient(90deg, #ff0080, #ff8c00, #ffe600, #00ff88, #00ccff, #8000ff, #ff0080);
+    background-size: 300% 100%;
+    animation: holo-shift 3s linear infinite;
+    border: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  }
+  @keyframes holo-shift {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* Option B: Subtle shimmer overlay */
+  .tag-holo-b {
+    display: inline-block;
+    padding: .3rem .85rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 25%, #00c9ff 50%, #92fe9d 75%, #f7971e 100%);
+    background-size: 200% 200%;
+    animation: holo-diagonal 4s ease infinite;
+    border: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  }
+  @keyframes holo-diagonal {
+    0%   { background-position: 0% 0%; }
+    50%  { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+
+  /* Option C: Full rainbow with white shimmer pass */
+  .tag-holo-c {
+    display: inline-block;
+    padding: .3rem .85rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: linear-gradient(90deg, #ff006e, #fb5607, #ffbe0b, #06d6a0, #118ab2, #8338ec, #ff006e);
+    background-size: 400% 100%;
+    animation: holo-smooth 5s linear infinite;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0,0,0,.5);
+  }
+  .tag-holo-c::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+    animation: shimmer-pass 2.5s ease-in-out infinite;
+  }
+  @keyframes holo-smooth {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 400% 50%; }
+  }
+  @keyframes shimmer-pass {
+    0%   { left: -100%; }
+    100% { left: 200%; }
+  }
+
+  /* ══════════════════════════════════════════════════════
+     CRACKED ICE — fractured crystalline shimmer
+     ══════════════════════════════════════════════════════ */
+
+  /* Option A: Silver-blue angular gradient */
+  .tag-ice-a {
+    display: inline-block;
+    padding: .3rem .85rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: linear-gradient(135deg, #a8c0d6, #d4e5f7, #7fb3d3, #c0ddf0, #5a9cbf, #e0eef8);
+    background-size: 300% 300%;
+    animation: ice-shift 4s ease infinite;
+    border: 1px solid rgba(160,200,230,.3);
+    text-shadow: 0 1px 2px rgba(0,0,0,.3);
+  }
+  @keyframes ice-shift {
+    0%   { background-position: 0% 0%; }
+    50%  { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+
+  /* Option B: Frosted glass with shimmer */
+  .tag-ice-b {
+    display: inline-block;
+    padding: .3rem .85rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #e8f4ff;
+    background: linear-gradient(120deg, #4a7c9b, #8bbbd4, #c5dff0, #6da5c2, #9dcbe5, #4a7c9b);
+    background-size: 300% 100%;
+    animation: ice-crawl 5s linear infinite;
+    border: 1px solid rgba(140,190,220,.4);
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 0 4px rgba(100,180,220,.6);
+  }
+  .tag-ice-b::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+    animation: shimmer-pass 3s ease-in-out infinite;
+  }
+  @keyframes ice-crawl {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* Option C: Multi-directional cracked refraction */
+  .tag-ice-c {
+    display: inline-block;
+    padding: .3rem .85rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background:
+      linear-gradient(60deg, rgba(100,180,230,.6) 0%, transparent 40%),
+      linear-gradient(200deg, rgba(180,220,255,.5) 0%, transparent 35%),
+      linear-gradient(340deg, rgba(80,150,210,.7) 0%, transparent 45%),
+      linear-gradient(135deg, #3a6e8f, #6baed6, #b0d4e8, #4a8ab5, #7ec0dd, #3a6e8f);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 250% 250%;
+    animation: ice-refract 4s ease infinite;
+    border: 1px solid rgba(110,180,220,.35);
+    text-shadow: 0 0 6px rgba(80,160,220,.5), 0 1px 2px rgba(0,0,0,.3);
+  }
+  @keyframes ice-refract {
+    0%   { background-position: 0% 0%, 100% 100%, 50% 0%, 0% 0%; }
+    50%  { background-position: 100% 100%, 0% 0%, 0% 100%, 100% 100%; }
+    100% { background-position: 0% 0%, 100% 100%, 50% 0%, 0% 0%; }
+  }
+
+  /* ══════════════════════════════════════════════════════
+     CARD PREVIEWS — how they'd look on dark cards
+     ══════════════════════════════════════════════════════ */
+  .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .preview-card {
+    background: #222;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .preview-card:hover { border-color: #CC0000; }
+  .preview-card h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 1rem 0 .5rem;
+  }
+  .preview-card p { color: #999; font-size: .85rem; line-height: 1.6; }
+  .preview-card img { width: 100%; max-width: 180px; border-radius: 8px; }
+  .video-circle { width: 180px; aspect-ratio: 1/1; border-radius: 50%; overflow: hidden; margin: 0 auto; background: #333; }
+
+  /* Product grid tags — larger context */
+  .product-tag {
+    display: inline-block;
+    padding: .25rem .7rem;
+    border-radius: 4px;
+    font-size: .7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: .8rem;
+  }
+
+  @media (max-width: 640px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .row { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Finish Effect Preview</h1>
+<p class="subtitle">Pick your preferred option for each finish. Once approved, these styles propagate to all pages.</p>
+
+<!-- ═══ MATTE ═══ -->
+<div class="section">
+  <h2>Matte (single option — clean and solid)</h2>
+  <div class="row">
+    <div class="option">
+      <span class="tag-matte">MATTE</span>
+      <div class="option-label">Final</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HOLOGRAPHIC ═══ -->
+<div class="section">
+  <h2>Holographic — pick A, B, or C</h2>
+  <div class="row">
+    <div class="option">
+      <span class="tag-holo-a">HOLOGRAPHIC</span>
+      <div class="option-label">A — Fast rainbow sweep</div>
+    </div>
+    <div class="option">
+      <span class="tag-holo-b">HOLOGRAPHIC</span>
+      <div class="option-label">B — Diagonal fade</div>
+    </div>
+    <div class="option">
+      <span class="tag-holo-c">HOLOGRAPHIC</span>
+      <div class="option-label">C — Rainbow + shimmer pass</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CRACKED ICE ═══ -->
+<div class="section">
+  <h2>Cracked Ice — pick A, B, or C</h2>
+  <div class="row">
+    <div class="option">
+      <span class="tag-ice-a">CRACKED ICE</span>
+      <div class="option-label">A — Silver-blue angular</div>
+    </div>
+    <div class="option">
+      <span class="tag-ice-b">CRACKED ICE</span>
+      <div class="option-label">B — Frosted + shimmer</div>
+    </div>
+    <div class="option">
+      <span class="tag-ice-c">CRACKED ICE</span>
+      <div class="option-label">C — Multi-directional refraction</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HOMEPAGE CARDS PREVIEW ═══ -->
+<div class="section">
+  <h2>Preview — Homepage product cards (using Option C for both)</h2>
+  <div class="card-grid">
+    <div class="preview-card">
+      <span class="tag-matte product-tag">Matte</span>
+      <h3>One Touch Matte Stickers</h3>
+      <p>Clean, professional finish for One Touch holders. Sharp print, crisp look.</p>
+    </div>
+    <div class="preview-card">
+      <span class="tag-holo-c product-tag">Holographic</span>
+      <h3>One Touch Holographic Stickers</h3>
+      <p>Full rainbow color-shift holographic finish. Turn heads at every card show.</p>
+    </div>
+    <div class="preview-card">
+      <span class="tag-ice-c product-tag">Cracked Ice</span>
+      <h3>One Touch Cracked Ice Stickers</h3>
+      <p>Unique fractured pattern — bold, distinctive, unlike anything else in the hobby.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHOWCASE RIBBONS PREVIEW ═══ -->
+<div class="section">
+  <h2>Preview — Sticker Showcase ribbons</h2>
+  <div class="row" style="gap: 3rem;">
+    <div class="option">
+      <div style="background:#1a1a1a; border-radius:8px; padding:1.2rem 2rem;">
+        <span class="tag-matte">Matte</span>
+        <div style="color:#D4A017; font-size:.75rem; font-weight:700; margin-top:.8rem; text-transform:uppercase; letter-spacing:1px;">Small · Matte Finish</div>
+      </div>
+    </div>
+    <div class="option">
+      <div style="background:#1a1a1a; border-radius:8px; padding:1.2rem 2rem; border:1px solid #2a6e3f;">
+        <span class="tag-holo-c">Holographic</span>
+        <span style="background:#333; color:#ccc; padding:.2rem .5rem; border-radius:3px; font-size:.65rem; font-weight:700; margin-left:.5rem;">MOST POPULAR</span>
+        <div style="color:#D4A017; font-size:.75rem; font-weight:700; margin-top:.8rem; text-transform:uppercase; letter-spacing:1px;">Medium · Holographic Finish</div>
+      </div>
+    </div>
+    <div class="option">
+      <div style="background:#1a1a1a; border-radius:8px; padding:1.2rem 2rem;">
+        <span class="tag-ice-c">Cracked Ice</span>
+        <div style="color:#D4A017; font-size:.75rem; font-weight:700; margin-top:.8rem; text-transform:uppercase; letter-spacing:1px;">Large · Cracked Ice Finish</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
