@@ -715,41 +715,18 @@
           endfor
         endif
       -%}
-      {% if top_level_featured_collections.size > 0 or top_level_featured_products_collection.products_count > 0 %}
-        <div
-          class="menu-drawer__featured-content"
-          style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
-        >
-          <ul class="menu-drawer__featured-content-list menu-drawer__animated-element list-unstyled">
-            {% if top_level_featured_collections.size > 0 %}
-              {%- for collection in top_level_featured_collections limit: max_featured_items -%}
-                <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--collection">
-                  {% render 'resource-card',
-                    resource: collection.object,
-                    resource_type: 'collection',
-                    style: 'overlay',
-                    image_aspect_ratio: ratio,
-                    image_sizes: 'auto, 400px'
-                  %}
-                </li>
-              {%- endfor -%}
-            {% elsif top_level_featured_products_collection.products_count > 0 %}
-              {% paginate top_level_featured_products_collection.products by max_featured_items %}
-                {%- for product in top_level_featured_products_collection.products limit: max_featured_items -%}
-                  <li class="menu-drawer__featured-content-list-item menu-drawer__featured-content-list-item--product">
-                    {% render 'resource-card',
-                      resource: product,
-                      resource_type: 'product',
-                      image_aspect_ratio: ratio,
-                      image_sizes: 'auto, 400px'
-                    %}
-                  </li>
-                {%- endfor -%}
-              {% endpaginate %}
-            {% endif %}
-          </ul>
-        </div>
-      {% endif %}
+      {%- comment -%} BD: replaced collection squares with mascot branding block {%- endcomment -%}
+      <div class="bd-drawer-mascot">
+        {%- if settings.logo -%}
+          <img
+            src="{{ settings.logo | image_url: width: 600 }}"
+            alt="{{ shop.name }}"
+            class="bd-drawer-mascot__img"
+            width="600"
+            loading="lazy"
+          >
+        {%- endif -%}
+      </div>
     </div>
     <div
       class="menu-drawer__backdrop"
@@ -759,6 +736,45 @@
 </header-drawer>
 
 {% stylesheet %}
+  /* ── BD: Hide collection image squares from drawer child lists ── */
+  .menu-drawer__link-image {
+    display: none !important;
+  }
+
+  /* When images are hidden, reset the grid layout so items stack normally */
+  .menu-drawer__menu--grid {
+    display: block !important;
+    grid-template-columns: unset !important;
+    column-gap: unset !important;
+  }
+
+  /* ── BD: Mascot branding block at drawer bottom ── */
+  .bd-drawer-mascot {
+    margin-top: auto;
+    padding: 24px 20px 28px;
+    background: #111111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid #1e1e1e;
+    flex-shrink: 0;
+  }
+
+  .bd-drawer-mascot__img {
+    display: block;
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.92;
+    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.5));
+    transition: opacity 0.2s ease;
+  }
+
+  .bd-drawer-mascot__img:hover {
+    opacity: 1;
+  }
+
   .header__icon--menu {
     position: initial;
   }
