@@ -167,7 +167,7 @@
             "products_nav_text": {
               "type": "text",
               "settings": {
-                "text": "<p><strong>Products</strong></p><p><a href=\"/products/custom-card-stickers\">Custom Card Stickers</a></p><p><a href=\"/products/sample-pack\">Sample Pack</a></p><p><a href=\"/collections/flat-stickers\">Flat Stickers</a></p><p><a href=\"/products/card-stand\">Card Stands</a></p>",
+                "text": "<p><strong>Products</strong></p><p><a href=\"/products/custom-card-stickers\">Custom Card Stickers</a></p><p><a href=\"/products/sample-pack\">Sample Pack</a></p><p><a href=\"/collections/flat-stickers\">Flat Stickers</a></p><p><a href=\"/products/3d-printed-card-stand\">Card Stands</a></p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
