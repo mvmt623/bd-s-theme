@@ -414,18 +414,17 @@
     <div class="bd-hero-content">
       <span class="bd-hero-badge">Custom Card Holder Stickers</span>
       <h1>STICKERS FOR <span>CARD SHOPS</span> &amp; COLLECTORS</h1>
-      <!-- ✅ CHANGE 1: "One Touch mag holders" → "One Touches" -->
-      <p class="bd-hero-sub">One Touches. Toploaders. Regular, Holographic &amp; Cracked Ice. Made by someone who actually lives the hobby.</p>
+      <p class="bd-hero-sub">One Touches. Toploaders. Regular, Holographic &amp; Cracked Ice. Built by a collector who lives the hobby.</p>
       <ul class="bd-hero-checks">
         <li>Bulk Pricing</li>
         <li>Fast Turnaround</li>
         <li>One Touch &amp; Toploader</li>
         <li>3 Premium Finishes</li>
         <li>Collector-Owned</li>
+        <li>Community-trusted @bigdawgsstickers</li>
       </ul>
       <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-btn-primary">ORDER NOW &rarr;</a>
     </div>
-    <!-- ✅ CHANGE 2: pills are now <a> links to the product page -->
     <div class="bd-hero-visual" aria-hidden="true">
       <div class="bd-hero-visual-title">CHOOSE YOUR FINISH</div>
       <div class="bd-hero-pill-list">
@@ -434,7 +433,6 @@
         <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-finish-pill bd-pill-regular">Regular</a>
       </div>
       <div class="bd-hero-types">One Touch &bull; Toploader</div>
-      <!-- ✅ CHANGE 7: Wide → Large -->
       <div class="bd-hero-sizes">Small (0.5&quot;) &bull; Medium (0.75&quot;) &bull; Large (1.0&quot;)</div>
     </div>
     <div class="bd-hero-mascot-col" aria-hidden="true">
@@ -462,41 +460,49 @@
     <div class="bd-products-grid">
       <div class="bd-product-card">
         <span class="bd-finish-tag bd-tag-regular">Regular</span>
-        <!-- ✅ CHANGE 1: "magnetic one-touch card holders" → "One Touch holders" -->
         <h3>One Touch Regular Stickers</h3>
         <p>Clean, professional finish for One Touch holders. Sharp print, crisp look.</p>
-        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Build My Matte Order &rarr;</a>
       </div>
       <div class="bd-product-card">
         <span class="bd-finish-tag bd-tag-holo">Holographic</span>
         <h3>One Touch Holographic Stickers</h3>
         <p>Full rainbow color-shift holographic finish. Turn heads at every card show and break.</p>
-        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Configure Holographic &rarr;</a>
       </div>
       <div class="bd-product-card">
         <span class="bd-finish-tag bd-tag-ice">Cracked Ice</span>
         <h3>One Touch Cracked Ice Stickers</h3>
         <p>Unique fractured pattern — bold, distinctive, and unlike anything else in the hobby space.</p>
-        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Get Cracked Ice Pricing &rarr;</a>
       </div>
       <div class="bd-product-card">
         <span class="bd-finish-tag bd-tag-regular">Regular</span>
         <h3>Toploader Regular Stickers</h3>
         <p>Crisp regular-finish stickers perfectly sized for standard toploaders. Great for singles and sets.</p>
-        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Configure Toploader &rarr;</a>
       </div>
       <div class="bd-product-card">
         <span class="bd-finish-tag bd-tag-holo">Holographic</span>
         <h3>Toploader Holographic Stickers</h3>
         <p>Holographic shine on your toploaders. Elevate every card you sell or display.</p>
-        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Build Holo Toploader &rarr;</a>
       </div>
       <div class="bd-product-card">
         <span class="bd-finish-tag bd-tag-ice">Cracked Ice</span>
         <h3>Toploader Cracked Ice Stickers</h3>
         <p>The cracked ice pattern on toploaders — a signature look that collectors remember.</p>
-        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Order &rarr;</a>
+        <a href="{{ routes.root_url }}products/custom-card-stickers" class="bd-card-link">Configure Cracked Ice &rarr;</a>
       </div>
+    </div>
+    <!-- SAMPLE PACK CALLOUT -->
+    <div style="margin-top: 2rem; background: #f9f9f0; border: 1px solid #e0d8b0; border-left: 4px solid var(--bd-gold); border-radius: 8px; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <span style="font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--bd-gold);">SAMPLE PACK</span>
+        <h3 style="color: var(--bd-black); font-size: 1.1rem; font-weight: 800; margin: .3rem 0 .5rem;">Not sure which finish is right for you?</h3>
+        <p style="color: #555; font-size: .9rem; margin: 0;">The Sample Pack lets you try everything before you commit.</p>
+      </div>
+      <a href="{{ routes.root_url }}products/sample-pack" class="bd-btn-primary" style="white-space: nowrap;">Get a Sample Pack &rarr;</a>
     </div>
   </div>
 </section>
@@ -515,7 +521,6 @@
       <div class="bd-step">
         <div class="bd-step-num">2</div>
         <h3>Upload Your Artwork</h3>
-        <!-- ✅ CHANGE 3: file format alignment with FAQ -->
         <p>Upload your GIF, JPG, or PNG directly, or share via Google Drive or Dropbox link. We'll confirm before printing.</p>
       </div>
       <div class="bd-step">
@@ -566,7 +571,7 @@
 <section class="bd-section bd-section-light" id="bd-pricing">
   <div class="bd-section-inner">
     <h2>BULK PRICING THAT SCALES WITH YOU</h2>
-    <p class="bd-section-sub">The more you order, the better the deal. Contact us for exact pricing — we confirm your total before invoicing.</p>
+    <p class="bd-section-sub">The more you order, the better the deal. Use the configurator to build your order instantly — exact pricing shown at every step. No quotes, no waiting.</p>
     <div class="bd-pricing-cols">
       <div class="bd-pricing-box">
         <h3>One Touch Stickers</h3>
@@ -630,6 +635,7 @@
 <section class="bd-section bd-section-dark" id="bd-reviews">
   <div class="bd-section-inner">
     <h2 class="bd-text-center">WHAT OUR CUSTOMERS SAY</h2>
+    <div class="bd-text-center" style="margin-bottom: .5rem;"><span style="display: inline-block; background: var(--bd-gold); color: #111; font-weight: 800; font-size: .82rem; padding: .3rem 1.1rem; border-radius: 20px; letter-spacing: .3px;">⭐ 500+ Verified Orders &nbsp;&middot;&nbsp; ★★★★★ Across All Orders</span></div>
     <p class="bd-section-sub bd-text-center bd-mx-auto">Real reviews from real collectors and card shop sellers.</p>
     <div class="bd-reviews-grid">
       <div class="bd-review-card">
@@ -657,7 +663,6 @@
     <h2>Frequently Asked Questions</h2>
     <p class="bd-faq-intro">Everything you need to know about ordering custom card holder stickers from BIG DAWGS.</p>
 
-    <!-- ✅ CHANGE 4: file format aligned with FAQ page -->
     <details>
       <summary>What file format should I use for my artwork?</summary>
       <div class="bd-faq-answer">We accept <strong>GIF, JPG, and PNG files only</strong>. For best results, upload at 300 DPI or higher with a transparent background. If your artwork is in a different format, email us before ordering and we'll work with you to find a solution.</div>
@@ -668,7 +673,6 @@
       <div class="bd-faq-answer">Most orders ship within 5–7 business days after artwork is approved. We move fast because we know you need these for your shop, show schedule, or breaks. Rush inquiries are welcome — just note it in the order.</div>
     </details>
 
-    <!-- ✅ CHANGE 5: "$15–$20 for the highest tiers" → "up from there" -->
     <details>
       <summary>What's the minimum order quantity?</summary>
       <div class="bd-faq-answer">Minimums vary by holder type and size. One Touch: Small starts at 25, Medium at 20, Large at 15. Toploader: Small at 30, Medium at 25, Large at 20. Prices start at $6 and go up from there. See full pricing when you configure your order.</div>
@@ -684,7 +688,6 @@
       <div class="bd-faq-answer">Yes — just place a separate order for each holder type. The product configurator walks you through each one independently so you get exactly the right specs for both.</div>
     </details>
 
-    <!-- ✅ CHANGE 6: residue-free callout -->
     <details>
       <summary>Will the sticker damage my card holder?</summary>
       <div class="bd-faq-answer">No. Our stickers are <strong>100% residue-free</strong> — peel them off cleanly without leaving any adhesive behind on the plastic surface. They're sized to fit cleanly without covering the cardholder window or locking mechanism, so your holder functions exactly as designed.</div>
