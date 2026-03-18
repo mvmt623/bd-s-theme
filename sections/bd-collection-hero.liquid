@@ -1,8 +1,10 @@
 {% comment %}
   BIG DAWGS — Collection Hero Section
-  Branded hero + trust bar for the /collections/all page
-  Includes page-wide dark override CSS (safe: only loads via collection.all.json)
+  Renders ONLY on /collections/all via handle check.
+  Injected into collection.json so it's safe on all other collection pages.
 {% endcomment %}
+
+{% if collection.handle == 'all' %}
 
 <style>
   :root {
@@ -15,7 +17,7 @@
   }
 
   /* ─── PAGE-WIDE DARK OVERRIDE ───
-     Safe to use here — this section only loads on collection.all */
+     Wrapped inside handle check — safe, only applies to /collections/all */
   body {
     background-color: #0f0f0f !important;
   }
@@ -145,11 +147,8 @@
     flex-shrink: 0;
   }
 
-  /* ─── PRODUCT GRID DARK OVERRIDE ───
-     Target the main-collection section that follows this hero */
-  #shopify-section-main {
-    background-color: #0f0f0f !important;
-  }
+  /* ─── PRODUCT GRID DARK OVERRIDE ─── */
+  #shopify-section-main,
   #shopify-section-main .section-background {
     background-color: #0f0f0f !important;
   }
@@ -166,7 +165,6 @@
     transform: translateY(-4px) !important;
     box-shadow: 0 16px 40px rgba(0,0,0,.6) !important;
   }
-  /* Product image hover zoom */
   #shopify-section-main product-card .media img,
   #shopify-section-main product-card img {
     transition: transform .3s ease !important;
@@ -190,23 +188,20 @@
   #shopify-section-main product-card product-price,
   #shopify-section-main product-card [class*="price"],
   #shopify-section-main product-card .price {
-    color: #999 !important;
+    color: #aaa !important;
   }
-  /* Card info padding area */
+  /* Card info area */
   #shopify-section-main product-card .product-card-info,
   #shopify-section-main product-card .card-info {
     padding: .75rem 1rem 1rem !important;
     background: #181818 !important;
   }
-
-  /* Filter + sort bar */
+  /* Filter + sort bar text */
   #shopify-section-main .facets-container,
   #shopify-section-main .facets-wrap,
   #shopify-section-main [class*="facet"] {
     color: #999 !important;
   }
-  #shopify-section-main .facet-count,
-  #shopify-section-main .results-count,
   #shopify-section-main [class*="count"] {
     color: #666 !important;
   }
@@ -264,6 +259,8 @@
     </div>
   </div>
 </div>
+
+{% endif %}
 
 {% schema %}
 {
