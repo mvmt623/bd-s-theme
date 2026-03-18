@@ -81,7 +81,6 @@
     border-color: var(--bd-red); background: rgba(204,0,0,.1);
     box-shadow: 0 0 20px rgba(204,0,0,.25);
   }
-  .bdcs-card-icon  { font-size: 2rem; margin-bottom: 10px; }
   .bdcs-card-name  { font-size: 17px; font-weight: 700; color: var(--bd-white); margin-bottom: 8px; }
   .bdcs-card-price { font-size: 22px; font-weight: 800; color: var(--bd-gold); margin-bottom: 12px; }
   .bdcs-card-features { list-style: none; padding: 0; margin: 0; }
@@ -111,6 +110,41 @@
   textarea.bdcs-input { min-height: 90px; resize: vertical; }
   .bdcs-help { font-size: 12px; color: #777; margin-top: 5px; }
   .bdcs-optional { font-weight: 400; color: #666; }
+
+  /* UPLOAD ZONE */
+  .bdcs-upload-zone {
+    position: relative; border: 2px dashed var(--bd-gray);
+    border-radius: 8px; padding: 2rem 1.5rem; text-align: center;
+    cursor: pointer; transition: border-color .25s, background .25s;
+    background: var(--bd-dark);
+  }
+  .bdcs-upload-zone:hover, .bdcs-upload-zone.drag-over { border-color: var(--bd-red); background: rgba(204,0,0,.04); }
+  .bdcs-upload-zone.has-file { border-color: var(--bd-gold); background: rgba(212,160,23,.05); }
+  .bdcs-file-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 0; }
+  .bdcs-upload-title { font-size: .95rem; font-weight: 700; color: var(--bd-white); margin: 0 0 4px; pointer-events: none; }
+  .bdcs-upload-hint  { font-size: .82rem; color: #aaa; margin: 0 0 6px; pointer-events: none; }
+  .bdcs-upload-fmt   { font-size: .72rem; color: #666; margin: 0; pointer-events: none; }
+  .bdcs-upload-preview {
+    display: none; align-items: center; gap: 10px;
+    margin-top: 12px; padding: 10px 12px;
+    background: #1e1e1e; border-radius: 6px; border: 1px solid #333;
+  }
+  .bdcs-upload-preview.show { display: flex; }
+  .bdcs-preview-info { flex: 1; text-align: left; }
+  .bdcs-preview-name { color: var(--bd-white); font-size: 13px; font-weight: 600; }
+  .bdcs-preview-size { color: #888; font-size: 11px; margin-top: 2px; }
+  .bdcs-remove-btn {
+    background: none; border: 1px solid #555; border-radius: 4px;
+    color: #aaa; font-size: 12px; padding: 4px 10px; cursor: pointer;
+  }
+  .bdcs-remove-btn:hover { border-color: var(--bd-red); color: var(--bd-red); }
+  .bdcs-upload-success {
+    display: none; align-items: center; gap: 8px;
+    margin-top: 10px; padding: 10px 14px;
+    background: rgba(212,160,23,.1); border: 1px solid var(--bd-gold);
+    border-radius: 6px; font-size: 13px; color: var(--bd-gold);
+  }
+  .bdcs-upload-success.show { display: flex; }
 
   /* ACTIONS */
   .bdcs-actions { display: flex; gap: 12px; margin-top: 32px; }
@@ -164,7 +198,6 @@
 
       <div class="bdcs-grid">
         <div class="bdcs-card" data-variant="{{ logo_variant.id }}" data-name="Logo Only" data-price="{{ logo_variant.price | money_without_trailing_zeros }}">
-          <div class="bdcs-card-icon">🖨️</div>
           <div class="bdcs-card-name">Logo Only</div>
           <div class="bdcs-card-price">{{ logo_variant.price | money_without_trailing_zeros }}</div>
           <ul class="bdcs-card-features">
@@ -175,7 +208,6 @@
         </div>
         <div class="bdcs-card" data-variant="{{ extra_variant.id }}" data-name="Extra Customizations" data-price="{{ extra_variant.price | money_without_trailing_zeros }}">
           <div class="bdcs-badge">Best Value</div>
-          <div class="bdcs-card-icon">⚙️</div>
           <div class="bdcs-card-name">Extra Customizations</div>
           <div class="bdcs-card-price">{{ extra_variant.price | money_without_trailing_zeros }}</div>
           <ul class="bdcs-card-features">
@@ -204,11 +236,26 @@
       </div>
 
       <div class="bdcs-field">
-        <label for="bdcs-logo-link">Logo / Artwork Link <span class="bdcs-optional">(Google Drive, Dropbox, etc.)</span></label>
-        <input type="text" class="bdcs-input" id="bdcs-logo-link"
-          name="properties[Logo Link]"
-          placeholder="https://drive.google.com/...">
-        <p class="bdcs-help">PNG (transparent background preferred) or vector file. We'll confirm before printing.</p>
+        <label>Primary Artwork</label>
+        <div class="bdcs-upload-zone" id="bdcs-upload-zone">
+          <input type="file" class="bdcs-file-input" id="bdcs-file-input"
+            accept="image/*,.pdf,.ai,.psd,.eps,.svg">
+          <p class="bdcs-upload-title" id="bdcs-upload-title">Upload Your Logo / Artwork</p>
+          <p class="bdcs-upload-hint" id="bdcs-upload-hint">Drag & drop or click to browse</p>
+          <p class="bdcs-upload-fmt">PNG (transparent bg preferred), PDF, AI, SVG · Any size</p>
+        </div>
+        <div class="bdcs-upload-preview" id="bdcs-upload-preview">
+          <div class="bdcs-preview-info">
+            <div class="bdcs-preview-name" id="bdcs-preview-name">—</div>
+            <div class="bdcs-preview-size" id="bdcs-preview-size">—</div>
+          </div>
+          <button type="button" class="bdcs-remove-btn" id="bdcs-remove-btn">Remove</button>
+        </div>
+        <div class="bdcs-upload-success" id="bdcs-upload-success">
+          <span>✓</span>
+          <span id="bdcs-success-text">Artwork noted — we'll email you to collect it securely after your order.</span>
+        </div>
+        <p class="bdcs-help" style="margin-top:.5rem;">PNG with transparent background preferred. We'll confirm before printing.</p>
       </div>
 
       <div class="bdcs-field">
@@ -221,6 +268,7 @@
       <!-- Hidden cart fields -->
       <input type="hidden" name="id" id="bdcs-variant-id" value="">
       <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="properties[Artwork]" id="bdcs-prop-artwork" value="">
 
       <div class="bdcs-actions">
         <button type="button" class="bdcs-btn bdcs-btn-back" id="bdcs-s2-back">Back</button>
@@ -277,6 +325,60 @@
   });
 
   document.getElementById('bdcs-s2-back').addEventListener('click', function() { goStep(1); });
+
+  // ── FILE UPLOAD ──
+  var artworkFileName = null;
+  var zone      = document.getElementById('bdcs-upload-zone');
+  var fileInput = document.getElementById('bdcs-file-input');
+  var preview   = document.getElementById('bdcs-upload-preview');
+  var success   = document.getElementById('bdcs-upload-success');
+
+  // Smart subtitle based on device
+  (function() {
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || ('ontouchstart' in window && !window.matchMedia('(pointer:fine)').matches);
+    var hint = document.getElementById('bdcs-upload-hint');
+    if (hint) hint.textContent = isMobile ? 'Tap to choose a file or take a photo' : 'Drag & drop or click to browse';
+  })();
+
+  zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', function() { zone.classList.remove('drag-over'); });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault(); zone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (this.files[0]) handleFile(this.files[0]);
+  });
+  document.getElementById('bdcs-remove-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    artworkFileName = null;
+    zone.classList.remove('has-file');
+    preview.classList.remove('show');
+    success.classList.remove('show');
+    fileInput.value = '';
+    document.getElementById('bdcs-upload-title').textContent = 'Upload Your Logo / Artwork';
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || ('ontouchstart' in window && !window.matchMedia('(pointer:fine)').matches);
+    document.getElementById('bdcs-upload-hint').textContent = isMobile ? 'Tap to choose a file or take a photo' : 'Drag & drop or click to browse';
+    document.getElementById('bdcs-prop-artwork').value = '';
+  });
+
+  function handleFile(file) {
+    artworkFileName = file.name;
+    zone.classList.add('has-file');
+    document.getElementById('bdcs-preview-name').textContent = file.name;
+    document.getElementById('bdcs-preview-size').textContent = formatFileSize(file.size);
+    document.getElementById('bdcs-upload-title').textContent = '✓ File ready';
+    document.getElementById('bdcs-upload-hint').textContent = file.name;
+    preview.classList.add('show');
+    success.classList.add('show');
+    document.getElementById('bdcs-success-text').textContent = '"' + file.name + '" selected — we\'ll email you to collect it securely after your order.';
+    document.getElementById('bdcs-prop-artwork').value = 'File: ' + file.name + ' (will be emailed)';
+  }
+  function formatFileSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
 
   document.getElementById('bdcs-form').addEventListener('submit', function(e) {
     e.preventDefault();
