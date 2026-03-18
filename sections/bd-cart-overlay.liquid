@@ -418,7 +418,7 @@
 </div>
 
 <!-- COLLECTOR TRUST BLOCK (replaces You may also like) -->
-<!-- Rendered server-side so it's below the cart in DOM order -->
+<!-- JS will relocate this below the cart section on DOMContentLoaded -->
 <div class="bd-why-block">
   <div class="bd-why-inner">
     <p class="bd-why-eyebrow">Why Big Dawgs</p>
@@ -471,6 +471,15 @@
   function onReady(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
     else fn();
+  }
+
+  /* ── Move Why Big Dawgs block to below the cart section ── */
+  function relocateWhyBlock() {
+    var whyBlock = document.querySelector('.bd-why-block');
+    var cartSection = document.querySelector('[id$="__cart-section"]');
+    if (whyBlock && cartSection && cartSection.parentNode) {
+      cartSection.parentNode.insertBefore(whyBlock, cartSection.nextSibling);
+    }
   }
 
   /* ── Build upsell suggestions from live cart ── */
@@ -568,6 +577,9 @@
   }
 
   function init() {
+    /* Relocate the Why Big Dawgs block to below the cart order details */
+    relocateWhyBlock();
+
     /* Fetch live cart, build + inject upsells, then inject conversion elements */
     fetch('/cart.js')
       .then(function(r) { return r.json(); })
