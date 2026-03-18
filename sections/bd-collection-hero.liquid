@@ -224,6 +224,23 @@
     color: #666 !important;
   }
 
+  /* ── "STARTING AT" PRICE PREFIX ──
+     Adds a small label above each product card price
+     so customers understand it's a base/minimum price */
+  [id$="__main"] product-card product-price {
+    display: block;
+  }
+  [id$="__main"] product-card product-price::before {
+    content: "Starting at";
+    display: block;
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: .1rem;
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 750px) {
     .bdc-hero { padding: 3.5rem 1.2rem 3rem; }
@@ -258,7 +275,7 @@
   <div class="bdc-trust-inner">
     <div class="bdc-trust-item">
       <span class="bdc-trust-icon">⚡</span>
-      <span>Ships in 3–5 Days</span>
+      <span>Ships in 5–7 Business Days</span>
     </div>
     <div class="bdc-trust-sep"></div>
     <div class="bdc-trust-item">
