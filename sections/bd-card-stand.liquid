@@ -3,6 +3,26 @@
   2-step: Choose Package → Details & Cart
 {% endcomment %}
 
+{%- liquid
+  comment
+    Safely look up variants by title so reordering or adding variants
+    in Shopify admin never breaks checkout. Falls back to first variant.
+  endcomment
+  assign logo_variant = product.variants[0]
+  assign extra_variant = product.variants[1]
+  unless extra_variant
+    assign extra_variant = product.variants[0]
+  endunless
+  for v in product.variants
+    if v.title == 'Logo Only'
+      assign logo_variant = v
+    endif
+    if v.title == 'Extra Customizations'
+      assign extra_variant = v
+    endif
+  endfor
+-%}
+
 <style>
   :root {
     --bd-red: #CC0000; --bd-red-dark: #990000;
@@ -143,21 +163,21 @@
       <p class="bdcs-sub">Custom 3D printed display stands for TCG cards, sports collectibles, and more. Built to order with your logo.</p>
 
       <div class="bdcs-grid">
-        <div class="bdcs-card" data-variant="{{ product.variants[0].id }}" data-name="Logo Only" data-price="$15">
+        <div class="bdcs-card" data-variant="{{ logo_variant.id }}" data-name="Logo Only" data-price="{{ logo_variant.price | money_without_trailing_zeros }}">
           <div class="bdcs-card-icon">🖨️</div>
           <div class="bdcs-card-name">Logo Only</div>
-          <div class="bdcs-card-price">$15</div>
+          <div class="bdcs-card-price">{{ logo_variant.price | money_without_trailing_zeros }}</div>
           <ul class="bdcs-card-features">
             <li>Your logo printed on stand</li>
             <li>Standard card display angle</li>
             <li>Perfect for shops &amp; home displays</li>
           </ul>
         </div>
-        <div class="bdcs-card" data-variant="{{ product.variants[1].id }}" data-name="Extra Customizations" data-price="$20">
+        <div class="bdcs-card" data-variant="{{ extra_variant.id }}" data-name="Extra Customizations" data-price="{{ extra_variant.price | money_without_trailing_zeros }}">
           <div class="bdcs-badge">Best Value</div>
           <div class="bdcs-card-icon">⚙️</div>
           <div class="bdcs-card-name">Extra Customizations</div>
-          <div class="bdcs-card-price">$20</div>
+          <div class="bdcs-card-price">{{ extra_variant.price | money_without_trailing_zeros }}</div>
           <ul class="bdcs-card-features">
             <li>Logo + custom text or details</li>
             <li>Color &amp; style preferences</li>
@@ -246,7 +266,10 @@
   });
 
   document.getElementById('bdcs-s1-next').addEventListener('click', function() {
-    if (!selectedVariant) { alert('Please select a package.'); return; }
+    if (!selectedVariant || selectedVariant.trim() === '') {
+      alert('Please select a package.');
+      return;
+    }
     document.getElementById('bdcs-variant-id').value = selectedVariant;
     document.getElementById('bdcs-sum-pkg').textContent = selectedName;
     document.getElementById('bdcs-sum-price').textContent = selectedPrice;
@@ -257,6 +280,11 @@
 
   document.getElementById('bdcs-form').addEventListener('submit', function(e) {
     e.preventDefault();
+    var variantId = document.getElementById('bdcs-variant-id').value;
+    if (!variantId || variantId.trim() === '') {
+      alert('Please go back and select a package before submitting.');
+      return;
+    }
     var brand = document.getElementById('bdcs-brand').value.trim();
     if (!TESTING_MODE && !brand) { alert('Please enter your brand or shop name.'); return; }
     var btn = document.getElementById('bdcs-submit');

@@ -344,7 +344,7 @@
   const TESTING_MODE = true;
   // ============================================================
 
-  const variants = {{ product.variants | json }};
+  const variants = {{ product.variants | json }} || [];
 
   const state = { size: null, finish: null, variantId: null, price: null, artworkFile: null };
 
@@ -357,14 +357,39 @@
     return v ? (v.price / 100).toFixed(2) : null;
   }
 
-  // Populate finish prices once size is selected
+  // Populate finish prices once size is selected; mark unavailable combos
   function updateFinishPrices() {
-    ['Regular', 'Holographic', 'Cracked Ice'].forEach(function(finish) {
-      const price = getPriceForSizeFinish(state.size, finish);
-      const ids = { 'Regular': 'bdf-price-regular', 'Holographic': 'bdf-price-holo', 'Cracked Ice': 'bdf-price-cracked' };
-      const el = document.getElementById(ids[finish]);
-      if (el) el.textContent = price ? '$' + price : '—';
+    var finishMap = [
+      { finish: 'Regular',     priceId: 'bdf-price-regular', cardAttr: 'Regular' },
+      { finish: 'Holographic', priceId: 'bdf-price-holo',    cardAttr: 'Holographic' },
+      { finish: 'Cracked Ice', priceId: 'bdf-price-cracked', cardAttr: 'Cracked Ice' }
+    ];
+    finishMap.forEach(function(item) {
+      var price = getPriceForSizeFinish(state.size, item.finish);
+      var el = document.getElementById(item.priceId);
+      var card = document.querySelector('[data-opt="finish"][data-value="' + item.cardAttr + '"]');
+      if (el) {
+        el.textContent = price ? '$' + price : 'Unavailable';
+        el.style.color = price ? 'var(--bd-gold)' : '#666';
+      }
+      if (card) {
+        if (!price) {
+          card.style.opacity = '0.45';
+          card.style.pointerEvents = 'none';
+          card.classList.remove('selected');
+        } else {
+          card.style.opacity = '';
+          card.style.pointerEvents = '';
+        }
+      }
     });
+    // Clear finish selection if the previously selected finish is now unavailable
+    if (state.finish && !getPriceForSizeFinish(state.size, state.finish)) {
+      state.finish = null;
+      state.variantId = null;
+      state.price = null;
+      document.querySelectorAll('[data-opt="finish"]').forEach(function(c) { c.classList.remove('selected'); });
+    }
   }
 
   // Step navigation
@@ -463,8 +488,12 @@
   // Form submit
   document.getElementById('bdf-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    if (!state.size || !state.finish || !state.variantId) {
-      alert('Please complete all steps.'); return;
+    if (!state.size || !state.finish) {
+      alert('Please complete all steps before submitting.'); return;
+    }
+    if (!state.variantId) {
+      alert('The ' + state.size + ' / ' + state.finish + ' combination isn\'t currently available. Please choose a different size or finish, or contact us for a custom quote.');
+      return;
     }
     var artworkLink = document.getElementById('bdf-artwork-link').value.trim();
     if (!TESTING_MODE && !state.artworkFile && !artworkLink) {
