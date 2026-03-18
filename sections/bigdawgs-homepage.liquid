@@ -167,48 +167,7 @@
   }
   .bd-finish-pill:hover { opacity: .85; transform: translateY(-1px); text-decoration: none; }
 
-  /* ── FINISH VISUAL SYSTEM ── */
-  @keyframes holo-sweep {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  @keyframes ice-snap {
-    0%,  16% { filter: hue-rotate(0deg)   brightness(1.0); }
-    20%, 36% { filter: hue-rotate(45deg)  brightness(1.06); }
-    40%, 56% { filter: hue-rotate(100deg) brightness(0.94); }
-    60%, 76% { filter: hue-rotate(170deg) brightness(1.06); }
-    80%, 96% { filter: hue-rotate(230deg) brightness(0.97); }
-    100%     { filter: hue-rotate(0deg)   brightness(1.0); }
-  }
-  .bd-pill-regular {
-    background: radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.07) 0%, transparent 55%), linear-gradient(145deg, #3d3d3d 0%, #222 100%);
-    color: #ccc;
-    border: 1px solid #4a4a4a;
-  }
-  .bd-pill-holo {
-    background: linear-gradient(90deg, hsl(0,100%,68%) 0%, hsl(30,100%,62%) 12%, hsl(60,100%,58%) 25%, hsl(120,100%,55%) 38%, hsl(180,100%,55%) 50%, hsl(240,100%,65%) 63%, hsl(290,100%,65%) 75%, hsl(330,100%,66%) 88%, hsl(360,100%,68%) 100%);
-    background-size: 300% 100%;
-    animation: holo-sweep 7s linear infinite;
-    color: #111;
-  }
-  .bd-pill-ice {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(148deg, hsl(175,85%,72%) 0%, hsl(175,85%,72%) 47%, transparent 47.5%), linear-gradient(238deg, hsl(285,75%,76%) 0%, hsl(285,75%,76%) 44%, transparent 44.5%), linear-gradient(58deg, hsl(200,85%,74%) 0%, hsl(200,85%,74%) 41%, transparent 41.5%), linear-gradient(328deg, hsl(340,80%,76%) 0%, hsl(340,80%,76%) 47%, transparent 47.5%), linear-gradient(108deg, hsl(60,90%,72%) 0%, hsl(120,80%,68%) 100%);
-    animation: ice-snap 1.5s linear infinite;
-    color: #111;
-    align-self: center;
-    vertical-align: middle;
-  }
-  .bd-pill-ice::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background: linear-gradient(148deg, transparent 46.5%, rgba(0,0,0,0.4) 47%, rgba(0,0,0,0.4) 47.5%, transparent 48%), linear-gradient(238deg, transparent 43.5%, rgba(0,0,0,0.4) 44%, rgba(0,0,0,0.4) 44.5%, transparent 45%), linear-gradient(58deg, transparent 40.5%, rgba(0,0,0,0.4) 41%, rgba(0,0,0,0.4) 41.5%, transparent 42%), linear-gradient(328deg, transparent 46.5%, rgba(0,0,0,0.4) 47%, rgba(0,0,0,0.4) 47.5%, transparent 48%);
-  }
+  /* Finish visual styles handled by snippets/finish-effects.liquid (V13) */
 
   .bd-hero-types { color: #666; font-size: .8rem; margin-top: 1.25rem; }
   .bd-hero-sizes { color: #555; font-size: .75rem; margin-top: .5rem; }
@@ -277,34 +236,7 @@
     border-radius: 3px;
     margin-bottom: .5rem;
   }
-  .bd-tag-regular {
-    background: radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.07) 0%, transparent 55%), linear-gradient(145deg, #3d3d3d 0%, #222 100%);
-    color: #ccc;
-    border: 1px solid #4a4a4a;
-  }
-  .bd-tag-holo {
-    background: linear-gradient(90deg, hsl(0,100%,68%) 0%, hsl(30,100%,62%) 12%, hsl(60,100%,58%) 25%, hsl(120,100%,55%) 38%, hsl(180,100%,55%) 50%, hsl(240,100%,65%) 63%, hsl(290,100%,65%) 75%, hsl(330,100%,66%) 88%, hsl(360,100%,68%) 100%);
-    background-size: 300% 100%;
-    animation: holo-sweep 7s linear infinite;
-    color: #111;
-  }
-  .bd-tag-ice {
-    position: relative;
-    overflow: hidden;
-    align-self: center;
-    vertical-align: middle;
-    background: linear-gradient(148deg, hsl(175,85%,72%) 0%, hsl(175,85%,72%) 47%, transparent 47.5%), linear-gradient(238deg, hsl(285,75%,76%) 0%, hsl(285,75%,76%) 44%, transparent 44.5%), linear-gradient(58deg, hsl(200,85%,74%) 0%, hsl(200,85%,74%) 41%, transparent 41.5%), linear-gradient(328deg, hsl(340,80%,76%) 0%, hsl(340,80%,76%) 47%, transparent 47.5%), linear-gradient(108deg, hsl(60,90%,72%) 0%, hsl(120,80%,68%) 100%);
-    animation: ice-snap 1.5s linear infinite;
-    color: #111;
-  }
-  .bd-tag-ice::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background: linear-gradient(148deg, transparent 46.5%, rgba(0,0,0,0.4) 47%, rgba(0,0,0,0.4) 47.5%, transparent 48%), linear-gradient(238deg, transparent 43.5%, rgba(0,0,0,0.4) 44%, rgba(0,0,0,0.4) 44.5%, transparent 45%), linear-gradient(58deg, transparent 40.5%, rgba(0,0,0,0.4) 41%, rgba(0,0,0,0.4) 41.5%, transparent 42%), linear-gradient(328deg, transparent 46.5%, rgba(0,0,0,0.4) 47%, rgba(0,0,0,0.4) 47.5%, transparent 48%);
-  }
+  /* Tag styles handled by snippets/finish-effects.liquid (V13) */
   .bd-card-link {
     color: var(--bd-red);
     font-size: .88rem;
