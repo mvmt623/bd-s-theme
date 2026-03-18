@@ -645,7 +645,7 @@
       <span id="summary-quantity">Not selected</span>
     </div>
     <div class="summary-item" id="summary-price-row" style="display:none;">
-      <span class="summary-label">Price:</span>
+      <span class="summary-label">Order Total:</span>
       <span id="summary-price" style="color:var(--bd-gold);font-weight:700;">—</span>
     </div>
   </div>
@@ -681,17 +681,17 @@
         <div class="option-card" data-value="Matte" data-step="2">
           <div class="option-card-title">Matte</div>
           <div class="option-card-subtext">Clean, professional matte look</div>
-          <div class="option-card-price">From $6</div>
+          <div class="option-card-price">Starting at $6</div>
         </div>
         <div class="option-card" data-value="Holographic" data-step="2">
           <div class="option-card-title">Holographic</div>
           <div class="option-card-subtext">Rainbow shine, eye-catching</div>
-          <div class="option-card-price">From $7</div>
+          <div class="option-card-price">Starting at $7</div>
         </div>
         <div class="option-card" data-value="Cracked Ice" data-step="2">
           <div class="option-card-title">Cracked Ice</div>
           <div class="option-card-subtext">Unique fractured-crystal pattern</div>
-          <div class="option-card-price">From $7</div>
+          <div class="option-card-price">Starting at $7</div>
         </div>
       </div>
 
@@ -847,9 +847,10 @@
       <input type="hidden" name="properties[Finish]" id="prop-finish" value="">
       <input type="hidden" name="properties[Size]" id="prop-size" value="">
       <input type="hidden" name="properties[Quantity Tier]" id="prop-quantity-tier" value="">
-      <input type="hidden" name="properties[Price]" id="prop-price" value="">
       <input type="hidden" name="properties[Secondary Logo]" id="prop-secondary-logo" value="">
       <input type="hidden" name="properties[Secondary Artwork]" id="prop-secondary-artwork" value="">
+      <!-- _price is hidden from customer cart but visible in Shopify admin orders for fulfillment reference -->
+      <input type="hidden" name="properties[_price]" id="prop-price" value="">
 
       <div class="form-actions">
         <button type="button" class="btn btn-secondary btn-back" id="step-5-back">Back</button>
@@ -1302,20 +1303,24 @@
     document.getElementById('prop-finish').value = formState.finish;
     document.getElementById('prop-size').value = formState.size;
     document.getElementById('prop-quantity-tier').value = formState.quantity + ' stickers';
+
+    // Store full order total (including secondary logo) in hidden _price property.
+    // This is invisible to the customer in the cart but visible in Shopify admin orders.
     var totalPrice = parseFloat(formState.price) + (secondaryToggle ? 2 : 0);
     document.getElementById('prop-price').value = '$' + totalPrice;
-    document.getElementById('cart-quantity').value = '1';
 
-    // Find the variant whose price matches the selected tier price.
-    // IMPORTANT: Shopify serializes variant.price in CENTS (e.g. $6.00 = 600).
-    // formState.price is in whole dollars (e.g. 6). Multiply by 100 to compare.
-    var selectedPriceCents = Math.round(formState.price * 100);
+    // Select the variant whose Shopify price matches the calculated total.
+    // Shopify stores variant.price in CENTS (e.g. $40.00 = 4000).
+    // The correct variant for each price point must be created in Shopify admin.
+    var selectedPriceCents = Math.round(totalPrice * 100);
     var variant = productVariants.find(function(v) {
       return parseInt(v.price, 10) === selectedPriceCents;
     }) || productVariants[0];
     if (variant) {
       document.getElementById('variant-id').value = variant.id;
     }
+
+    document.getElementById('cart-quantity').value = '1';
 
     var submitBtn = document.getElementById('submit-btn');
     submitBtn.disabled = true;
