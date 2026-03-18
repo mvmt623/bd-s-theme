@@ -1,0 +1,365 @@
+{% comment %}
+  BIG DAWGS — Sticker Showcase / Gallery Page Section
+  Shows all 6 product variants: 3 finishes × 2 holder types (One Touch + Toploader)
+  Each with Small / Medium / Large sizing options
+{% endcomment %}
+
+<style>
+  :root {
+    --bd-red: #CC0000;
+    --bd-red-dark: #990000;
+    --bd-gold: #D4A017;
+    --bd-black: #111111;
+    --bd-dark: #1A1A1A;
+    --bd-gray: #333333;
+    --bd-mid: #222222;
+    --bd-light: #F5F5F5;
+    --bd-white: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+
+  /* ══════════════════════════════════
+     HERO
+  ══════════════════════════════════ */
+  .bd-showcase-hero {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 50%, #0a0a0a 100%);
+    color: var(--bd-white);
+    padding: 5rem 1.5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .bd-showcase-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(204,0,0,0.15) 0%, transparent 68%);
+    pointer-events: none;
+  }
+  .bd-showcase-hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .bd-badge {
+    display: inline-block;
+    background: var(--bd-red);
+    color: var(--bd-white);
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: .32rem .9rem;
+    border-radius: 3px;
+    margin-bottom: 1.3rem;
+  }
+  .bd-showcase-hero h1 {
+    color: var(--bd-white);
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  }
+  .bd-showcase-hero p {
+    color: var(--bd-light);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 1rem 0 0 0;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ══════════════════════════════════
+     CONTROLS (Size Select)
+  ══════════════════════════════════ */
+  .bd-showcase-controls {
+    background: var(--bd-white);
+    padding: 1.5rem;
+    text-align: center;
+    border-top: 1px solid var(--bd-light);
+    border-bottom: 1px solid var(--bd-light);
+  }
+  .bd-showcase-controls label {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-right: 1rem;
+    color: var(--bd-black);
+  }
+  .bd-showcase-controls select {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    border: 1px solid var(--bd-gray);
+    border-radius: 4px;
+    background: var(--bd-white);
+    cursor: pointer;
+    min-width: 140px;
+  }
+
+  /* ══════════════════════════════════
+     GALLERY GRID
+  ══════════════════════════════════ */
+  .bd-showcase-gallery {
+    background: var(--bd-light);
+    padding: 3rem 1.5rem;
+  }
+  .bd-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .bd-gallery-item {
+    background: var(--bd-white);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .bd-gallery-item:hover {
+    box-shadow: 0 8px 24px rgba(204,0,0,0.15);
+    transform: translateY(-4px);
+  }
+  .bd-gallery-image {
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .bd-gallery-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .bd-gallery-info {
+    padding: 1.5rem;
+  }
+  .bd-gallery-variant {
+    font-size: 0.85rem;
+    color: var(--bd-red);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+  .bd-gallery-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bd-black);
+    margin: 0.5rem 0 0.8rem 0;
+    line-height: 1.3;
+  }
+  .bd-gallery-desc {
+    font-size: 0.9rem;
+    color: var(--bd-gray);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .bd-gallery-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bd-light);
+    font-size: 0.85rem;
+    color: var(--bd-gray);
+  }
+  .bd-gallery-size {
+    font-weight: 600;
+    color: var(--bd-black);
+  }
+
+  /* ══════════════════════════════════
+     FOOTER / CTA
+  ══════════════════════════════════ */
+  .bd-showcase-cta {
+    background: var(--bd-dark);
+    color: var(--bd-white);
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+  .bd-cta-title {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 900;
+    margin: 0 0 1rem 0;
+  }
+  .bd-cta-text {
+    font-size: 1rem;
+    color: var(--bd-light);
+    margin-bottom: 1.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .bd-cta-button {
+    display: inline-block;
+    background: var(--bd-red);
+    color: var(--bd-white);
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border: 2px solid var(--bd-red);
+    cursor: pointer;
+  }
+  .bd-cta-button:hover {
+    background: var(--bd-red-dark);
+    border-color: var(--bd-red-dark);
+  }
+
+  /* ══════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════ */
+  @media (max-width: 768px) {
+    .bd-showcase-hero {
+      padding: 3rem 1.5rem 2.5rem;
+    }
+    .bd-showcase-hero h1 {
+      font-size: 2rem;
+    }
+    .bd-showcase-hero p {
+      font-size: 0.95rem;
+    }
+    .bd-gallery-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .bd-gallery-image {
+      height: 250px;
+    }
+  }
+</style>
+
+<div class="bd-showcase-hero">
+  <div class="bd-showcase-hero-inner">
+    <span class="bd-badge">Showcase</span>
+    <h1>Sticker Showcase Gallery</h1>
+    <p>Browse all Big Dawgs sticker variants. Each design comes in 3 sizes (Small, Medium, Large) with choice of finish and holder type.</p>
+  </div>
+</div>
+
+<div class="bd-showcase-controls">
+  <label for="bd-size-select">Filter by Size:</label>
+  <select id="bd-size-select">
+    <option value="all">All Sizes</option>
+    <option value="Small">Small</option>
+    <option value="Medium">Medium</option>
+    <option value="Large">Large</option>
+  </select>
+</div>
+
+<div class="bd-showcase-gallery">
+  <div class="bd-gallery-grid" id="bd-gallery-grid">
+    <!-- Gallery items will be generated by JavaScript -->
+  </div>
+</div>
+
+<div class="bd-showcase-cta">
+  <h2 class="bd-cta-title">Ready to collect?</h2>
+  <p class="bd-cta-text">Choose your favorite variant and start your Big Dawgs sticker collection today.</p>
+  <button class="bd-cta-button" onclick="window.location.href='/collections/stickers'">Shop All Stickers</button>
+</div>
+
+<script>
+  // 6 variants: 3 finishes × 2 holder types
+  const variants = [
+    {
+      name: 'Red Hologram / One Touch',
+      finish: 'Red Hologram',
+      holder: 'One Touch',
+      image: 'https://via.placeholder.com/400x400?text=Red+Hologram+One+Touch',
+      description: 'Vibrant red hologram finish with One Touch holder'
+    },
+    {
+      name: 'Red Hologram / Toploader',
+      finish: 'Red Hologram',
+      holder: 'Toploader',
+      image: 'https://via.placeholder.com/400x400?text=Red+Hologram+Toploader',
+      description: 'Vibrant red hologram finish with Toploader'
+    },
+    {
+      name: 'Gold Foil / One Touch',
+      finish: 'Gold Foil',
+      holder: 'One Touch',
+      image: 'https://via.placeholder.com/400x400?text=Gold+Foil+One+Touch',
+      description: 'Premium gold foil finish with One Touch holder'
+    },
+    {
+      name: 'Gold Foil / Toploader',
+      finish: 'Gold Foil',
+      holder: 'Toploader',
+      image: 'https://via.placeholder.com/400x400?text=Gold+Foil+Toploader',
+      description: 'Premium gold foil finish with Toploader'
+    },
+    {
+      name: 'Silver Metallic / One Touch',
+      finish: 'Silver Metallic',
+      holder: 'One Touch',
+      image: 'https://via.placeholder.com/400x400?text=Silver+Metallic+One+Touch',
+      description: 'Sleek silver metallic finish with One Touch holder'
+    },
+    {
+      name: 'Silver Metallic / Toploader',
+      finish: 'Silver Metallic',
+      holder: 'Toploader',
+      image: 'https://via.placeholder.com/400x400?text=Silver+Metallic+Toploader',
+      description: 'Sleek silver metallic finish with Toploader'
+    }
+  ];
+
+  // Sizes with descriptions
+  const sizes = [
+    { name: 'Small', desc: '2" × 2"' },
+    { name: 'Medium', desc: '3" × 3"' },
+    { name: 'Large', desc: '4" × 4"' }
+  ];
+
+  // Generate gallery items
+  function renderGallery(selectedSize = 'all') {
+    const grid = document.getElementById('bd-gallery-grid');
+    grid.innerHTML = '';
+
+    sizes.forEach(size => {
+      if (selectedSize !== 'all' && size.name !== selectedSize) return;
+
+      variants.forEach(variant => {
+        const item = document.createElement('div');
+        item.className = 'bd-gallery-item';
+        item.innerHTML = `
+          <div class="bd-gallery-image">
+            <img src="${variant.image}" alt="${variant.name} - ${size.name}">
+          </div>
+          <div class="bd-gallery-info">
+            <div class="bd-gallery-variant">${variant.finish}</div>
+            <h3 class="bd-gallery-title">${variant.name}</h3>
+            <p class="bd-gallery-desc">${variant.description}</p>
+            <div class="bd-gallery-meta">
+              <span class="bd-gallery-size">${size.name}</span>
+              <span>${size.desc}</span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(item);
+      });
+    });
+  }
+
+  // Size filter handler
+  document.getElementById('bd-size-select').addEventListener('change', (e) => {
+    renderGallery(e.target.value);
+  });
+
+  // Initial render
+  renderGallery();
+</script>
