@@ -104,6 +104,8 @@
     padding: .45rem 1.1rem;
     border-radius: 20px;
     text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
     transition: background .2s, border-color .2s, color .2s, transform .15s;
   }
   .bdc-pill:hover {
@@ -113,9 +115,9 @@
     transform: translateY(-1px);
   }
   .bdc-pill--active {
-    background: var(--bd-red);
-    border-color: var(--bd-red);
-    color: #fff;
+    background: var(--bd-red) !important;
+    border-color: var(--bd-red) !important;
+    color: #fff !important;
   }
 
   /* ── TRUST BAR ── */
@@ -161,6 +163,13 @@
   [id$="__main"],
   [id$="__main"] .section-background {
     background-color: #0f0f0f !important;
+  }
+
+  /* Center product grid items (when fewer items than columns) */
+  [id$="__main"] .product-grid,
+  [id$="__main"] ul.product-grid,
+  [id$="__main"] [class*="product-grid"] {
+    justify-content: center !important;
   }
 
   /* Product card dark treatment */
@@ -235,11 +244,11 @@
     <h1>Built For<br><em>Collectors</em>.</h1>
     <p class="bdc-hero-sub">Custom card stickers, holo finishes, sample packs, and more — every product made with the hobby in mind.</p>
     <div class="bdc-pills">
-      <a href="/collections/all" class="bdc-pill bdc-pill--active">All Products</a>
-      <a href="/collections/all?filter.p.product_type=Custom+Card+Stickers" class="bdc-pill">Card Stickers</a>
-      <a href="/collections/all?filter.p.product_type=Custom+Flat+Stickers" class="bdc-pill">Flat Stickers</a>
-      <a href="/collections/all?filter.p.product_type=Sample+Pack" class="bdc-pill">Sample Packs</a>
-      <a href="/collections/all?filter.p.product_type=Accessories" class="bdc-pill">Accessories</a>
+      <button class="bdc-pill bdc-pill--active" data-filter="">All Products</button>
+      <button class="bdc-pill" data-filter="card sticker">Card Stickers</button>
+      <button class="bdc-pill" data-filter="flat sticker">Flat Stickers</button>
+      <button class="bdc-pill" data-filter="sample pack">Sample Packs</button>
+      <button class="bdc-pill" data-filter="accessor">Accessories</button>
     </div>
   </div>
 </section>
@@ -268,6 +277,85 @@
     </div>
   </div>
 </div>
+
+{% comment %}
+  Bake product type data from Liquid into a JS map.
+  This gives the client-side filter accurate type values
+  regardless of what strings are used in the Shopify admin —
+  no dependency on Shopify Storefront Filters API.
+{% endcomment %}
+<script>
+window.__bdProductTypes = {
+  {% for product in collection.products %}{{ product.handle | json }}: {{ product.type | downcase | json }}{% unless forloop.last %},{% endunless %}{% endfor %}
+};
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  function onReady(fn) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fn);
+    } else {
+      fn();
+    }
+  }
+
+  /* Extract product handle from a card's first /products/ link */
+  function getHandle(card) {
+    var link = card.querySelector('a[href*="/products/"]');
+    if (!link) return null;
+    var m = link.getAttribute('href').match(/\/products\/([^/?#]+)/);
+    return m ? m[1] : null;
+  }
+
+  /* Get every product item wrapper in the grid */
+  function getProductItems() {
+    var main = document.querySelector('[id$="__main"]');
+    if (!main) return [];
+    /* Horizon theme: each product is an <li> inside .product-grid */
+    var items = main.querySelectorAll('.product-grid > li, ul.product-grid > li');
+    if (!items.length) {
+      items = main.querySelectorAll('.product-grid > div');
+    }
+    if (!items.length) {
+      /* Final fallback: product-card custom elements */
+      items = main.querySelectorAll('product-card');
+    }
+    return Array.prototype.slice.call(items);
+  }
+
+  /* Show/hide items — keyword is a lowercase substring to match against product.type */
+  function filterProducts(keyword) {
+    getProductItems().forEach(function (item) {
+      if (!keyword) {
+        item.style.display = '';
+        return;
+      }
+      var handle = getHandle(item);
+      if (!handle) { item.style.display = ''; return; }
+      var type = (window.__bdProductTypes && window.__bdProductTypes[handle]) || '';
+      /* Substring match handles "custom card stickers" matching keyword "card sticker" */
+      item.style.display = type.indexOf(keyword) !== -1 ? '' : 'none';
+    });
+  }
+
+  function initPills() {
+    var pills = document.querySelectorAll('.bdc-pill');
+    pills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var filter = this.getAttribute('data-filter') || '';
+        pills.forEach(function (p) { p.classList.remove('bdc-pill--active'); });
+        this.classList.add('bdc-pill--active');
+        filterProducts(filter);
+      });
+    });
+  }
+
+  onReady(initPills);
+})();
+</script>
 
 {% endif %}
 
