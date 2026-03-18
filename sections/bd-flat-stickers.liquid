@@ -253,7 +253,7 @@
 
       <div class="bdf-finish-grid">
         <div class="bdf-finish-card" data-opt="finish" data-value="Regular">
-          <div class="bdf-finish-name">Regular</div>
+          <div class="bdf-finish-name">Matte</div>
           <div class="bdf-finish-desc">Clean matte vinyl — professional and sharp</div>
           <div class="bdf-finish-price" id="bdf-price-regular">—</div>
         </div>
@@ -278,13 +278,13 @@
     <!-- STEP 3: ARTWORK & CART -->
     <div class="bdf-step" data-step="3">
       <h2 class="bdf-heading">Artwork &amp; Details</h2>
-      <p class="bdf-sub">Upload your design or share a link — we'll confirm before printing.</p>
+      <p class="bdf-sub">Upload your design — we'll confirm before printing.</p>
 
       <div class="bdf-field">
-        <label>Your Artwork</label>
+        <label>Primary Artwork</label>
         <div class="bdf-upload-zone" id="bdf-upload-zone">
           <input type="file" class="bdf-file-input" id="bdf-file-input"
-            accept="image/*,.pdf,.ai,.psd,.eps" capture="environment">
+            accept="image/*,.pdf,.ai,.psd,.eps">
           <div class="bdf-upload-icon" id="bdf-upload-icon">📎</div>
           <p class="bdf-upload-title" id="bdf-upload-title">Upload Your Artwork</p>
           <p class="bdf-upload-hint" id="bdf-upload-hint">Drag &amp; drop or tap to browse — mobile camera supported</p>
@@ -297,9 +297,6 @@
           </div>
           <button type="button" class="bdf-remove-btn" id="bdf-remove-btn" title="Remove">✕</button>
         </div>
-        <div class="bdf-or">or paste a link</div>
-        <input type="text" class="bdf-input-text" id="bdf-artwork-link"
-          placeholder="https://drive.google.com/... or Dropbox link">
         <p class="bdf-help">We'll review your file and confirm before printing. High-res PNG or vector preferred.</p>
       </div>
 
@@ -397,7 +394,8 @@
 
   function updateSummary() {
     document.getElementById('bdf-sum-size').textContent = state.size || '—';
-    document.getElementById('bdf-sum-finish').textContent = state.finish || '—';
+    // Display "Matte" for the "Regular" variant
+    document.getElementById('bdf-sum-finish').textContent = state.finish === 'Regular' ? 'Matte' : (state.finish || '—');
     if (state.price) document.getElementById('bdf-sum-price').textContent = '$' + state.price;
   }
 
@@ -449,14 +447,22 @@
   fileInput.addEventListener('change', function() {
     if (this.files[0]) handleFile(this.files[0]);
   });
+  // Smart subtitle based on device
+  (function() {
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || ('ontouchstart' in window && !window.matchMedia('(pointer:fine)').matches);
+    var hint = document.getElementById('bdf-upload-hint');
+    if (hint) hint.textContent = isMobile ? 'Tap to choose a file or take a photo' : 'Drag & drop or click to browse';
+  })();
+
   document.getElementById('bdf-remove-btn').addEventListener('click', function(e) {
     e.stopPropagation();
     state.artworkFile = null;
     zone.classList.remove('has-file');
     preview.classList.remove('show');
     fileInput.value = '';
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || ('ontouchstart' in window && !window.matchMedia('(pointer:fine)').matches);
     document.getElementById('bdf-upload-title').textContent = 'Upload Your Artwork';
-    document.getElementById('bdf-upload-hint').textContent = 'Drag & drop or tap to browse — mobile camera supported';
+    document.getElementById('bdf-upload-hint').textContent = isMobile ? 'Tap to choose a file or take a photo' : 'Drag & drop or click to browse';
   });
 
   function handleFile(file) {
@@ -484,16 +490,16 @@
       alert('The ' + state.size + ' / ' + state.finish + ' combination isn\'t currently available. Please choose a different size or finish, or contact us for a custom quote.');
       return;
     }
-    var artworkLink = document.getElementById('bdf-artwork-link').value.trim();
-    if (!TESTING_MODE && !state.artworkFile && !artworkLink) {
-      alert('Please upload your artwork or paste a link to continue.'); return;
+    if (!TESTING_MODE && !state.artworkFile) {
+      alert('Please upload your artwork file to continue.'); return;
     }
     document.getElementById('bdf-variant-id').value = state.variantId;
     document.getElementById('bdf-prop-size').value = state.size;
-    document.getElementById('bdf-prop-finish').value = state.finish;
+    // Display "Matte" in cart even though variant title in Shopify is "Regular"
+    document.getElementById('bdf-prop-finish').value = state.finish === 'Regular' ? 'Matte' : state.finish;
     document.getElementById('bdf-prop-artwork').value = state.artworkFile
       ? 'File: ' + state.artworkFile + ' (will be emailed)'
-      : artworkLink;
+      : '';
 
     var btn = document.getElementById('bdf-submit');
     btn.disabled = true;
