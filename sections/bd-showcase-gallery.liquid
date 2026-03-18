@@ -4,6 +4,7 @@
   Matte = Small | Holographic = Medium | Cracked Ice = Large
   v2: smart hover-zoom on sticker, CSS photo uniformity, per-finish adjustments
   v2.1: targeted object-position + transform-origin override for Toploader Cracked Ice
+  v2.2: targeted overrides for Toploader Matte (default scale + position) and Toploader Holographic (position)
 {% endcomment %}
 
 <style>
@@ -259,7 +260,7 @@
   /* ── Per-finish photo normalisation ───────────────────────
      Balances colour temperature, contrast, and saturation
      across photos taken in different lighting conditions.
-  ────────────────────────────────────────────── */
+  ────────────────────────────────────────────────────────── */
 
   /* Matte: warm-neutral, already well-exposed */
   .bdsg-card-photo[data-finish="matte"] img {
@@ -293,6 +294,35 @@
      Adjust the % values here if the sticker is still off after photos load.
   ──────────────────────────────────────────────────────────────────────── */
   .bdsg-card-photo[data-card="tl-cracked"] img {
+    object-position: center 30%;
+    transform-origin: 50% 30%;
+  }
+
+  /* ── Toploader Matte — per-photo position correction ────────────────
+     This photo has more empty space around the sticker at rest than the
+     other cards, making it appear smaller. A modest default scale(1.15)
+     closes the visual gap.
+     object-position / transform-origin shift the crop and zoom anchor
+     down to where the sticker actually sits in this photo.
+     Adjust % values if the sticker position differs in the final photo.
+  ────────────────────────────────────────────────────────────────────── */
+  .bdsg-card-photo[data-card="tl-matte"] img {
+    object-position: center 30%;
+    transform-origin: 50% 30%;
+    transform: scale(1.15);
+  }
+  /* Re-state hover scale so it overrides the base scale(1.15) cleanly */
+  .bdsg-card:hover .bdsg-card-photo[data-card="tl-matte"] img {
+    transform: scale(2.25);
+  }
+
+  /* ── Toploader Holographic — per-photo position correction ──────────
+     Sticker sits lower in this photo's frame than the global 15% anchor
+     assumes. Shift object-position and transform-origin down so the zoom
+     centres on the sticker rather than empty space above it.
+     Adjust % values if the sticker position differs in the final photo.
+  ────────────────────────────────────────────────────────────────────── */
+  .bdsg-card-photo[data-card="tl-holo"] img {
     object-position: center 30%;
     transform-origin: 50% 30%;
   }
@@ -571,9 +601,9 @@
   <div class="bdsg-grid-wrap">
     <div class="bdsg-grid">
 
-      {%- comment %} Matte — Small {%- endcomment %}
+      {%- comment %} Matte — Small (data-card="tl-matte" targets per-photo CSS correction: default scale + position) {%- endcomment %}
       <div class="bdsg-card">
-        <div class="bdsg-card-photo" data-finish="matte">
+        <div class="bdsg-card-photo" data-finish="matte" data-card="tl-matte">
           {%- if section.settings.tl_matte_image != blank -%}
             <img src="{{ section.settings.tl_matte_image | image_url: width: 800 }}"
                  alt="Small Matte sticker on Toploader" loading="lazy">
@@ -598,9 +628,9 @@
         </div>
       </div>
 
-      {%- comment %} Holographic — Medium {%- endcomment %}
+      {%- comment %} Holographic — Medium (data-card="tl-holo" targets per-photo CSS correction: position) {%- endcomment %}
       <div class="bdsg-card bdsg-card--holo">
-        <div class="bdsg-card-photo" data-finish="holo">
+        <div class="bdsg-card-photo" data-finish="holo" data-card="tl-holo">
           {%- if section.settings.tl_holo_image != blank -%}
             <img src="{{ section.settings.tl_holo_image | image_url: width: 800 }}"
                  alt="Medium Holographic sticker on Toploader" loading="lazy">
