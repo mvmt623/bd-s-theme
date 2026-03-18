@@ -1,0 +1,239 @@
+{% comment %}
+  BIG DAWGS — Sticker Showcase / Gallery Page Section
+  Shows all 6 product variants: 3 finishes × 2 holder types (One Touch + Toploader)
+  Each with Small / Medium / Large sizing options
+{% endcomment %}
+
+<style>
+  :root {
+    --bd-red: #CC0000;
+    --bd-red-dark: #990000;
+    --bd-gold: #D4A017;
+    --bd-black: #111111;
+    --bd-dark: #1A1A1A;
+    --bd-gray: #333333;
+    --bd-mid: #222222;
+    --bd-light: #F5F5F5;
+    --bd-white: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+
+  /* ══════════════════════════════════
+     HERO
+  ══════════════════════════════════ */
+  .bd-showcase-hero {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 50%, #0a0a0a 100%);
+    color: var(--bd-white);
+    padding: 5rem 1.5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .bd-showcase-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(204,0,0,0.15) 0%, transparent 68%);
+    pointer-events: none;
+  }
+  .bd-showcase-hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .bd-badge {
+    display: inline-block;
+    background: var(--bd-red);
+    color: var(--bd-white);
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: .32rem .9rem;
+    border-radius: 3px;
+    margin-bottom: 1.3rem;
+  }
+  .bd-showcase-hero h1 {
+    color: var(--bd-white);
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 0 0 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .bd-showcase-hero h1 span { color: var(--bd-red); }
+  .bd-showcase-hero p {
+    color: #bbb;
+    font-size: 1.1rem;
+    max-width: 640px;
+    margin: 0 auto 2rem;
+    line-height: 1.75;
+  }
+  .bd-hero-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--bd-red);
+    margin: 0 auto 2.5rem;
+    border-radius: 2px;
+  }
+  /* Gallery Grid */
+  .bd-showcase-gallery {
+    padding: 4rem 1.5rem;
+    background: var(--bd-white);
+  }
+  .bd-gallery-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .bd-gallery-title {
+    font-size: 2rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--bd-black);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .bd-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  .bd-gallery-item {
+    background: var(--bd-light);
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  .bd-gallery-item:hover {
+    border-color: var(--bd-red);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+  .bd-gallery-item img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+  }
+  .bd-gallery-item h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    color: var(--bd-black);
+  }
+  .bd-gallery-item p {
+    color: #666;
+    font-size: 0.95rem;
+    margin: 0.5rem 0 1rem;
+  }
+  .bd-gallery-item .bd-price {
+    font-weight: 800;
+    color: var(--bd-red);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .bd-cta-button {
+    display: inline-block;
+    background: var(--bd-red);
+    color: var(--bd-white);
+    padding: 0.8rem 1.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+  .bd-cta-button:hover {
+    background: var(--bd-red-dark);
+  }
+  /* Footer section */
+  .bd-showcase-footer {
+    background: var(--bd-black);
+    color: var(--bd-white);
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+  .bd-showcase-footer h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  .bd-showcase-footer p {
+    color: #aaa;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
+
+<div class="bd-showcase-hero">
+  <div class="bd-showcase-hero-inner">
+    <div class="bd-badge">BIG DAWGS STICKER SHOWCASE</div>
+    <h1><span>ULTIMATE</span> STICKER COLLECTION</h1>
+    <div class="bd-hero-divider"></div>
+    <p>Premium sticker holders & sleeves — designed for collectors & traders. Choose your finish, size, and holder type.</p>
+  </div>
+</div>
+
+<div class="bd-showcase-gallery">
+  <div class="bd-gallery-inner">
+    <h2 class="bd-gallery-title">Shop Our Collection</h2>
+    <div class="bd-gallery-grid">
+      <!-- Item 1: Black One Touch Small -->
+      <div class="bd-gallery-item">
+        <h3>Black One Touch - Small</h3>
+        <p>Premium black finish for vintage cards</p>
+        <div class="bd-price">$12.99</div>
+        <button class="bd-cta-button">Add to Cart</button>
+      </div>
+      <!-- Item 2: Black One Touch Medium -->
+      <div class="bd-gallery-item">
+        <h3>Black One Touch - Medium</h3>
+        <p>Perfect for standard-size stickers</p>
+        <div class="bd-price">$15.99</div>
+        <button class="bd-cta-button">Add to Cart</button>
+      </div>
+      <!-- Item 3: Black One Touch Large -->
+      <div class="bd-gallery-item">
+        <h3>Black One Touch - Large</h3>
+        <p>Showcase your premium collection</p>
+        <div class="bd-price">$18.99</div>
+        <button class="bd-cta-button">Add to Cart</button>
+      </div>
+      <!-- Item 4: Gold One Touch Small -->
+      <div class="bd-gallery-item">
+        <h3>Gold One Touch - Small</h3>
+        <p>Luxurious gold finish</p>
+        <div class="bd-price">$13.99</div>
+        <button class="bd-cta-button">Add to Cart</button>
+      </div>
+      <!-- Item 5: Gold One Touch Medium -->
+      <div class="bd-gallery-item">
+        <h3>Gold One Touch - Medium</h3>
+        <p>Elegant protection with style</p>
+        <div class="bd-price">$16.99</div>
+        <button class="bd-cta-button">Add to Cart</button>
+      </div>
+      <!-- Item 6: Gold One Touch Large -->
+      <div class="bd-gallery-item">
+        <h3>Gold One Touch - Large</h3>
+        <p>Premium display solution</p>
+        <div class="bd-price">$19.99</div>
+        <button class="bd-cta-button">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bd-showcase-footer">
+  <h2>Why Choose Big Dawgs?</h2>
+  <p>Our sticker holders are crafted with precision, using premium materials to protect and showcase your collection. Whether you're a casual collector or a serious trader, we have the perfect solution for you.</p>
+</div>
