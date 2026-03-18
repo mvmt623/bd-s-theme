@@ -51,8 +51,13 @@
     border-radius: 3px;
     margin-bottom: 1.2rem;
   }
+  /* Override theme heading-box style (theme injects: h1 { background: white; display: inline-block }) */
   .bd-contact-hero h1 {
-    color: var(--bd-white);
+    color: var(--bd-white) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    display: block !important;
     font-size: 2.8rem;
     font-weight: 900;
     line-height: 1.15;
@@ -61,7 +66,7 @@
     letter-spacing: 1px;
   }
   .bd-contact-hero h1 span {
-    color: var(--bd-red);
+    color: var(--bd-red) !important;
     background: transparent !important;
     background-color: transparent !important;
   }
@@ -111,6 +116,9 @@
     text-transform: uppercase;
     margin: 0 0 1rem;
     line-height: 1.2;
+    background: transparent !important;
+    background-color: transparent !important;
+    display: block !important;
   }
   .bd-contact-info h2 span { color: var(--bd-red); background: transparent !important; }
   .bd-contact-info > p {
@@ -341,6 +349,9 @@
     font-weight: 900;
     text-transform: uppercase;
     margin: 0 0 .6rem;
+    background: transparent !important;
+    background-color: transparent !important;
+    display: block !important;
   }
   .bd-contact-cta p {
     color: rgba(255,255,255,.8);
@@ -368,11 +379,11 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     .bd-contact-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .bd-contact-hero h1 { font-size: 2.1rem; }
+    .bd-contact-hero h1 { font-size: 2.1rem !important; }
   }
   @media (max-width: 560px) {
     .bd-contact-form-wrap { padding: 1.6rem; }
-    .bd-contact-hero h1 { font-size: 1.8rem; }
+    .bd-contact-hero h1 { font-size: 1.8rem !important; }
     .bd-form-two-col { grid-template-columns: 1fr; }
   }
 </style>
