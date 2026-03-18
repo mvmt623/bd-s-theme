@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "bd-showcase": {
+      "type": "bd-sticker-showcase",
+      "settings": {}
+    }
+  },
+  "order": [
+    "bd-showcase"
+  ]
+}
