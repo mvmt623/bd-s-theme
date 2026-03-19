@@ -240,6 +240,11 @@ Three product forms have `TESTING_MODE = true` which BYPASSES artwork upload val
 
 - **Most popular size:** Medium
 - **Most popular finish:** Cracked Ice
+- **Default pre-selections (applied on page load across all product forms):**
+  - Custom Card Stickers: Cracked Ice (finish) + Medium (size) pre-selected
+  - Flat Stickers: 3×3 (size) + Cracked Ice (finish) pre-selected
+  - Sample Pack: Cracked Ice visually highlighted (does not auto-advance)
+  - Card Stand: N/A (no finish/size options)
 - **Turnaround time (shown on site):** 5–7 business days
 - **Google Drive / Dropbox link sharing:** REMOVED from all pages (direct upload only)
 - **Secondary logo upload:** Available but has NO pricing impact ($2 charge removed)

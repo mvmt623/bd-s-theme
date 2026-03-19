@@ -403,6 +403,10 @@
   var isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
   if (isMobile && uploadSub) uploadSub.textContent = 'Tap to choose a file or take a photo';
 
+  // ── Pre-highlight Cracked Ice (most popular) — does NOT auto-advance ──
+  var defaultCard = document.querySelector('.bdsp-card[data-name="Cracked Ice"]');
+  if (defaultCard) defaultCard.classList.add('selected');
+
   /* ── Finish card selection → advance to step 2 ── */
   document.querySelectorAll('.bdsp-card').forEach(function(card) {
     card.addEventListener('click', function() {

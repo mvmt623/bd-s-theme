@@ -917,6 +917,11 @@
     initializeFormListeners();
     initializeToggle();
     initializeFileUpload();
+    // Pre-select most popular options: Cracked Ice (finish) + Medium (size)
+    var defaultFinish = document.querySelector('.option-card[data-step="2"][data-value="Cracked Ice"]');
+    if (defaultFinish) selectCard(defaultFinish);
+    var defaultSize = document.querySelector('.option-card[data-step="3"][data-value="Medium"]');
+    if (defaultSize) selectCard(defaultSize);
     // Smart subtitle: mobile shows tap+photo option, desktop shows drag+drop
     (function() {
       var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || ('ontouchstart' in window && !window.matchMedia('(pointer:fine)').matches);

@@ -771,6 +771,24 @@
     if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
     return (b / 1048576).toFixed(1) + ' MB';
   }
+
+  // ── PRE-SELECT MOST POPULAR OPTIONS ──
+  // Size: 3x3 (Standard), Finish: Cracked Ice (most popular)
+  (function() {
+    var defaultSize = document.querySelector('.bdf-size-card[data-value="3x3"]');
+    if (defaultSize) {
+      defaultSize.classList.add('selected');
+      state.size = '3x3';
+      updateSummary();
+    }
+    // Pre-select Cracked Ice so it's highlighted when user reaches Step 2
+    var defaultFinish = document.querySelector('.bdf-finish-card[data-value="Cracked Ice"]');
+    if (defaultFinish) {
+      defaultFinish.classList.add('selected');
+      state.finish = 'Cracked Ice';
+      updateSummary();
+    }
+  })();
 })();
 </script>
 
