@@ -50,16 +50,25 @@ git add <files> && git commit -m "description" && git pull --rebase origin main 
 - **Variant strategy:** Direct variant ID from Liquid `data-variant` attributes — bulletproof
 
 ### Product: Flat Stickers
-- **Handle:** `flat-stickers` (collection)
-- **URL:** `/collections/flat-stickers`
+- **Handle:** `custom-flat-stickers`
+- **URL:** `/products/custom-flat-stickers`
 - **Template:** `templates/product.flat-stickers.json` → section `bd-flat-stickers`
-- **Variant strategy:** Option-based matching (`variant.option1 === size && variant.option2 === finish`) — most robust
+- **Form:** 4-step wizard (Size → Finish → Quantity → Artwork + Cut Type)
+- **Sizes:** 2×2 and 3×3 only (dimension-based, no S/M/L)
+- **Fine print:** "Length of sticker is determined by the longest side"
+- **Variant strategy:** Option-based matching (`option1=size, option2=finish, option3=qty`) with price-based fallback
+- **Shopify options:** Size (2x2, 3x3) / Finish (Matte, Holo) / Quantity (6, 15, 24, 48, 50, 100, 250, 500)
+- **Total variants:** 22 (10 for 2x2, 12 for 3x3 — Holo covers both Holographic & Cracked Ice)
+- **Cut type:** Die-cut, Circle, Square — stored in `properties[Cut Type]` (required)
+- **Artwork:** Primary only (required) — stored in `properties[Artwork]`
 
 ### Product: Sample Pack
 - **Handle:** `sample-pack`
 - **URL:** `/products/sample-pack`
 - **Template:** `templates/product.sample-pack.json` → section `bd-sample-pack`
+- **Form:** 2-step flow (Finish → Artwork upload → Add to Cart)
 - **Variant strategy:** Liquid-based lookup with fallback chain — safe
+- **Contents:** 155 stickers total — 30/25/15 One Touch (S/M/L), 40/25/20 Toploader (S/M/L), 3× 3×3 + 5× 2×2 Flat
 
 ---
 
@@ -89,6 +98,21 @@ TOPLOADER — HOLO / CRACKED ICE:
   Small:  40→$7, 80→$13, 160→$20, 250→$27, 500→$50, 1000→$90*, 2500→$165, 5000→$300, 10000→$500
   Medium: 25→$7, 55→$13, 110→$20, 250→$32, 500→$60, 1000→$105*, 2500→$180, 5000→$335, 10000→$600
   Large:  20→$7, 45→$13, 90→$20, 250→$45, 500→$80, 1000→$150*, 2500→$275, 5000→$475, 10000→$875
+
+(* = "best value" tier, highlighted in UI)
+```
+
+### Flat Stickers Pricing Tiers
+
+**CRITICAL:** When changing prices, update BOTH Shopify admin variants AND the `quantityTiers` object in `bd-flat-stickers.liquid`. They must match exactly.
+
+```
+Key format: "size|finishCategory"
+
+2×2 — MATTE:     15→$10, 50→$20, 100→$35, 250→$80*, 500→$150
+2×2 — HOLO/ICE:  15→$13, 50→$25, 100→$45, 250→$100*, 500→$175
+3×3 — MATTE:     6→$5, 24→$18, 48→$32, 100→$60, 250→$135*, 500→$250
+3×3 — HOLO/ICE:  6→$6, 24→$20, 48→$36, 100→$70, 250→$150*, 500→$275
 
 (* = "best value" tier, highlighted in UI)
 ```
@@ -189,10 +213,17 @@ All finish tags/pills/ribbons use the `bd-ftag` CSS system defined in `snippets/
 - **Risk:** `quantityTiers` is hardcoded in JS. If Shopify variant prices change in admin, the form shows stale prices
 - **Rule:** Update BOTH Shopify admin AND `quantityTiers` simultaneously
 
-### TESTING_MODE Flag
-- **Location:** `bigdawgs-product-form.liquid` line ~897
-- **Current value:** `true` — artwork upload validation is BYPASSED
-- **Production:** Set to `false` before final launch
+### ⚠️ TESTING_MODE Flags — MUST DISABLE BEFORE LAUNCH
+Three product forms have `TESTING_MODE = true` which BYPASSES artwork upload validation:
+
+| File | Variable | Effect |
+|------|----------|--------|
+| `bigdawgs-product-form.liquid` | `const TESTING_MODE = true;` (~line 897) | Skips primary artwork requirement on Custom Card Stickers |
+| `bd-flat-stickers.liquid` | `var TESTING_MODE = true;` (~line 370) | Skips primary artwork requirement on Flat Stickers |
+| `bd-sample-pack.liquid` | N/A (no testing flag) | Artwork is always required |
+
+**Before launch:** Search all three files for `TESTING_MODE` and flip to `false`.
+**Quick command:** `grep -rn 'TESTING_MODE' sections/ | grep true`
 
 ### Shopify GitHub Integration Race Condition
 - **Problem:** Shopify pushes sync commits to GitHub that conflict with local pushes
