@@ -1,7 +1,7 @@
 {% comment %}
   BIG DAWGS - Sample Pack Product Form
-  Single-step: pick your finish type → instant Add to Cart
-  Secondary product — streamlined, no friction.
+  2-step: (1) pick finish type → (2) upload primary artwork → Add to Cart
+  Secondary logo upload intentionally omitted — primary artwork only.
 {% endcomment %}
 
 {%- liquid
@@ -55,16 +55,60 @@
   .bdsp-sub {
     font-size: 14px; color: #aaa; margin-bottom: 30px; line-height: 1.6;
   }
+
+  /* What's Included box */
   .bdsp-what {
     background: var(--bd-dark); border: 1px solid #333;
     border-radius: 8px; padding: 16px 20px; margin-bottom: 28px;
   }
   .bdsp-what-title { font-size: 12px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--bd-gold); margin-bottom: 8px; }
+    letter-spacing: 1px; color: var(--bd-gold); margin-bottom: 12px; }
+  .bdsp-what-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+  }
+  @media (max-width: 480px) { .bdsp-what-grid { grid-template-columns: 1fr; } }
+  .bdsp-what-group { margin-bottom: 10px; }
+  .bdsp-what-group-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .8px; color: #666; margin-bottom: 4px;
+  }
   .bdsp-what ul { list-style: none; padding: 0; margin: 0; }
-  .bdsp-what li { font-size: 14px; color: #ccc; padding: 4px 0; }
+  .bdsp-what li { font-size: 13px; color: #ccc; padding: 2px 0; }
   .bdsp-what li::before { content: "✓ "; color: var(--bd-gold); }
 
+  /* Step indicator */
+  .bdsp-steps {
+    display: flex; align-items: center; gap: 0;
+    margin-bottom: 24px;
+  }
+  .bdsp-step-pip {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .5px; color: #555;
+    transition: color .25s;
+  }
+  .bdsp-step-pip.active { color: var(--bd-white); }
+  .bdsp-step-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+    background: #333; color: #666;
+    transition: background .25s, color .25s;
+    flex-shrink: 0;
+  }
+  .bdsp-step-pip.active   .bdsp-step-num { background: var(--bd-red); color: #fff; }
+  .bdsp-step-pip.done     .bdsp-step-num { background: #1a5c1a; color: #5dde5d; }
+  .bdsp-step-pip.done { color: #5dde5d; }
+  .bdsp-step-connector {
+    flex: 1; height: 2px; background: #2a2a2a;
+    margin: 0 10px; transition: background .4s;
+    max-width: 60px;
+  }
+  .bdsp-step-connector.done { background: #1a5c1a; }
+
+  /* Finish grid */
   .bdsp-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 14px; margin-bottom: 28px;
@@ -91,6 +135,77 @@
     padding: 3px 9px; border-radius: 20px; letter-spacing: .5px;
   }
 
+  /* Step panels */
+  .bdsp-panel { transition: opacity .3s; }
+  .bdsp-panel.hidden { display: none; }
+
+  /* Step 2 — Artwork Upload */
+  .bdsp-step2-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  }
+  .bdsp-back-btn {
+    background: none; border: 1px solid #444; color: #aaa;
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .5px; padding: 6px 14px; border-radius: 4px;
+    cursor: pointer; transition: all .2s; flex-shrink: 0;
+  }
+  .bdsp-back-btn:hover { border-color: #888; color: #fff; }
+  .bdsp-step2-title {
+    font-size: 15px; font-weight: 700; color: #fff;
+  }
+  .bdsp-step2-chosen {
+    font-size: 12px; color: #888; margin-top: 2px;
+  }
+
+  /* Upload zone */
+  .bdsp-upload-zone {
+    border: 2px dashed #444; border-radius: 8px;
+    padding: 36px 20px; text-align: center; cursor: pointer;
+    background: var(--bd-dark); transition: all .25s;
+    position: relative; margin-bottom: 16px;
+  }
+  .bdsp-upload-zone:hover,
+  .bdsp-upload-zone.drag-over { border-color: var(--bd-red); background: rgba(204,0,0,.05); }
+  .bdsp-upload-zone.has-file  { border-color: #2a7a2a; background: rgba(0,100,0,.08); border-style: solid; }
+  .bdsp-upload-input {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0; cursor: pointer; font-size: 0;
+  }
+  .bdsp-upload-icon  { font-size: 2.2rem; margin-bottom: 8px; }
+  .bdsp-upload-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .bdsp-upload-sub   { font-size: 12px; color: #888; margin-bottom: 6px; }
+  .bdsp-upload-fmts  { font-size: 11px; color: #555; }
+
+  .bdsp-upload-preview {
+    display: none; align-items: center; gap: 12px;
+    padding: 10px 16px; background: #1a1a1a; border-radius: 6px;
+    margin-bottom: 12px;
+  }
+  .bdsp-upload-preview.visible { display: flex; }
+  .bdsp-upload-preview-img {
+    width: 48px; height: 48px; object-fit: cover;
+    border-radius: 4px; flex-shrink: 0; border: 1px solid #333;
+  }
+  .bdsp-upload-preview-info { flex: 1; text-align: left; min-width: 0; }
+  .bdsp-upload-preview-name { color: #fff; font-size: 13px; font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bdsp-upload-preview-size { color: #888; font-size: 11px; margin-top: 2px; }
+  .bdsp-upload-remove {
+    background: none; border: 1px solid #444; color: #888;
+    font-size: 11px; padding: 4px 10px; border-radius: 4px;
+    cursor: pointer; flex-shrink: 0; transition: all .2s;
+  }
+  .bdsp-upload-remove:hover { border-color: var(--bd-red); color: #fff; }
+
+  .bdsp-upload-success {
+    display: none; align-items: center; gap: 8px;
+    background: rgba(0,120,0,.15); border: 1px solid #1a5c1a;
+    border-radius: 6px; padding: 10px 14px;
+    font-size: 12px; color: #7ddf7d; margin-bottom: 20px;
+  }
+  .bdsp-upload-success.visible { display: flex; }
+
+  /* Submit */
   .bdsp-submit {
     width: 100%; padding: 16px; border: none; border-radius: 6px;
     font-size: 17px; font-weight: 700; cursor: pointer;
@@ -117,6 +232,7 @@
     display: inline-block; width: 15px; height: 15px;
     border: 2px solid var(--bd-gold); border-top-color: transparent;
     border-radius: 50%; animation: bdspSpin .6s linear infinite; margin-right: 7px;
+    vertical-align: middle;
   }
   @keyframes bdspSpin { to { transform: rotate(360deg); } }
 </style>
@@ -124,45 +240,127 @@
 {% render 'finish-effects' %}
 
 <div class="bdsp-container">
-  <h2 class="bdsp-heading">Choose Your Sample Pack</h2>
-  <p class="bdsp-sub">Try before you commit. Feel the quality of our custom sticker finishes before placing a bulk order.</p>
+  <h2 class="bdsp-heading">Sample Pack</h2>
+  <p class="bdsp-sub">Try all three finishes before you bulk order. Real stickers on real card holders, delivered to your door.</p>
 
   <div class="bdsp-what">
-    <div class="bdsp-what-title">What's Included</div>
-    <ul>
-      <li>Assorted custom sticker samples in your chosen finish</li>
-      <li>Multiple sizes so you can see the difference in person</li>
-      <li>Perfect for evaluating quality before your full order</li>
-    </ul>
+    <div class="bdsp-what-title">What's Included — 138 Stickers Total</div>
+    <div class="bdsp-what-grid">
+      <div class="bdsp-what-group">
+        <div class="bdsp-what-group-label">One Touch Holders</div>
+        <ul>
+          <li>30× Small</li>
+          <li>25× Medium</li>
+          <li>15× Large</li>
+        </ul>
+      </div>
+      <div class="bdsp-what-group">
+        <div class="bdsp-what-group-label">Toploader Holders</div>
+        <ul>
+          <li>40× Small</li>
+          <li>25× Medium</li>
+          <li>20× Large</li>
+        </ul>
+      </div>
+      <div class="bdsp-what-group">
+        <div class="bdsp-what-group-label">Flat Stickers</div>
+        <ul>
+          <li>3× 3×3</li>
+          <li>5× 2×2</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step indicator -->
+  <div class="bdsp-steps" id="bdsp-steps">
+    <div class="bdsp-step-pip active" id="bdsp-pip-1">
+      <div class="bdsp-step-num">1</div>
+      <span>Choose Finish</span>
+    </div>
+    <div class="bdsp-step-connector" id="bdsp-connector"></div>
+    <div class="bdsp-step-pip" id="bdsp-pip-2">
+      <div class="bdsp-step-num">2</div>
+      <span>Upload Artwork</span>
+    </div>
   </div>
 
   <form id="bdsp-form" action="/cart/add" method="post">
-    <div class="bdsp-grid">
-      <div class="bdsp-card" data-variant="{{ regular_variant.id }}" data-name="Matte">
-        <div class="bdsp-card-name"><span class="bd-ftag bd-ftag--matte">Matte</span></div>
-        <div class="bdsp-card-desc">Clean vinyl — sharp, professional, the go-to for card shops.</div>
-        <div class="bdsp-card-price">{{ regular_variant.price | money_without_trailing_zeros }}</div>
-      </div>
-      <div class="bdsp-card" data-variant="{{ holo_variant.id }}" data-name="Holographic">
-        <div class="bdsp-badge">Popular</div>
-        <div class="bdsp-card-name"><span class="bd-ftag bd-ftag--holo">Holographic</span></div>
-        <div class="bdsp-card-desc">Full rainbow color-shift — eye-catching and impossible to ignore.</div>
-        <div class="bdsp-card-price">{{ holo_variant.price | money_without_trailing_zeros }}</div>
-      </div>
-      <div class="bdsp-card" data-variant="{{ cracked_variant.id }}" data-name="Cracked Ice">
-        <div class="bdsp-card-name"><span class="bd-ftag bd-ftag--ice"><span class="bd-ftag-text">Cracked Ice</span><svg class="bd-ftag-ice-svg" viewBox="0 0 100 28" preserveAspectRatio="none">{% render 'finish-ice-svg' %}</svg></span></div>
-        <div class="bdsp-card-desc">Unique fractured-crystal pattern — bold and distinct on any holder.</div>
-        <div class="bdsp-card-price">{{ cracked_variant.price | money_without_trailing_zeros }}</div>
+
+    <!-- STEP 1: Finish selection -->
+    <div class="bdsp-panel" id="bdsp-step-1">
+      <div class="bdsp-grid">
+        <div class="bdsp-card" data-variant="{{ regular_variant.id }}" data-name="Matte">
+          <div class="bdsp-card-name"><span class="bd-ftag bd-ftag--matte">Matte</span></div>
+          <div class="bdsp-card-desc">Clean vinyl — sharp, professional, the go-to for card shops.</div>
+          <div class="bdsp-card-price">{{ regular_variant.price | money_without_trailing_zeros }}</div>
+        </div>
+        <div class="bdsp-card" data-variant="{{ holo_variant.id }}" data-name="Holographic">
+          <div class="bdsp-badge">Popular</div>
+          <div class="bdsp-card-name"><span class="bd-ftag bd-ftag--holo">Holographic</span></div>
+          <div class="bdsp-card-desc">Full rainbow color-shift — eye-catching and impossible to ignore.</div>
+          <div class="bdsp-card-price">{{ holo_variant.price | money_without_trailing_zeros }}</div>
+        </div>
+        <div class="bdsp-card" data-variant="{{ cracked_variant.id }}" data-name="Cracked Ice">
+          <div class="bdsp-card-name">
+            <span class="bd-ftag bd-ftag--ice">
+              <span class="bd-ftag-text">Cracked Ice</span>
+              <svg class="bd-ftag-ice-svg" viewBox="0 0 100 28" preserveAspectRatio="none">{% render 'finish-ice-svg' %}</svg>
+            </span>
+          </div>
+          <div class="bdsp-card-desc">Unique fractured-crystal pattern — bold and distinct on any holder.</div>
+          <div class="bdsp-card-price">{{ cracked_variant.price | money_without_trailing_zeros }}</div>
+        </div>
       </div>
     </div>
 
-    <input type="hidden" name="id" id="bdsp-variant-id" value="">
-    <input type="hidden" name="quantity" value="1">
-    <input type="hidden" name="properties[Finish]" id="bdsp-prop-finish" value="">
+    <!-- STEP 2: Artwork upload -->
+    <div class="bdsp-panel hidden" id="bdsp-step-2">
+      <div class="bdsp-step2-header">
+        <button type="button" class="bdsp-back-btn" id="bdsp-back-btn">← Back</button>
+        <div>
+          <div class="bdsp-step2-title">Upload Your Artwork</div>
+          <div class="bdsp-step2-chosen" id="bdsp-chosen-finish">Finish: —</div>
+        </div>
+      </div>
 
-    <button type="submit" class="bdsp-submit" id="bdsp-submit" disabled>
-      Select a Pack Above
-    </button>
+      <div class="bdsp-upload-zone" id="bdsp-upload-zone">
+        <input
+          type="file"
+          id="bdsp-file-input"
+          class="bdsp-upload-input"
+          accept="image/*,.pdf,.ai,.psd"
+        >
+        <div class="bdsp-upload-icon" id="bdsp-upload-icon">📁</div>
+        <p class="bdsp-upload-title" id="bdsp-upload-title">Upload Your Artwork</p>
+        <p class="bdsp-upload-sub" id="bdsp-upload-sub">Drag & drop or tap to browse files</p>
+        <p class="bdsp-upload-fmts">JPG, PNG, GIF, PDF, AI, PSD &nbsp;·&nbsp; Any size &nbsp;·&nbsp; Mobile camera supported</p>
+      </div>
+
+      <div class="bdsp-upload-preview" id="bdsp-upload-preview">
+        <img class="bdsp-upload-preview-img" id="bdsp-preview-img" src="" alt="" style="display:none;">
+        <div class="bdsp-upload-preview-info">
+          <div class="bdsp-upload-preview-name" id="bdsp-preview-name">–</div>
+          <div class="bdsp-upload-preview-size" id="bdsp-preview-size">–</div>
+        </div>
+        <button type="button" class="bdsp-upload-remove" id="bdsp-upload-remove">Remove</button>
+      </div>
+
+      <div class="bdsp-upload-success" id="bdsp-upload-success">
+        <span>✓</span>
+        <span id="bdsp-success-text">Artwork noted — we'll email you to collect it securely after your order.</span>
+      </div>
+
+      <input type="hidden" name="id"                     id="bdsp-variant-id"    value="">
+      <input type="hidden" name="quantity"                                        value="1">
+      <input type="hidden" name="properties[Finish]"     id="bdsp-prop-finish"   value="">
+      <input type="hidden" name="properties[Artwork]"    id="bdsp-prop-artwork"  value="">
+
+      <button type="submit" class="bdsp-submit" id="bdsp-submit" disabled>
+        Upload Artwork to Continue
+      </button>
+    </div>
+
   </form>
 
   <div class="bdsp-upsell">
@@ -174,24 +372,162 @@
 <script>
 (function() {
   var selectedVariant = null;
-  var submitBtn = document.getElementById('bdsp-submit');
+  var selectedFinish  = null;
+  var artworkFileName = null;
 
+  var step1       = document.getElementById('bdsp-step-1');
+  var step2       = document.getElementById('bdsp-step-2');
+  var submitBtn   = document.getElementById('bdsp-submit');
+  var backBtn     = document.getElementById('bdsp-back-btn');
+  var chosenLbl   = document.getElementById('bdsp-chosen-finish');
+
+  // Step pips
+  var pip1        = document.getElementById('bdsp-pip-1');
+  var pip2        = document.getElementById('bdsp-pip-2');
+  var connector   = document.getElementById('bdsp-connector');
+
+  // Upload refs
+  var zone        = document.getElementById('bdsp-upload-zone');
+  var fileInput   = document.getElementById('bdsp-file-input');
+  var preview     = document.getElementById('bdsp-upload-preview');
+  var previewImg  = document.getElementById('bdsp-preview-img');
+  var previewName = document.getElementById('bdsp-preview-name');
+  var previewSize = document.getElementById('bdsp-preview-size');
+  var removeBtn   = document.getElementById('bdsp-upload-remove');
+  var successBadge= document.getElementById('bdsp-upload-success');
+  var successText = document.getElementById('bdsp-success-text');
+  var uploadIcon  = document.getElementById('bdsp-upload-icon');
+  var uploadTitle = document.getElementById('bdsp-upload-title');
+  var uploadSub   = document.getElementById('bdsp-upload-sub');
+
+  var isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  if (isMobile && uploadSub) uploadSub.textContent = 'Tap to choose a file or take a photo';
+
+  /* ── Finish card selection → advance to step 2 ── */
   document.querySelectorAll('.bdsp-card').forEach(function(card) {
     card.addEventListener('click', function() {
       document.querySelectorAll('.bdsp-card').forEach(function(c) { c.classList.remove('selected'); });
       this.classList.add('selected');
       selectedVariant = this.dataset.variant;
-      document.getElementById('bdsp-variant-id').value = selectedVariant;
-      document.getElementById('bdsp-prop-finish').value = this.dataset.name;
-      submitBtn.textContent = 'Add to Cart — ' + this.dataset.name;
-      submitBtn.classList.add('ready');
-      submitBtn.disabled = false;
+      selectedFinish  = this.dataset.name;
+      document.getElementById('bdsp-variant-id').value  = selectedVariant;
+      document.getElementById('bdsp-prop-finish').value = selectedFinish;
+      goToStep2();
     });
   });
 
+  function goToStep2() {
+    step1.classList.add('hidden');
+    step2.classList.remove('hidden');
+    chosenLbl.textContent = 'Finish: ' + selectedFinish;
+    pip1.classList.remove('active');
+    pip1.classList.add('done');
+    pip2.classList.add('active');
+    connector.classList.add('done');
+    updateSubmitState();
+  }
+
+  function goToStep1() {
+    step2.classList.add('hidden');
+    step1.classList.remove('hidden');
+    pip2.classList.remove('active');
+    pip1.classList.remove('done');
+    pip1.classList.add('active');
+    connector.classList.remove('done');
+  }
+
+  backBtn.addEventListener('click', goToStep1);
+
+  /* ── Upload zone ── */
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    zone.classList.add('drag-over');
+  });
+  zone.addEventListener('dragleave', function() {
+    zone.classList.remove('drag-over');
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    var files = e.dataTransfer.files;
+    if (files && files[0]) handleFile(files[0]);
+  });
+  fileInput.addEventListener('change', function() {
+    if (this.files && this.files[0]) handleFile(this.files[0]);
+  });
+  removeBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    clearUpload();
+  });
+
+  function handleFile(file) {
+    zone.classList.add('has-file');
+    artworkFileName = file.name;
+    document.getElementById('bdsp-prop-artwork').value = file.name;
+
+    previewName.textContent = file.name;
+    previewSize.textContent = formatBytes(file.size);
+
+    if (file.type.startsWith('image/')) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        previewImg.src = e.target.result;
+        previewImg.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewImg.style.display = 'none';
+    }
+
+    preview.classList.add('visible');
+    successBadge.classList.add('visible');
+    successText.textContent = '"' + file.name + '" selected — we\'ll email you to collect your artwork securely after your order.';
+
+    uploadIcon.textContent = '✓';
+    uploadTitle.textContent = '✓ File ready';
+    uploadSub.textContent = file.name;
+
+    updateSubmitState();
+  }
+
+  function clearUpload() {
+    zone.classList.remove('has-file');
+    fileInput.value = '';
+    artworkFileName = null;
+    document.getElementById('bdsp-prop-artwork').value = '';
+    preview.classList.remove('visible');
+    successBadge.classList.remove('visible');
+    previewImg.src = '';
+    previewImg.style.display = 'none';
+    uploadIcon.textContent = '📁';
+    uploadTitle.textContent = 'Upload Your Artwork';
+    uploadSub.textContent = isMobile ? 'Tap to choose a file or take a photo' : 'Drag & drop or tap to browse files';
+    updateSubmitState();
+  }
+
+  function updateSubmitState() {
+    if (artworkFileName) {
+      submitBtn.textContent = 'Add to Cart — ' + (selectedFinish || '');
+      submitBtn.classList.add('ready');
+      submitBtn.disabled = false;
+    } else {
+      submitBtn.textContent = 'Upload Artwork to Continue';
+      submitBtn.classList.remove('ready');
+      submitBtn.disabled = true;
+    }
+  }
+
+  function formatBytes(bytes) {
+    if (bytes < 1024)       return bytes + ' B';
+    if (bytes < 1048576)    return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  /* ── Form submit ── */
   document.getElementById('bdsp-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    if (!selectedVariant) { alert('Please select a pack first.'); return; }
+    if (!selectedVariant) { alert('Please select a finish first.'); return; }
+    if (!artworkFileName) { alert('Please upload your artwork to continue.'); return; }
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span class="bdsp-spinner"></span>Adding to Cart...';
     setTimeout(function() { document.getElementById('bdsp-form').submit(); }, 400);
