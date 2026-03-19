@@ -202,7 +202,26 @@
                       or item.properties.size != 0
                       or item.selling_plan_allocation != null
                     -%}
-                      {%- if item.product.has_only_default_variant == false and item.item_components.size == 0 and item.product.handle != 'custom-card-stickers' -%}
+                      {%- comment -%}
+                        Hide Shopify's auto-generated variant subtitle for BD products
+                        that use our custom property renderer (avoids duplicate data).
+                        Only show variant options for products NOT in our custom lineup.
+                        Card Stand keeps variant title ("Logo Only" / "Extra Customizations")
+                        since that's useful context not captured in properties.
+                      {%- endcomment -%}
+                      {%- liquid
+                        assign bd_hide_variants = false
+                        if item.product.handle == 'custom-card-stickers'
+                          assign bd_hide_variants = true
+                        endif
+                        if item.product.handle == 'custom-flat-stickers'
+                          assign bd_hide_variants = true
+                        endif
+                        if item.product.handle == 'sample-pack'
+                          assign bd_hide_variants = true
+                        endif
+                      -%}
+                      {%- if item.product.has_only_default_variant == false and item.item_components.size == 0 and bd_hide_variants == false -%}
                         <dl class="cart-items__variants">
                           {%- for option in item.options_with_values -%}
                             <div class="cart-items__variant">
