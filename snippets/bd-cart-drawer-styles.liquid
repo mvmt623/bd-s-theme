@@ -1,0 +1,291 @@
+{% comment %}
+  BIG DAWGS — Cart Drawer Dark Theme
+  Targets the flyout/side-drawer cart only (.cart-drawer).
+  Mirrors the dark styling from bd-cart-overlay.liquid (cart page).
+  Include via {% render 'bd-cart-drawer-styles' %} in theme.liquid or header.
+{% endcomment %}
+
+<style>
+  /* ═══════════════════════════════════════════════════
+     BD CART DRAWER — DARK THEME OVERRIDE
+     Scoped to .cart-drawer so it never touches the cart page
+     ═══════════════════════════════════════════════════ */
+
+  /* ── Base drawer panel ── */
+  .cart-drawer,
+  .cart-drawer .dialog-body,
+  .cart-drawer [class*="color-scheme"],
+  .cart-drawer .section-background {
+    background-color: #0f0f0f !important;
+    color: #f0f0f0 !important;
+  }
+
+  /* ── Header bar (sticky "Cart" title + close) ── */
+  .cart-drawer__header {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 50%, #0a0a0a 100%) !important;
+    border-bottom: 1px solid #1e1e1e !important;
+  }
+  .cart-drawer__header *,
+  .cart-drawer .cart-drawer__title,
+  .cart-drawer .cart-page__title,
+  .cart-drawer .h4,
+  .cart-drawer h4 {
+    color: #fff !important;
+    background: transparent !important;
+  }
+  .cart-drawer .cart-bubble__text,
+  .cart-drawer .cart-bubble__text-count {
+    color: #fff !important;
+    background: transparent !important;
+  }
+
+  /* Close button */
+  .cart-drawer button[class*="close"],
+  .cart-drawer .dialog-close-button {
+    color: #888 !important;
+  }
+  .cart-drawer button[class*="close"]:hover,
+  .cart-drawer .dialog-close-button:hover {
+    color: #fff !important;
+  }
+
+  /* ── Content area ── */
+  .cart-drawer__content,
+  .cart-drawer .cart-drawer__inner {
+    background: #0f0f0f !important;
+  }
+
+  /* ── Line items ── */
+  .cart-drawer cart-items-component,
+  .cart-drawer .cart-items,
+  .cart-drawer .cart-item,
+  .cart-drawer .cart-items__table-row {
+    color: #eee !important;
+    background: transparent !important;
+    border-color: #2a2a2a !important;
+  }
+  .cart-drawer .cart-items--dividers .cart-items__table-row {
+    border-color: #2a2a2a !important;
+  }
+
+  /* Product title */
+  .cart-drawer .cart-items__title,
+  .cart-drawer .cart-items__product-title,
+  .cart-drawer [class*="cart-item"] a,
+  .cart-drawer [class*="cart-items"] a {
+    color: #fff !important;
+    background: transparent !important;
+  }
+
+  /* Variant / property text */
+  .cart-drawer .cart-items__details,
+  .cart-drawer .cart-items__product-info p,
+  .cart-drawer .cart-items__variants-wrapper,
+  .cart-drawer .cart-items__properties,
+  .cart-drawer .cart-items__property,
+  .cart-drawer .cart-primary-typography,
+  .cart-drawer [class*="cart-items__property"],
+  .cart-drawer [class*="cart-items__variant"] {
+    color: #aaa !important;
+    background: transparent !important;
+  }
+  .cart-drawer .cart-items__property-value { color: #bbb !important; }
+
+  /* Price */
+  .cart-drawer .cart-items__price,
+  .cart-drawer .cart-secondary-typography,
+  .cart-drawer product-price,
+  .cart-drawer [class*="price"] {
+    color: #ccc !important;
+    background: transparent !important;
+  }
+
+  /* ── Quantity controls ── */
+  .cart-drawer .cart-items__quantity,
+  .cart-drawer [class*="quantity-wrapper"],
+  .cart-drawer quantity-input,
+  .cart-drawer .quantity-selector {
+    background: #1e1e1e !important;
+    border: 1px solid #333 !important;
+    border-radius: 6px !important;
+  }
+  .cart-drawer .quantity-minus,
+  .cart-drawer .quantity-plus,
+  .cart-drawer button.quantity-minus,
+  .cart-drawer button.quantity-plus {
+    background: transparent !important;
+    color: #aaa !important;
+    border: none !important;
+  }
+  .cart-drawer .quantity-minus:hover,
+  .cart-drawer .quantity-plus:hover {
+    color: #fff !important;
+  }
+  .cart-drawer input[type="number"],
+  .cart-drawer [class*="quantity"] input {
+    background: transparent !important;
+    color: #eee !important;
+    border: none !important;
+    text-align: center;
+  }
+
+  /* ── Remove button ── */
+  .cart-drawer .cart-items__remove,
+  .cart-drawer button.cart-items__remove,
+  .cart-drawer cart-remove-button button {
+    color: #555 !important;
+    background: transparent !important;
+  }
+  .cart-drawer .cart-items__remove:hover,
+  .cart-drawer button.cart-items__remove:hover {
+    color: #CC0000 !important;
+  }
+
+  /* ── Summary section (sticky bottom) ── */
+  .cart-drawer__summary,
+  .cart-drawer .cart-drawer__summary {
+    background: #111 !important;
+    border-top: 1px solid #1e1e1e !important;
+  }
+  .cart-drawer .cart-totals,
+  .cart-drawer [class*="totals"],
+  .cart-drawer .cart-totals__total,
+  .cart-drawer [class*="total-label"],
+  .cart-drawer [class*="total-value"],
+  .cart-drawer [class*="subtotal"],
+  .cart-drawer [class*="cart-total"] {
+    color: #ddd !important;
+    background: transparent !important;
+  }
+  .cart-drawer .cart-totals__total strong,
+  .cart-drawer .cart-totals__total-value,
+  .cart-drawer [class*="cart-total"] strong {
+    color: #fff !important;
+  }
+  .cart-drawer .cart-totals hr,
+  .cart-drawer .cart-actions,
+  .cart-drawer .cart-actions__divider,
+  .cart-drawer [class*="divider"] {
+    border-color: #2a2a2a !important;
+  }
+  .cart-drawer .cart-totals__tax-note,
+  .cart-drawer .cart-totals__tax-note small {
+    color: #555 !important;
+  }
+
+  /* ── Discount / note inputs ── */
+  .cart-drawer input,
+  .cart-drawer textarea,
+  .cart-drawer select {
+    background-color: #1a1a1a !important;
+    color: #eee !important;
+    border-color: #333 !important;
+    border-radius: 6px !important;
+  }
+  .cart-drawer input::placeholder,
+  .cart-drawer textarea::placeholder {
+    color: #555 !important;
+  }
+  .cart-drawer input:focus,
+  .cart-drawer textarea:focus {
+    border-color: #555 !important;
+    outline: none !important;
+  }
+  .cart-drawer .cart-note__summary,
+  .cart-drawer .cart-note__label,
+  .cart-drawer .cart-discount__summary,
+  .cart-drawer .cart-discount__label {
+    color: #888 !important;
+  }
+  .cart-drawer .cart-discount__button,
+  .cart-drawer [class*="apply"] {
+    color: #aaa !important;
+    background: transparent !important;
+    border-color: #333 !important;
+  }
+  .cart-drawer .cart-discount__button:hover {
+    color: #fff !important;
+    border-color: #555 !important;
+  }
+  .cart-drawer .cart-discount__pill {
+    background-color: #1e1e1e !important;
+    color: #ccc !important;
+  }
+
+  /* Accordion plus/minus icons */
+  .cart-drawer .cart-totals__icon,
+  .cart-drawer .cart-totals__icon svg {
+    color: #666 !important;
+  }
+
+  /* Installments / payment terms */
+  .cart-drawer [class*="installment"],
+  .cart-drawer [class*="payment-terms"],
+  .cart-drawer .shopify-payment-terms {
+    color: #666 !important;
+  }
+
+  /* ── Checkout button — BD red ── */
+  .cart-drawer .cart__checkout-button,
+  .cart-drawer button[name="checkout"] {
+    background: #CC0000 !important;
+    border-color: #CC0000 !important;
+    color: #fff !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    border-radius: 6px !important;
+    box-shadow: 0 4px 20px rgba(204,0,0,.35) !important;
+    transition: background .2s, transform .15s, box-shadow .2s !important;
+  }
+  .cart-drawer .cart__checkout-button:hover,
+  .cart-drawer button[name="checkout"]:hover {
+    background: #e00000 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 28px rgba(204,0,0,.5) !important;
+  }
+
+  /* ── Continue shopping button (empty cart) ── */
+  .cart-drawer .cart-items__empty-button {
+    background: #CC0000 !important;
+    border-color: #CC0000 !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    border-radius: 6px !important;
+  }
+  .cart-drawer .cart-items__empty-button:hover {
+    background: #e00000 !important;
+  }
+
+  /* ── Empty cart state ── */
+  .cart-drawer [class*="empty"],
+  .cart-drawer [class*="cart-empty"],
+  .cart-drawer .cart-page--empty {
+    color: #888 !important;
+    background: transparent !important;
+  }
+
+  /* ── Scroll hint gradient ── */
+  .cart-drawer .scroll-hint__gradient {
+    background: linear-gradient(to top, #0f0f0f, transparent) !important;
+  }
+
+  /* ── Drawer border/shadow ── */
+  .cart-drawer .dialog-drawer {
+    border-left: 1px solid #1e1e1e !important;
+    box-shadow: -8px 0 40px rgba(0,0,0,.6) !important;
+  }
+
+  /* ── Image borders ── */
+  .cart-drawer .cart-items__media-image {
+    border-color: #2a2a2a !important;
+  }
+
+  /* ── SVG icons (delete, etc.) inherit color ── */
+  .cart-drawer svg {
+    color: inherit;
+  }
+</style>
