@@ -216,6 +216,12 @@
                         </dl>
                       {%- endif -%}
 
+                      {%- comment -%}
+                        BD CUSTOM PROPERTY RENDERER
+                        Consistent display order across all products.
+                        Simplifies artwork fields, hides internal/noise properties.
+                        Display order: Holder Type → Finish → Size → Cut Type → Quantity → Brand Name → Artwork → Notes
+                      {%- endcomment -%}
                       {%- liquid
                         assign has_visible_properties = false
                         for property in item.properties
@@ -227,20 +233,96 @@
                         endfor
                       -%}
                       {%- if has_visible_properties -%}
+                        {%- liquid
+                          comment
+                            Build ordered property display list.
+                            Priority keys rendered first in fixed order; skip noise properties.
+                          endcomment
+                          assign bd_order = 'Holder Type,Finish,Size,Cut Type,Quantity Tier,Quantity,Brand Name' | split: ','
+                          assign bd_skip = 'Secondary Logo,Secondary Artwork,Artwork,Order Notes,Custom Notes' | split: ','
+                          assign bd_artwork_keys = 'Artwork,Secondary Artwork' | split: ','
+                          assign bd_notes_keys = 'Order Notes,Custom Notes' | split: ','
+
+                          assign has_artwork = false
+                          assign has_secondary = false
+                          assign has_notes = false
+                          assign notes_value = ''
+                          for property in item.properties
+                            if property.first == 'Artwork' and property.last != blank
+                              assign has_artwork = true
+                            endif
+                            if property.first == 'Secondary Artwork' and property.last != blank
+                              assign has_secondary = true
+                            endif
+                            if property.first == 'Order Notes' or property.first == 'Custom Notes'
+                              if property.last != blank
+                                assign has_notes = true
+                                assign notes_value = property.last
+                              endif
+                            endif
+                          endfor
+                        -%}
                         <dl class="cart-items__properties">
+                          {%- comment -%} Render ordered properties first {%- endcomment -%}
+                          {%- for key in bd_order -%}
+                            {%- for property in item.properties -%}
+                              {%- if property.first == key and property.last != blank -%}
+                                <div class="cart-items__property">
+                                  <dt>{{ property.first }}:</dt>
+                                  <dd>{{ property.last }}</dd>
+                                </div>
+                              {%- endif -%}
+                            {%- endfor -%}
+                          {%- endfor -%}
+
+                          {%- comment -%} Artwork: simplified to checkmark {%- endcomment -%}
+                          {%- if has_artwork -%}
+                            <div class="cart-items__property">
+                              <dt>Artwork:</dt>
+                              <dd style="color:#5dde5d;">✓ Uploaded</dd>
+                            </div>
+                          {%- endif -%}
+                          {%- if has_secondary -%}
+                            <div class="cart-items__property">
+                              <dt>Secondary:</dt>
+                              <dd style="color:#5dde5d;">✓ Uploaded</dd>
+                            </div>
+                          {%- endif -%}
+
+                          {%- comment -%} Notes: only if present, kept last {%- endcomment -%}
+                          {%- if has_notes -%}
+                            <div class="cart-items__property">
+                              <dt>Notes:</dt>
+                              <dd>{{ notes_value | truncate: 40 }}</dd>
+                            </div>
+                          {%- endif -%}
+
+                          {%- comment -%} Catch any remaining non-skipped properties {%- endcomment -%}
                           {%- for property in item.properties -%}
                             {%- assign property_first_char = property.first | slice: 0 -%}
                             {%- if property.last != blank and property_first_char != '_' -%}
-                              <div class="cart-items__property">
-                                <dt>{{ property.first }}:</dt>
-                                <dd>
-                                  {%- if property.last contains '/uploads/' -%}
-                                    <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
-                                  {%- else -%}
-                                    {{ property.last }}
-                                  {%- endif -%}
-                                </dd>
-                              </div>
+                              {%- assign is_ordered = false -%}
+                              {%- for key in bd_order -%}
+                                {%- if property.first == key -%}{%- assign is_ordered = true -%}{%- endif -%}
+                              {%- endfor -%}
+                              {%- for key in bd_skip -%}
+                                {%- if property.first == key -%}{%- assign is_ordered = true -%}{%- endif -%}
+                              {%- endfor -%}
+                              {%- for key in bd_notes_keys -%}
+                                {%- if property.first == key -%}{%- assign is_ordered = true -%}{%- endif -%}
+                              {%- endfor -%}
+                              {%- unless is_ordered -%}
+                                <div class="cart-items__property">
+                                  <dt>{{ property.first }}:</dt>
+                                  <dd>
+                                    {%- if property.last contains '/uploads/' -%}
+                                      <a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+                                    {%- else -%}
+                                      {{ property.last }}
+                                    {%- endif -%}
+                                  </dd>
+                                </div>
+                              {%- endunless -%}
                             {%- endif -%}
                           {%- endfor -%}
                         </dl>
