@@ -1,7 +1,7 @@
 # Big Dawgs Stickers — Theme Architecture Reference
 
 > **Purpose:** Single source of truth for any AI agent or developer working on this Shopify theme. READ THIS ENTIRE FILE BEFORE making any changes.
-> **Last updated:** 2026-03-18
+> **Last updated:** 2026-03-19
 > **Store:** big-dawgs-store-2.myshopify.com
 > **Admin:** https://admin.shopify.com/store/big-dawgs-store-2/
 > **GitHub:** https://github.com/mvmt623/bd-s-theme
@@ -345,3 +345,33 @@ Any workflow change that adds/removes/renames cart properties MUST update this r
 17. Moved footer email signup inside "Stay in the hobby loop" group
 18. Built V13 finish effect tag system and deployed to all 6 pages (24 tags total)
 19. Removed old conflicting finish CSS (`ice-snap`, `holo-sweep`, `bdsg-holo-move`)
+
+## 13. Changes Applied (2026-03-19 Session)
+
+1. About page: 3-col story section with mascot video, finish tags, audio unlock
+2. Sample Pack: 2-step flow (Finish → Artwork upload), updated quantities (138 total)
+3. Flat Stickers: complete rebuild as 4-step wizard (Size → Finish → Quantity → Artwork + Cut Type)
+4. Flat Stickers: 22 Shopify variants created via Chrome (Size/Finish/Quantity options, correct prices)
+5. Cart drawer: dark theme (`bd-cart-drawer-styles.liquid`) matching cart page
+6. Cart bubble: gold badge (`#D4A017`) with dark text for visibility on dark header
+7. Pre-select defaults: Cracked Ice + Medium across all product forms
+8. MOST POPULAR red pill on quantity tables (highest qty ≤ $100, dynamic)
+9. Removed "Popular" badge from Holographic on Sample Pack
+10. Size card descriptions updated: Small = "Slim, sleek look", Large = "Max coverage"
+11. One Touch description expanded: "For 35 Pt. Mags — the standard magnetic one-touch holder"
+12. FAQ audit: fixed min quantities, file formats, flat sticker sizes/pricing, sample pack contents
+13. Added 4 new FAQs: cut types, popular finish/size, holder damage, reorder process
+14. Fixed white-text-on-light-background on focused form inputs (theme.liquid CSS)
+15. Removed `?variant=` from all product URLs (4 files: card-gallery, product-title, product-details, section-rendering)
+16. Fixed flat stickers link: `/collections/flat-stickers` → `/products/custom-flat-stickers` (footer, about, CLAUDE.md)
+17. Cart line items: custom property renderer with fixed display order, artwork → "✓ Uploaded", hidden noise
+18. Cart line items: hid duplicate variant subtitle for BD custom products
+19. Cookie consent banner: dark-themed, GDPR/CCPA, Shopify Customer Privacy API integration
+20. Policy pages created in Shopify Admin: Return/Refund, Terms of Service, Shipping, Contact Information
+21. Store email updated: `mvmt623@gmail.com` → `austin@bigdawgsstickers.com` (Settings → General)
+
+### Pending Items
+- **TESTING_MODE = true** on `bigdawgs-product-form.liquid` and `bd-flat-stickers.liquid` — MUST flip to `false` before launch
+- **Store email save**: Shopify Admin requires a phone number to save the email change — Matt to complete manually
+- **Notification sender email**: Check Settings → Notifications to ensure sender is `austin@bigdawgsstickers.com`
+- **ADA/WCAG accessibility sweep**: aria labels, keyboard navigation, focus indicators on all custom product forms (Tier 2 priority)
