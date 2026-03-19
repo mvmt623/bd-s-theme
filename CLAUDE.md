@@ -125,7 +125,7 @@ Key format: "size|finishCategory"
 /products/custom-card-stickers       ← Custom Card Stickers (NOT /custom-card-sticker)
 /products/3d-printed-card-stand      ← Card Stand (NOT /products/card-stand)
 /products/sample-pack                ← Sample Pack
-/collections/flat-stickers           ← Flat Stickers collection
+/products/custom-flat-stickers       ← Flat Stickers (NOT /collections/flat-stickers)
 /pages/about                         ← About page
 /pages/faq                           ← FAQ page
 /pages/contact                       ← Contact page
