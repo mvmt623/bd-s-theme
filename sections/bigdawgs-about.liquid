@@ -75,25 +75,26 @@
     border-radius: 2px;
   }
 
-  /* ── STORY SECTION ── */
+  /* ── STORY SECTION — 3-COLUMN ── */
   .bd-story {
     background: var(--bd-dark);
-    padding: 4.5rem 1.5rem;
+    padding: 5rem 2rem;
   }
   .bd-story-inner {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: 1fr 220px 1fr;
+    gap: 3.5rem;
     align-items: center;
   }
   .bd-story-text h2 {
     color: var(--bd-white);
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 900;
     text-transform: uppercase;
-    margin: 0 0 .5rem;
+    margin: 0 0 1.2rem;
+    line-height: 1.2;
   }
   .bd-story-text h2 span { color: var(--bd-red); }
   .bd-story-text .bd-eyebrow {
@@ -107,67 +108,105 @@
   }
   .bd-story-text p {
     color: #aaa;
-    font-size: 1rem;
+    font-size: .97rem;
     line-height: 1.75;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.1rem;
   }
   .bd-story-text p strong { color: var(--bd-white); }
-  .bd-story-visual {
-    background: var(--bd-gray);
-    border-radius: 12px;
-    padding: 3rem 2rem;
-    text-align: center;
-    border: 1px solid #444;
+
+  /* ── Mascot video (center column) ── */
+  .bd-mascot-wrap {
     position: relative;
+    border-radius: 14px;
     overflow: hidden;
+    background: #111;
+    aspect-ratio: 9 / 16;
+    width: 100%;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 16px 48px rgba(0,0,0,0.6);
+    opacity: 0;
+    transition: opacity 0.6s ease;
   }
-  .bd-story-visual::before {
-    content: "";
+  .bd-mascot-wrap.bd-visible { opacity: 1; }
+  .bd-mascot-wrap video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .bd-sound-btn {
     position: absolute;
-    top: -30px; right: -30px;
-    width: 120px; height: 120px;
-    background: var(--bd-red);
-    opacity: .1;
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, transform .15s;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
   }
-  .bd-story-logo-text {
+  .bd-sound-btn.visible { opacity: 1; pointer-events: all; }
+  .bd-sound-btn:hover { background: rgba(204,0,0,0.75); transform: scale(1.08); }
+  .bd-sound-btn svg { width: 14px; height: 14px; fill: #fff; display: block; }
+
+  /* ── Brand column (right) ── */
+  .bd-brand-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .bd-brand-lockup-text {
     font-size: 3rem;
     font-weight: 900;
     color: var(--bd-white);
     text-transform: uppercase;
     letter-spacing: 2px;
     line-height: 1;
-    margin-bottom: .5rem;
+    margin-bottom: .3rem;
   }
-  .bd-story-logo-text span { color: var(--bd-red); }
-  .bd-story-logo-sub {
+  .bd-brand-lockup-text span { color: var(--bd-red); }
+  .bd-brand-lockup-sub {
     color: var(--bd-gold);
-    font-size: .8rem;
+    font-size: .78rem;
     font-weight: 700;
     letter-spacing: 3px;
     text-transform: uppercase;
-    margin-bottom: 2rem;
   }
-  .bd-stat-row {
+  .bd-story-finish-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    align-items: center;
+  }
+  .bd-story-stat-row {
     display: flex;
     gap: 1.5rem;
-    justify-content: center;
     flex-wrap: wrap;
-    margin-top: 1.5rem;
   }
-  .bd-stat { text-align: center; }
-  .bd-stat-num {
+  .bd-story-stat-item {
+    border-left: 3px solid var(--bd-red);
+    padding-left: .85rem;
+  }
+  .bd-story-stat-item .num {
     font-size: 2rem;
     font-weight: 900;
     color: var(--bd-red);
     line-height: 1;
   }
-  .bd-stat-label {
-    font-size: .7rem;
+  .bd-story-stat-item .label {
+    font-size: .68rem;
     color: #aaa;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: .2rem;
+    letter-spacing: 1.5px;
+    margin-top: .15rem;
   }
 
   /* ── PRODUCTS SECTION ── */
@@ -379,9 +418,16 @@
   .bd-cta-secondary:hover { color: var(--bd-white); }
 
   /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .bd-story-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .bd-mascot-wrap { max-width: 220px; margin: 0 auto; }
+    .bd-brand-col { align-items: center; text-align: center; }
+    .bd-story-finish-tags { justify-content: center; }
+    .bd-story-stat-row { justify-content: center; }
+    .bd-story-stat-item { border-left: none; border-top: 3px solid var(--bd-red); padding-left: 0; padding-top: .6rem; }
+  }
   @media (max-width: 768px) {
     .bd-about-hero h1 { font-size: 2rem; }
-    .bd-story-inner { grid-template-columns: 1fr; gap: 2.5rem; }
     .bd-products-grid { grid-template-columns: 1fr; }
     .bd-finishes-grid { grid-template-columns: 1fr; }
     .bd-values-grid { grid-template-columns: repeat(2, 1fr); }
@@ -404,38 +450,68 @@
   </div>
 </section>
 
-<!-- STORY -->
+<!-- STORY — 3 COLUMNS -->
 <section class="bd-story">
   <div class="bd-story-inner">
+
+    <!-- COL 1: Where It Started -->
     <div class="bd-story-text">
       <span class="bd-eyebrow">Where It Started</span>
       <h2>From the <span>Collection</span> to the Community</h2>
-      <!-- ✅ CHANGE 1: authentic first-show story -->
-      <p>It started when I set up at my first card show. Looking at all of my cards stuffed in 5,000 Ct. boxes and displayed in cases — yet I was the only person there that knew my brand. No Logo. No branding. Just plastic casings.</p>
-      <p><strong>Big Dawgs was built to fix that.</strong> We started making custom stickers for our own collection, then for friends, then for dealers, then for shops — and word spread fast. Collectors who care about the details found us.</p>
-      <p>Today we serve <strong>500+ collectors and card shops</strong> across the country. Every sticker is made to spec, printed sharp, and shipped fast — because we know your collection doesn't wait.</p>
+      <p>It started at my first card show — cards stuffed in boxes, displayed in cases, and not a single person knew my brand. No logo. No branding. Just plastic casings. <strong>Big Dawgs was built to fix that.</strong></p>
+      <p>We started with our own collection, then friends, dealers, and shops — and word spread fast. Today we serve <strong>500+ collectors and card shops</strong> across the country. Every sticker is made to spec, printed sharp, and shipped fast.</p>
     </div>
-    <div class="bd-story-visual">
-      <div class="bd-story-logo-text">BIG<br><span>DAWGS</span></div>
-      <div class="bd-story-logo-sub">Custom Card Stickers</div>
-      <div class="bd-stat-row">
-        <div class="bd-stat">
-          <div class="bd-stat-num">500+</div>
-          <div class="bd-stat-label">Happy Collectors</div>
+
+    <!-- COL 2: Mascot video -->
+    <div class="bd-mascot-wrap">
+      <video
+        id="bd-mascot-video"
+        src="https://cdn.shopify.com/videos/c/o/v/6f28a774fd544710bb3a9de7871c03f7.mp4"
+        playsinline
+        preload="auto"
+      ></video>
+      <button class="bd-sound-btn" id="bd-sound-btn" aria-label="Toggle sound">
+        <svg id="bd-icon-sound" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        <svg id="bd-icon-muted" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+      </button>
+    </div>
+
+    <!-- COL 3: Brand + finish tags + stats -->
+    <div class="bd-brand-col">
+      <div>
+        <div class="bd-brand-lockup-text">BIG<br><span>DAWGS</span></div>
+        <div class="bd-brand-lockup-sub">Custom Card Stickers</div>
+      </div>
+      <div class="bd-story-finish-tags">
+        <span class="bd-ftag bd-ftag--matte">Matte</span>
+        <span class="bd-ftag bd-ftag--holo">Holographic</span>
+        <span class="bd-ftag bd-ftag--ice">
+          <span class="bd-ftag-text">Cracked Ice</span>
+          <svg class="bd-ftag-ice-svg" viewBox="0 0 100 28" preserveAspectRatio="none">{% render 'finish-ice-svg' %}</svg>
+        </span>
+      </div>
+      <div class="bd-story-stat-row">
+        <div class="bd-story-stat-item">
+          <div class="num">500+</div>
+          <div class="label">Happy Collectors</div>
         </div>
-        <div class="bd-stat">
-          <div class="bd-stat-num">3</div>
-          <div class="bd-stat-label">Premium Finishes</div>
+        <div class="bd-story-stat-item">
+          <div class="num">3</div>
+          <div class="label">Premium Finishes</div>
         </div>
-        <!-- ✅ CHANGE 2: 24hr → 5–7 Days -->
-        <div class="bd-stat">
-          <div class="bd-stat-num">5–7</div>
-          <div class="bd-stat-label">Day Turnaround</div>
+        <div class="bd-story-stat-item">
+          <div class="num">5–7</div>
+          <div class="label">Day Turnaround</div>
         </div>
       </div>
     </div>
+
   </div>
 </section>
+
+<!-- Audio unlock hint — fixed pill, only visible when browser needs a gesture.
+     Never shows on Shopify since user clicked a nav link to get here. -->
+<div id="bd-audio-hint" style="position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.75);border:1px solid rgba(255,255,255,0.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:rgba(255,255,255,0.7);font-size:.7rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:20px;pointer-events:none;opacity:0;transition:opacity 0.4s ease;z-index:9999;white-space:nowrap;">🔊 Click anywhere to enable audio</div>
 
 <!-- PRODUCTS -->
 <section class="bd-products-section">
@@ -557,6 +633,70 @@
   <a href="/products/custom-card-stickers" class="bd-cta-btn">Start Your Order →</a>
   <a href="/pages/faq" class="bd-cta-secondary">Have questions? Read our FAQ</a>
 </section>
+
+<script>
+(function () {
+  var video    = document.getElementById('bd-mascot-video');
+  var wrap     = video ? video.closest('.bd-mascot-wrap') : null;
+  var soundBtn = document.getElementById('bd-sound-btn');
+  var iconOn   = document.getElementById('bd-icon-sound');
+  var iconOff  = document.getElementById('bd-icon-muted');
+  var hint     = document.getElementById('bd-audio-hint');
+  if (!video || !wrap) return;
+
+  var audioUnlocked = false;
+  var videoInView   = false;
+
+  function unlockAudio() {
+    if (audioUnlocked) return;
+    audioUnlocked = true;
+    if (hint) hint.style.opacity = '0';
+    if (videoInView && !video.paused && video.muted) {
+      video.muted = false;
+      iconOn.style.display  = 'block';
+      iconOff.style.display = 'none';
+    }
+  }
+  ['click', 'touchstart', 'keydown'].forEach(function(evt) {
+    document.addEventListener(evt, unlockAudio, { once: true, capture: true });
+  });
+
+  soundBtn.addEventListener('click', function() {
+    video.muted = !video.muted;
+    iconOn.style.display  = video.muted ? 'none'  : 'block';
+    iconOff.style.display = video.muted ? 'block' : 'none';
+  });
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        videoInView = true;
+        wrap.classList.add('bd-visible');
+        video.muted = !audioUnlocked;
+        video.play().then(function() {
+          soundBtn.classList.add('visible');
+          iconOn.style.display  = video.muted ? 'none'  : 'block';
+          iconOff.style.display = video.muted ? 'block' : 'none';
+          if (video.muted && hint) hint.style.opacity = '1';
+        }).catch(function() {});
+      } else {
+        videoInView = false;
+        video.pause();
+        video.currentTime = 0;
+        video.muted = false;
+        wrap.classList.remove('bd-visible');
+        soundBtn.classList.remove('visible');
+        if (hint) hint.style.opacity = '0';
+        iconOn.style.display  = 'block';
+        iconOff.style.display = 'none';
+      }
+    });
+  }, { threshold: 0.15 });
+
+  observer.observe(wrap);
+  video.addEventListener('ended', function() { video.pause(); });
+})();
+</script>
 
 {% schema %}
 {
