@@ -73,13 +73,32 @@
     background-image: none !important;
   }
 
-/* Fix input/textarea going transparent on hover/focus */
-[id^="shopify-section-template--"] input:hover,
-[id^="shopify-section-template--"] input:focus,
-[id^="shopify-section-template--"] textarea:hover,
-[id^="shopify-section-template--"] textarea:focus,
-[id^="shopify-section-template--"] .field__input:is(:focus, :hover) {
-  background-color: rgba(255, 255, 255, 0.78) !important;
+/* Fix input/textarea focus — contact page dark form fields */
+.bd-contact-form-wrap input:hover,
+.bd-contact-form-wrap input:focus,
+.bd-contact-form-wrap textarea:hover,
+.bd-contact-form-wrap textarea:focus,
+.bd-contact-form-wrap select:hover,
+.bd-contact-form-wrap select:focus {
+  background-color: #1e1e1e !important;
+  color: #fff !important;
+  border-color: var(--bd-red, #CC0000) !important;
+}
+
+/* Global safety net: Shopify native forms on light backgrounds get dark text on focus */
+.color-scheme-1 input:focus,
+.color-scheme-1 textarea:focus,
+.color-scheme-1 select:focus,
+.color-scheme-1 .field__input:focus {
+  color: #111 !important;
+}
+
+/* Footer newsletter input — ensure readable text on focus */
+.footer input:focus,
+.footer .field__input:focus,
+[id*="footer"] input:focus,
+[id*="footer"] .field__input:focus {
+  color: #111 !important;
 }
 </style>
 {% endif %}
