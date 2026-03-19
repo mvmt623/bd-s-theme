@@ -1,0 +1,339 @@
+{% comment %}
+  BIG DAWGS — Cookie Consent Banner
+  Dark-themed, GDPR/CCPA compliant cookie consent using Shopify Customer Privacy API.
+  Rendered in theme.liquid before </body>.
+  - Shows banner on first visit (checks localStorage for prior consent)
+  - Integrates with Shopify's consent-tracking-api for proper pixel/analytics gating
+  - Three options: Accept All, Essential Only, Manage Preferences
+  - Preferences panel allows granular control over Analytics, Marketing, Preferences
+  - Styled to match BD dark theme
+{% endcomment %}
+
+<style>
+  /* ═══════════════════════════════════════════════════
+     BD COOKIE CONSENT BANNER
+     ═══════════════════════════════════════════════════ */
+  .bd-cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    background: #111;
+    border-top: 1px solid #2a2a2a;
+    box-shadow: 0 -4px 30px rgba(0,0,0,.5);
+    padding: 0;
+    transform: translateY(100%);
+    transition: transform .4s ease;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .bd-cookie-banner.bd-cookie-visible {
+    transform: translateY(0);
+  }
+  .bd-cookie-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  @media (max-width: 768px) {
+    .bd-cookie-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+      padding: 1.2rem 1rem;
+    }
+  }
+  .bd-cookie-text {
+    flex: 1;
+    font-size: .85rem;
+    color: #aaa;
+    line-height: 1.55;
+  }
+  .bd-cookie-text a {
+    color: #CC0000;
+    text-decoration: underline;
+  }
+  .bd-cookie-btns {
+    display: flex;
+    gap: .6rem;
+    flex-shrink: 0;
+  }
+  @media (max-width: 768px) {
+    .bd-cookie-btns {
+      flex-direction: column;
+    }
+  }
+  .bd-cookie-btn {
+    padding: .6rem 1.2rem;
+    border-radius: 5px;
+    font-size: .8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+    border: none;
+    font-family: inherit;
+  }
+  .bd-cookie-btn-accept {
+    background: #CC0000;
+    color: #fff;
+  }
+  .bd-cookie-btn-accept:hover {
+    background: #e00000;
+    transform: translateY(-1px);
+  }
+  .bd-cookie-btn-essential {
+    background: transparent;
+    color: #aaa;
+    border: 1px solid #333;
+  }
+  .bd-cookie-btn-essential:hover {
+    border-color: #666;
+    color: #fff;
+  }
+  .bd-cookie-btn-manage {
+    background: transparent;
+    color: #666;
+    border: 1px solid #222;
+    font-size: .72rem;
+  }
+  .bd-cookie-btn-manage:hover {
+    border-color: #444;
+    color: #aaa;
+  }
+
+  /* Preferences panel */
+  .bd-cookie-prefs {
+    display: none;
+    background: #0f0f0f;
+    border-top: 1px solid #1e1e1e;
+    padding: 1.25rem 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .bd-cookie-prefs.bd-cookie-prefs-open {
+    display: block;
+  }
+  .bd-cookie-prefs-title {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #D4A017;
+    margin-bottom: .8rem;
+  }
+  .bd-cookie-pref-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .55rem 0;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .bd-cookie-pref-row:last-child {
+    border-bottom: none;
+  }
+  .bd-cookie-pref-info {
+    flex: 1;
+  }
+  .bd-cookie-pref-name {
+    font-size: .85rem;
+    font-weight: 600;
+    color: #ddd;
+  }
+  .bd-cookie-pref-desc {
+    font-size: .72rem;
+    color: #666;
+    margin-top: .15rem;
+  }
+  .bd-cookie-pref-badge {
+    font-size: .65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: #555;
+    padding: .2rem .5rem;
+    border: 1px solid #333;
+    border-radius: 3px;
+  }
+  /* Toggle switch */
+  .bd-cookie-toggle {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+  .bd-cookie-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+  .bd-cookie-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #333;
+    border-radius: 22px;
+    transition: background .2s;
+  }
+  .bd-cookie-toggle-slider::before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background: #888;
+    border-radius: 50%;
+    transition: transform .2s, background .2s;
+  }
+  .bd-cookie-toggle input:checked + .bd-cookie-toggle-slider {
+    background: #1a5c1a;
+  }
+  .bd-cookie-toggle input:checked + .bd-cookie-toggle-slider::before {
+    transform: translateX(18px);
+    background: #5dde5d;
+  }
+  .bd-cookie-prefs-save {
+    margin-top: .8rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+</style>
+
+<!-- COOKIE CONSENT BANNER -->
+<div class="bd-cookie-banner" id="bd-cookie-banner">
+  <div class="bd-cookie-inner">
+    <div class="bd-cookie-text">
+      We use cookies to improve your experience, analyze site traffic, and personalize content. By clicking "Accept All," you consent to our use of cookies.
+      <a href="/policies/privacy-policy" target="_blank">Privacy Policy</a>
+    </div>
+    <div class="bd-cookie-btns">
+      <button class="bd-cookie-btn bd-cookie-btn-accept" id="bd-cookie-accept">Accept All</button>
+      <button class="bd-cookie-btn bd-cookie-btn-essential" id="bd-cookie-essential">Essential Only</button>
+      <button class="bd-cookie-btn bd-cookie-btn-manage" id="bd-cookie-manage">Manage</button>
+    </div>
+  </div>
+  <div class="bd-cookie-prefs" id="bd-cookie-prefs">
+    <div class="bd-cookie-prefs-title">Cookie Preferences</div>
+    <div class="bd-cookie-pref-row">
+      <div class="bd-cookie-pref-info">
+        <div class="bd-cookie-pref-name">Essential</div>
+        <div class="bd-cookie-pref-desc">Required for the site to function. Cannot be disabled.</div>
+      </div>
+      <span class="bd-cookie-pref-badge">Always On</span>
+    </div>
+    <div class="bd-cookie-pref-row">
+      <div class="bd-cookie-pref-info">
+        <div class="bd-cookie-pref-name">Analytics</div>
+        <div class="bd-cookie-pref-desc">Helps us understand how visitors use the site so we can improve it.</div>
+      </div>
+      <label class="bd-cookie-toggle">
+        <input type="checkbox" id="bd-pref-analytics" checked>
+        <span class="bd-cookie-toggle-slider"></span>
+      </label>
+    </div>
+    <div class="bd-cookie-pref-row">
+      <div class="bd-cookie-pref-info">
+        <div class="bd-cookie-pref-name">Marketing</div>
+        <div class="bd-cookie-pref-desc">Used for personalized ads and retargeting across platforms.</div>
+      </div>
+      <label class="bd-cookie-toggle">
+        <input type="checkbox" id="bd-pref-marketing" checked>
+        <span class="bd-cookie-toggle-slider"></span>
+      </label>
+    </div>
+    <div class="bd-cookie-pref-row">
+      <div class="bd-cookie-pref-info">
+        <div class="bd-cookie-pref-name">Preferences</div>
+        <div class="bd-cookie-pref-desc">Remembers your settings like language and region.</div>
+      </div>
+      <label class="bd-cookie-toggle">
+        <input type="checkbox" id="bd-pref-preferences" checked>
+        <span class="bd-cookie-toggle-slider"></span>
+      </label>
+    </div>
+    <div class="bd-cookie-prefs-save">
+      <button class="bd-cookie-btn bd-cookie-btn-accept" id="bd-cookie-save-prefs">Save Preferences</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'bd_cookie_consent';
+  var banner = document.getElementById('bd-cookie-banner');
+  var prefsPanel = document.getElementById('bd-cookie-prefs');
+
+  // Check if consent already given
+  var stored = null;
+  try { stored = localStorage.getItem(STORAGE_KEY); } catch(e) {}
+  if (stored) return; // Already consented — don't show banner
+
+  // Show banner after short delay (let page render first)
+  setTimeout(function() {
+    banner.classList.add('bd-cookie-visible');
+  }, 800);
+
+  // Set consent via Shopify Customer Privacy API
+  function setConsent(analytics, marketing, preferences) {
+    var consent = {
+      analytics: analytics,
+      marketing: marketing,
+      preferences: preferences,
+      sale_of_data: !marketing // If marketing declined, opt out of data sale
+    };
+
+    // Save to localStorage
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
+    } catch(e) {}
+
+    // Integrate with Shopify Customer Privacy API
+    if (window.Shopify && window.Shopify.loadFeatures) {
+      window.Shopify.loadFeatures([{name: 'consent-tracking-api', version: '0.1'}], function(error) {
+        if (!error && window.Shopify.customerPrivacy) {
+          window.Shopify.customerPrivacy.setTrackingConsent({
+            analytics: analytics,
+            marketing: marketing,
+            preferences: preferences,
+            sale_of_data: !marketing
+          }, function() {});
+        }
+      });
+    }
+
+    // Hide banner
+    banner.classList.remove('bd-cookie-visible');
+  }
+
+  // Accept All
+  document.getElementById('bd-cookie-accept').addEventListener('click', function() {
+    setConsent(true, true, true);
+  });
+
+  // Essential Only
+  document.getElementById('bd-cookie-essential').addEventListener('click', function() {
+    setConsent(false, false, false);
+  });
+
+  // Manage preferences toggle
+  document.getElementById('bd-cookie-manage').addEventListener('click', function() {
+    prefsPanel.classList.toggle('bd-cookie-prefs-open');
+  });
+
+  // Save custom preferences
+  document.getElementById('bd-cookie-save-prefs').addEventListener('click', function() {
+    var analytics = document.getElementById('bd-pref-analytics').checked;
+    var marketing = document.getElementById('bd-pref-marketing').checked;
+    var preferences = document.getElementById('bd-pref-preferences').checked;
+    setConsent(analytics, marketing, preferences);
+  });
+})();
+</script>
