@@ -250,6 +250,31 @@ Three product forms have `TESTING_MODE = true` which BYPASSES artwork upload val
 - **Secondary logo upload:** Available but has NO pricing impact ($2 charge removed)
 - **Checkout customization:** Limited to colors/logo on current Shopify plan (not Plus)
 
+### Cart Line Item Display Rules (CORE DEPENDENCY)
+**File:** `snippets/cart-products.liquid` — shared by cart drawer AND cart page.
+Any workflow change that adds/removes/renames cart properties MUST update this renderer.
+
+**Display order (fixed across all products):**
+1. Holder Type
+2. Finish
+3. Size
+4. Cut Type
+5. Quantity Tier / Quantity
+6. Brand Name
+7. Artwork → simplified to "✓ Uploaded" (green)
+8. Secondary Artwork → simplified to "✓ Uploaded" (green)
+9. Notes → truncated to 40 chars, shown last
+
+**Hidden properties (never shown to customer):**
+- `Secondary Logo` (internal flag)
+- `_price` (underscore-prefixed = auto-hidden)
+- Raw artwork filenames (replaced by checkmark)
+
+**When modifying any product form:**
+- If you ADD a new `properties[X]` field → add `X` to `bd_order` array in cart-products.liquid
+- If you RENAME a property → update both the form AND the `bd_order`/`bd_skip` arrays
+- If you REMOVE a property → remove from `bd_order`/`bd_skip` to keep arrays clean
+
 ---
 
 ## 10. CSS Architecture
