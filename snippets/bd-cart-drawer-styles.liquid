@@ -7,6 +7,28 @@
 
 <style>
   /* ═══════════════════════════════════════════════════
+     BD HEADER CART BUBBLE — Gold badge on dark header
+     ═══════════════════════════════════════════════════ */
+
+  /* Badge circle — BD gold */
+  .cart-bubble__background {
+    background-color: #D4A017 !important;
+    color: #111 !important;
+  }
+  /* Count text — dark on gold */
+  .cart-bubble__text,
+  .cart-bubble__text-count {
+    color: #111 !important;
+    font-weight: 800 !important;
+  }
+  /* Cart icon itself — white on dark header */
+  .header-actions__cart-icon svg,
+  [class*="header"] .icon-cart,
+  [class*="header"] [class*="cart-icon"] svg {
+    color: #fff !important;
+  }
+
+  /* ═══════════════════════════════════════════════════
      BD CART DRAWER — DARK THEME OVERRIDE
      Scoped to .cart-drawer so it never touches the cart page
      ═══════════════════════════════════════════════════ */
