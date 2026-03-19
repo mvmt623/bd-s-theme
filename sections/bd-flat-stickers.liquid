@@ -138,6 +138,12 @@
     font-size: 11px; font-weight: 700; text-transform: uppercase;
     margin-left: 8px; display: inline-block;
   }
+  .bdf-qty-badge-popular {
+    background: var(--bd-red); color: #fff;
+    padding: 3px 10px; border-radius: 12px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    margin-left: 8px; display: inline-block;
+  }
   .bdf-qty-price { font-weight: 700; color: var(--bd-gold); font-size: 16px; }
 
   /* Artwork upload */
@@ -616,6 +622,12 @@
       return;
     }
 
+    // Find "Most Popular" tier: highest qty where price ≤ $100
+    var popularQty = null;
+    for (var p = tiers.length - 1; p >= 0; p--) {
+      if (tiers[p].price <= 100) { popularQty = tiers[p].qty; break; }
+    }
+
     tiers.forEach(function(tier) {
       var row = document.createElement('tr');
       row.className = 'bdf-qty-row';
@@ -623,6 +635,7 @@
 
       var qtyCell = document.createElement('td');
       qtyCell.innerHTML = tier.qty + ' stickers';
+      if (tier.qty === popularQty) qtyCell.innerHTML += '<span class="bdf-qty-badge-popular">Most Popular</span>';
       if (tier.best) qtyCell.innerHTML += '<span class="bdf-qty-badge">Best Value</span>';
 
       var priceCell = document.createElement('td');
